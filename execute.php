@@ -1,10 +1,53 @@
 <?php
+
 $web="https://api.telegram.org/bot";
 $token="872839539:AAGgmCXaX9zdSypFKiR4BHxoVK3U-riq3ao";
 $completo="https://api.telegram.org/bot".$token;
 $prendofile=file_get_contents("php://input");
 $informazioni=json_decode($prendofile, true);
-if(!$informazioni){
+function is_new_request($requestUpdateId)
+{
+    $filename = "./last_update_id.txt";
+
+    if (filesize($filename)) {
+        $file = fopen($filename, "w");
+        if ($file) {
+            fwrite($file, $requestUpdateId);
+            fclose($file);
+            return true;
+        } else
+            return null;
+    } else {
+        $file = fopen($filename, "w");
+        fwrite($file, 1);
+        fclose($file);
+        return false;
+    }
+}
+
+function set_get_updates_parameters($getUpdates)
+{
+    $filename = "./last_update_id.txt";
+    if (file_exists($filename)) {
+        $file = fopen($filename, "r");
+        $lastUpdateId = fgets($file);
+        fclose($file);
+    } else {
+        $file = fopen($filename, "w");
+        $lastUpdateId = fwrite($file, 1);
+        fclose($file);
+    }
+    return str_replace("%offset%", $lastUpdateId, $getUpdates);
+}
+
+$updates = json_decode(file_get_contents(set_get_updates_parameters("https://api.telegram.org/bot872839539:AAGgmCXaX9zdSypFKiR4BHxoVK3U-riq3ao/getUpdates?offset=%offset%")), true);
+
+// Separate every update in $updates
+
+$isNewRequest = is_new_request($update["update_id"]); // $update["update_id"] is update_id of one of your requests; e.g. 591019242
+if ($isNewRequest === false || $isNewRequest === null)
+	exit;	
+elseif(!$informazioni){
   exit;
 }
 $messaggio=$informazioni['message'];
@@ -46,6 +89,11 @@ switch ($testo) {
 	sendMessage($utente, $ms);
         sendMessage($utente, $dataoggi);
         break;
+    case "1admin":
+	$ms = "benvenuto admin";
+	sendMessage($utente, $ms);
+	comandiadmin($utente);
+        break;		
     default:
         $ms = "non ho capito";
 	sendMessage($utente, $ms);
@@ -63,7 +111,7 @@ function tastierastart($utente){
 function tastieracalendario($utente,$dataoggi){
     $message = $dataoggi;
    	
-    $tastiera = '&reply_markup={"inline_keyboard":[[{"text":"SEGUIMI!","url":"http://www.youtube.com"},{"text":"Modifica Messaggio","callback_data":"ModificaMessaggio"}],[{"text":"SEGUIMI!","url":"http://www.youtube.com"},{"text":"SEGUIMI!","url":"http://www.youtube.com"}]]}';
+    $tastiera = '&reply_markup={"inline_keyboard":[[{"text":"1","callback_data":"Prenota"},{"text":"2","callback_data":"Prenota"},{"text":"3","callback_data":"Prenota"},{"text":"4","callback_data":"Prenota"},{"text":"5","callback_data":"Prenota"},{"text":"6","callback_data":"Prenota"},{"text":"7","callback_data":"Prenota"}],[{"text":"8","callback_data":"Prenota"},{"text":"9","callback_data":"Prenota"},{"text":"10","callback_data":"Prenota"},{"text":"4","callback_data":"Prenota"},{"text":"5","callback_data":"Prenota"},{"text":"6","callback_data":"Prenota"},{"text":"7","callback_data":"Prenota"}], [{"text":"1","callback_data":"Prenota"},{"text":"2","callback_data":"Prenota"},{"text":"3","callback_data":"Prenota"},{"text":"4","callback_data":"Prenota"},{"text":"5","callback_data":"Prenota"},{"text":"6","callback_data":"Prenota"},{"text":"7","callback_data":"Prenota"}] , [{"text":"SEGUIMI!","url":"http://www.youtube.com"},{"text":"SEGUIMI!","url":"http://www.youtube.com"}]]}';
     $url = $GLOBALS[completo].'/sendMessage?chat_id='.$utente.'&parse_mod=HTML&text='.$message.$tastiera;
     file_get_contents($url);
 }
@@ -81,6 +129,17 @@ function getdataoggi($datamessaggio){
     $url = $GLOBALS[completo]."/editMessageText?chat_id=$chatId&message_id=$message_id&parse_mode=HTML&text=".urlencode($newText);
     file_get_contents($url);
   }
+function comandiadmin($utente){
+	$messaggio = "cosa vuole fare admin?";
+    	do {
+		$tastiera = '&reply_markup={"keyboard":[["crea evento"],["assemblea"],["manda notifica"],["esci da admin"]]}';
+    		
+		
+	}while($testo !== "esci da admin");
+	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
+	file_get_contents($url);
+	
+}
 //header("Content-Type: application/json");
 //$msg="vuoi fare altro?"; 
 //$parameters = array('chat_id' => $utente, "text" => $msg);
