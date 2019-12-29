@@ -71,7 +71,7 @@ switch ($testo) {
     case "prenota":
         $ms = "prenotiamo lo studio";
 	sendMessage($utente, $ms);
-	inviamessaggio()
+	inviamessaggio();
         break;
     case "vedi prenotazioni":
         $ms = "chi ha prenotato lo studio nell' ultima settimana?";
@@ -153,7 +153,8 @@ function inviamessaggio(){
 	$msg="nonmale";
 
 
-	file_get_contents("https://api.telegram.org/bot$token/sendMessage?chat_id=@santacaterina2&text=".urlencode($msg););
+	$url = $GLOBALS[completo]."/sendMessage?chat_id=".$utente."&text=".urlencode($msg);
+	file_get_contents($url);
 }	
 //header("Content-Type: application/json");
 //$msg="vuoi fare altro?"; 
