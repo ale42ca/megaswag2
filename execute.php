@@ -120,8 +120,7 @@ function tastieracalendario($utente,$dataoggi){
 
     $url = $GLOBALS[completo].'/sendMessage?chat_id='.$utente.'&parse_mod=HTML&text='.$message.$tastiera;
     $url2 = $GLOBALS[completo].'/sendMessage?chat_id='.$utente.'&parse_mod=HTML'.$message.$tastiera2;	
-    file_get_contents($url);
-    file_get_contents($url2);
+    file_get_contents($url,$url2);
 
 }
 function sendMessage($utente, $msg){
@@ -143,7 +142,7 @@ function comandiadmin($utente){
     	$tastiera = '&reply_markup={"keyboard":[["crea evento"],["assemblea"],["manda notifica"],["esci da admin"]]}';
 	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
 	file_get_contents($url);
-	
+	if($testo)
 }
 
 
