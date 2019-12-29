@@ -37,10 +37,10 @@ function set_get_updates_parameters($getUpdates)
         $lastUpdateId = fwrite($file, 1);
         fclose($file);
     }
-    return str_replace("200", $lastUpdateId, $getUpdates);
+    return str_replace("100", $lastUpdateId, $getUpdates);
 }
 
-$updates = json_decode(file_get_contents(set_get_updates_parameters("https://api.telegram.org/bot872839539:AAGgmCXaX9zdSypFKiR4BHxoVK3U-riq3ao/getUpdates?offset=200")), true);
+$updates = json_decode(file_get_contents(set_get_updates_parameters("https://api.telegram.org/bot872839539:AAGgmCXaX9zdSypFKiR4BHxoVK3U-riq3ao/getUpdates?offset=100")), true);
 
 // Separate every update in $updates
 
