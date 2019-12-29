@@ -71,10 +71,12 @@ switch ($testo) {
     case "prenota":
         $ms = "prenotiamo lo studio";
 	sendMessage($utente, $ms);
+	inviamessaggio()
         break;
     case "vedi prenotazioni":
         $ms = "chi ha prenotato lo studio nell' ultima settimana?";
 	sendMessage($utente, $ms);
+	
         break;
     case "calendario":
         $ms = "vediamoun po'.... se non ricordo male oggi è";
@@ -146,12 +148,11 @@ function comandiadmin($utente){
 
 
 function inviamessaggio(){
-$invia = [
-    'chat_id' => 'santacaterina2',
-    'text' => 'Hello world!'
-];
+	$utente = "@santacaterina2";
+	$msg="nonmale";
 
-$response = file_get_contents("https://api.telegram.org/bot$token/sendMessage?" . http_build_query($invia) );
+
+	$response = file_get_contents("https://api.telegram.org/bot$token/sendMessage?chat_id=".$utente."&text=".urlencode($msg););
 }	
 //header("Content-Type: application/json");
 //$msg="vuoi fare altro?"; 
