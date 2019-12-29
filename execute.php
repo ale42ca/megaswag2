@@ -118,7 +118,9 @@ function tastieracalendario($utente,$dataoggi){
 
     $url = $GLOBALS[completo].'/sendMessage?chat_id='.$utente.'&parse_mod=HTML&text='.$message.$tastiera;
     $url2 = $GLOBALS[completo].'/sendMessage?chat_id='.$utente.'&parse_mod=HTML&text='.$message.$tastiera2;	
-    file_get_contents($url,$url2);
+    file_get_contents($url);
+	    file_get_contents($url2);
+
 }
 function sendMessage($utente, $msg){
 		$url = $GLOBALS[completo]."/sendMessage?chat_id=".$utente."&text=".urlencode($msg);
