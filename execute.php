@@ -5,6 +5,7 @@ $token="872839539:AAGgmCXaX9zdSypFKiR4BHxoVK3U-riq3ao";
 $completo="https://api.telegram.org/bot".$token;
 $prendofile=file_get_contents("php://input");
 $informazioni=json_decode($prendofile, true);
+/*
 function is_new_request($requestUpdateId)
 {
     $filename = "./last_update_id.txt";
@@ -49,7 +50,7 @@ if ($isNewRequest === false || $isNewRequest === null)
 	exit;	
 elseif(!$informazioni){
   exit;
-}
+}*/
 $messaggio=$informazioni['message'];
 $testo=$messaggio['text'];
 $utente=$messaggio['chat']['id'];
@@ -92,7 +93,8 @@ switch ($testo) {
     case "1admin":
 	$ms = "benvenuto admin";
 	sendMessage($utente, $ms);
-	comandiadmin($utente);
+	inviamessaggio();	
+	//comandiadmin($utente);
         break;		
     default:
         $ms = "non ho capito";
@@ -112,7 +114,9 @@ function tastieracalendario($utente,$dataoggi){
     $message = $dataoggi;
    	
     $tastiera = '&reply_markup={"inline_keyboard":[[{"text":"1","callback_data":"Prenota"},{"text":"2","callback_data":"Prenota"},{"text":"3","callback_data":"Prenota"},{"text":"4","callback_data":"Prenota"},{"text":"5","callback_data":"Prenota"},{"text":"6","callback_data":"Prenota"},{"text":"7","callback_data":"Prenota"}]]}';
-    $url = $GLOBALS[completo].'/sendMessage?chat_id='.$utente.'&parse_mod=HTML&text='.$message.$tastiera;
+    $tastiera2 = '&reply_markup={"inline_keyboard":[[{"text":"1","callback_data":"Prenota"},{"text":"2","callback_data":"Prenota"},{"text":"3","callback_data":"Prenota"},{"text":"4","callback_data":"Prenota"},{"text":"5","callback_data":"Prenota"},{"text":"6","callback_data":"Prenota"},{"text":"7","callback_data":"Prenota"}]]}';
+
+    $url = $GLOBALS[completo].'/sendMessage?chat_id='.$utente.'&parse_mod=HTML&text='.$message.$tastiera.$tastiera2;
     file_get_contents($url);
 }
 function sendMessage($utente, $msg){
@@ -132,13 +136,20 @@ function getdataoggi($datamessaggio){
 function comandiadmin($utente){
 	$messaggio = "cosa vuole fare admin?";
     	$tastiera = '&reply_markup={"keyboard":[["crea evento"],["assemblea"],["manda notifica"],["esci da admin"]]}';
-    		
-		
-	
 	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
 	file_get_contents($url);
 	
 }
+
+
+function inviamessaggio(){
+$invia = [
+    'chat_id' => '@santacaterina2',
+    'text' => 'Hello world!'
+];
+
+$response = file_get_contents("https://api.telegram.org/bot$token/sendMessage?" . http_build_query($invia) );
+}	
 //header("Content-Type: application/json");
 //$msg="vuoi fare altro?"; 
 //$parameters = array('chat_id' => $utente, "text" => $msg);
