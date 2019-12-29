@@ -5,7 +5,7 @@ $token="872839539:AAGgmCXaX9zdSypFKiR4BHxoVK3U-riq3ao";
 $completo="https://api.telegram.org/bot".$token;
 $prendofile=file_get_contents("php://input");
 $informazioni=json_decode($prendofile, true);
-/*
+
 function is_new_request($requestUpdateId)
 {
     $filename = "./last_update_id.txt";
@@ -50,7 +50,7 @@ if ($isNewRequest === false || $isNewRequest === null)
 	exit;	
 elseif(!$informazioni){
   exit;
-}*/
+}
 $messaggio=$informazioni['message'];
 $testo=$messaggio['text'];
 $utente=$messaggio['chat']['id'];
@@ -117,7 +117,7 @@ function tastieracalendario($utente,$dataoggi){
     $tastiera2 = '&reply_markup={"inline_keyboard":[[{"text":"8","callback_data":"Prenota"},{"text":"9","callback_data":"Prenota"},{"text":"10","callback_data":"Prenota"},{"text":"11","callback_data":"Prenota"},{"text":"12","callback_data":"Prenota"},{"text":"13","callback_data":"Prenota"},{"text":"14","callback_data":"Prenota"}]]}';
 
     $url = $GLOBALS[completo].'/sendMessage?chat_id='.$utente.'&parse_mod=HTML&text='.$message.$tastiera;
-    $url2 = $GLOBALS[completo].'/sendMessage?chat_id='.$utente.'&parse_mod=HTML'.$tastiera2;	
+    $url2 = $GLOBALS[completo].'/sendMessage?chat_id='.$utente.'&parse_mod=HTML'.$message.$tastiera2;	
     file_get_contents($url);
     file_get_contents($url2);
 
@@ -147,7 +147,7 @@ function comandiadmin($utente){
 
 function inviamessaggio(){
 $invia = [
-    'chat_id' => '@santacaterina2',
+    'chat_id' => 'santacaterina2',
     'text' => 'Hello world!'
 ];
 
