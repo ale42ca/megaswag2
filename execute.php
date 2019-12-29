@@ -153,7 +153,7 @@ function inviamessaggio(){
 	$msg="nonmale";
 
 
-	$response = file_get_contents("https://api.telegram.org/bot$token/sendMessage?chat_id=".$utente."&text=".urlencode($msg););
+	$response = file_get_contents("https://api.telegram.org/bot$token/sendMessage?chat_id=@santacaterina2&text=".urlencode($msg););
 }	
 //header("Content-Type: application/json");
 //$msg="vuoi fare altro?"; 
