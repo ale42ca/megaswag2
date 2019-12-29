@@ -94,7 +94,7 @@ switch ($testo) {
 	$ms = "benvenuto admin";
 	sendMessage($utente, $ms);
 	inviamessaggio();	
-	//comandiadmin($utente);
+	comandiadmin($utente);
         break;		
     default:
         $ms = "non ho capito";
