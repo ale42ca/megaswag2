@@ -143,7 +143,7 @@ function comandiadmin($utente){
 	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
 	file_get_contents($url);
 	if($testo == "esci da admin" ){
-	   editMessageText($queryUserId,$querymsgid,"/start")	
+	   editMessageText($queryUserId,$querymsgid,"/start");	
 	}	
 }
 
@@ -153,7 +153,7 @@ function inviamessaggio(){
 	$msg="nonmale";
 
 
-	$response = file_get_contents("https://api.telegram.org/bot$token/sendMessage?chat_id=@santacaterina2&text=".urlencode($msg););
+	file_get_contents("https://api.telegram.org/bot$token/sendMessage?chat_id=@santacaterina2&text=".urlencode($msg););
 }	
 //header("Content-Type: application/json");
 //$msg="vuoi fare altro?"; 
