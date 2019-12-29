@@ -1,16 +1,4 @@
 <?php
-
-$updates = json_decode(file_get_contents(set_get_updates_parameters("https://api.telegram.org/872839539:AAGgmCXaX9zdSypFKiR4BHxoVK3U-riq3ao/getUpdates?offset=%offset%")), true);
-
-// Separate every update in $updates
-
-$isNewRequest = is_new_request($update["update_id"]); // $update["update_id"] is update_id of one of your requests; e.g. 591019242
-if ($isNewRequest === false)
-    ; // Old request
-elseif ($isNewRequest === null)
-    ; // File error
-else 
-    ; // New request; time to work!
 $web="https://api.telegram.org/bot";
 $token="872839539:AAGgmCXaX9zdSypFKiR4BHxoVK3U-riq3ao";
 $completo="https://api.telegram.org/bot".$token;
@@ -58,11 +46,6 @@ switch ($testo) {
 	sendMessage($utente, $ms);
         sendMessage($utente, $dataoggi);
         break;
-    case "1admin":
-	$ms = "benvenuto admin";
-	sendMessage($utente, $ms);
-	comandiadmin($utente);
-        break;		
     default:
         $ms = "non ho capito";
 	sendMessage($utente, $ms);
@@ -98,20 +81,6 @@ function getdataoggi($datamessaggio){
     $url = $GLOBALS[completo]."/editMessageText?chat_id=$chatId&message_id=$message_id&parse_mode=HTML&text=".urlencode($newText);
     file_get_contents($url);
   }
-
-
-function comandiadmin($utente){
-	$messaggio = "cosa vuole fare admin?";
-    	do {
-		$tastiera = '&reply_markup={"keyboard":[["crea evento"],["assemblea"],["manda notifica"],["esci da admin"]]}';
-    		
-		
-	}while($testo !== "esci da admin");
-	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
-	file_get_contents($url);
-
-	
-}
 //header("Content-Type: application/json");
 //$msg="vuoi fare altro?"; 
 //$parameters = array('chat_id' => $utente, "text" => $msg);
