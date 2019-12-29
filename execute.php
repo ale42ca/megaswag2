@@ -142,7 +142,9 @@ function comandiadmin($utente){
     	$tastiera = '&reply_markup={"keyboard":[["crea evento"],["assemblea"],["manda notifica"],["esci da admin"]]}';
 	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
 	file_get_contents($url);
-	if($testo)
+	if($testo == "esci da admin" ){
+	   editMessageText($queryUserId,$querymsgid,"/start")	
+	}	
 }
 
 
