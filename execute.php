@@ -47,6 +47,7 @@ elseif(!$update){
 }
 
 $messaggio=$update['message'];
+$message_id=$update['message']['message_id'];
 $testo=$messaggio['text'];
 $utente=$messaggio['chat']['id'];
 $utente=$messaggio['chat']['id'];
@@ -72,19 +73,26 @@ switch ($testo) {
         $ms = "prenotiamo lo studio";
 	sendMessage($utente, $ms);
 	$ms = "Mi serve che tu mi dica quando vuoi prenotarlo";
+	deleteMessage($utente, $message_id);	
 	sendMessage($utente, $ms);
 	//prenotazione();
+	$ms = "per che ora?";
+	sendMessage($utente, $ms);	
 	$dataprenotata="oggi";
 	//controllo conflitti
+		
+	//conferma e upload nel file	
 	$ms = "Perfetto! ora invio una notifica nel gruppo";
 	sendMessage($utente, $ms);
-	$msgcanale= "lo studio è stato prenotato ".$dataprenotata."da ".$nomeutente;	
-	inviamessaggiocanale($msgcanale);	
-
+	$msgcanale= "lo studio è stato prenotato ".$dataprenotata." da ".$nomeutente;	
+	inviamessaggiocanale($msgcanale);
+	deleteMessage($utente, $message_id);	
         break;
+		
     	case "vedi prenotazioni":
-        $ms = "chi ha prenotato lo studio nell' ultima settimana?";
+        $ms = "chi ha prenotato lo studio in questa  settimana?";
 	sendMessage($utente, $ms);
+	//vediprenotazioni();	
 	
         break;
     case "calendario":
@@ -189,7 +197,10 @@ function getdataoggi($datamessaggio){
   return $datazioneunix;
 }
 
-
+function deleteMessage($utente, $message_id){
+	$url = $GLOBALS[completo]."/deleteMessage?chat_id=".$utente."&$message_id=".$message_id;
+	file_get_contents($url);
+}
 //header("Content-Type: application/json");
 //$msg="vuoi fare altro?"; 
 //$parameters = array('chat_id' => $utente, "text" => $msg);
