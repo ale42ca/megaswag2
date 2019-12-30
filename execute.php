@@ -60,14 +60,13 @@ $nomeutente=$messaggio['chat']['first_name'];
   $querydata = $query['data'];
   $querymsgid = $query['message']['message_id'];
 
-$ms = "Ciao sono Beecky assistente virtuale di radio frequenza libera. Cosa posso fare per te?";
-sendMessage($utente, $ms);
+
 
 switch ($testo) {
     case "/start":
-        $ms = "Iniziamo!";
-	sendMessage($utente, $ms);
-	tastierastart($utente);	
+	$ms = "Ciao sono Beecky assistente virtuale di radio frequenza libera. Cosa posso fare per te?";
+	sendMessage($utente, $ms);	
+        tastierastart($utente);	
         break;
     case "prenota":
         $ms = "prenotiamo lo studio";
