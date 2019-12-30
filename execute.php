@@ -19,7 +19,7 @@ $ultimomsg=$messaggio['message_id'];
   $queryusername = $query['from']['username'];
   $querydata = $query['data'];
   $querymsgid = $query['message']['message_id'];
-
+/*
 function is_new_request($requestUpdateId)
 {
     $filename = "./last_update_id.txt";
@@ -62,7 +62,7 @@ $updates = json_decode(file_get_contents(set_get_updates_parameters("https://api
 $isNewRequest = is_new_request($update["update_id"]); // $update["update_id"] is update_id of one of your requests; e.g. 591019242
 if ($isNewRequest === false || $isNewRequest === null)
 	exit;	
-elseif(!$informazioni){
+else*/if(!$informazioni){
   exit;
 }
 
@@ -114,7 +114,8 @@ if($querydata == "ModificaMessaggio"){
     exit();
 }
 if($testo == "esci"){
-	editMessageText($utente,$ultimomsg,"/start");
+	$comandesci="/start";
+	editMessageText($utente,$ultimomsg,$comandesci);
    	exit();
 	
 }
