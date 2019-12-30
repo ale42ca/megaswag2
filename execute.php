@@ -106,8 +106,7 @@ switch ($testo) {
 	comandiadmin($utente);
         break;
     case "esci":	
-	$nviamessaggioutente="/start";
-	inviamessaggioutente($utente, $nviamessaggioutente)
+	tastierastart($utente);	
    	break;	
     default:
         $ms = "non ho capito";
