@@ -3,17 +3,19 @@
 $web="https://api.telegram.org/bot";
 $token="872839539:AAGgmCXaX9zdSypFKiR4BHxoVK3U-riq3ao";
 $completo="https://api.telegram.org/bot".$token;
-/*
+
 $prendofile=file_get_contents("php://input");
 $informazioni=json_decode($prendofile, true);
-*/
+$informa=$informazioni['update_id'];
+echo json_encode($informa);
 
-
+/*
 $updates=file_get_contents("https://api.telegram.org/bot872839539:AAGgmCXaX9zdSypFKiR4BHxoVK3U-riq3ao/getupdates?offset=".$updot);
 $update=json_decode($updates, true);
 $upquack=$update['update_id'];
-$updot=$upquack + 3;
 
+$updot=$upquack + 3;
+*/
 $messaggio=$update['message'];
 $testo=$messaggio['text'];
 $utente=$messaggio['chat']['id'];
