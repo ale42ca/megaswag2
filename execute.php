@@ -6,6 +6,20 @@ $completo="https://api.telegram.org/bot".$token;
 $prendofile=file_get_contents("php://input");
 $informazioni=json_decode($prendofile, true);
 
+$messaggio=$informazioni['message'];
+$testo=$messaggio['text'];
+$utente=$messaggio['chat']['id'];
+$datazioneunix=$messaggio['date'];
+$dataoggi = getdataoggi($datazioneunix);
+$ultimomsg=$messaggio['message_id'];
+
+  $query = $informazioni['callback_query'];
+  $queryid = $query['id'];
+  $queryUserId = $query['from']['id'];
+  $queryusername = $query['from']['username'];
+  $querydata = $query['data'];
+  $querymsgid = $query['message']['message_id'];
+
 function is_new_request($requestUpdateId)
 {
     $filename = "./last_update_id.txt";
@@ -38,10 +52,10 @@ function set_get_updates_parameters($getUpdates)
         $lastUpdateId = fwrite($file, 1);
         fclose($file);
     }
-    return str_replace("100", $lastUpdateId, $getUpdates);
+    return str_replace("200", $lastUpdateId, $getUpdates);
 }
 
-$updates = json_decode(file_get_contents(set_get_updates_parameters("https://api.telegram.org/bot872839539:AAGgmCXaX9zdSypFKiR4BHxoVK3U-riq3ao/getUpdates?offset=100")), true);
+$updates = json_decode(file_get_contents(set_get_updates_parameters("https://api.telegram.org/bot872839539:AAGgmCXaX9zdSypFKiR4BHxoVK3U-riq3ao/getUpdates?offset=200")), true);
 
 // Separate every update in $updates
 
@@ -51,18 +65,7 @@ if ($isNewRequest === false || $isNewRequest === null)
 elseif(!$informazioni){
   exit;
 }
-$messaggio=$informazioni['message'];
-$testo=$messaggio['text'];
-$utente=$messaggio['chat']['id'];
-$datazioneunix=$messaggio['date'];
-$dataoggi = getdataoggi($datazioneunix);
 
-  $query = $informazioni['callback_query'];
-  $queryid = $query['id'];
-  $queryUserId = $query['from']['id'];
-  $queryusername = $query['from']['username'];
-  $querydata = $query['data'];
-  $querymsgid = $query['message']['message_id'];
 
 $msgcanale="fico";
 switch ($testo) {
@@ -109,7 +112,13 @@ switch ($testo) {
 if($querydata == "ModificaMessaggio"){
     editMessageText($queryUserId,$querymsgid,"HEYLA!");
     exit();
-}	
+}
+if($testo == "esci"){
+	editMessageText($utente,$ultimomsg,"/start");
+   	exit();
+	
+}
+	
 function tastierastart($utente){
 	$messaggio = "osserva la tastiera e usa i suoi comandi";
     	$tastiera = '&reply_markup={"keyboard":[["prenota"],["calendario"],["vedi prenotazioni"],["data"]]}';
@@ -124,33 +133,19 @@ function tastieracalendario($utente,$dataoggi){
 
     $url = $GLOBALS[completo].'/sendMessage?chat_id='.$utente.'&parse_mod=HTML&text='.$message.$tastiera;
     $url2 = $GLOBALS[completo].'/sendMessage?chat_id='.$utente.'&parse_mod=HTML'.$message.$tastiera2;	
-    file_get_contents($url,$url2);
+    file_get_contents($url);
 
 }
 function sendMessage($utente, $msg){
 		$url = $GLOBALS[completo]."/sendMessage?chat_id=".$utente."&text=".urlencode($msg);
 		file_get_contents($url);
 }
-function getdataoggi($datamessaggio){
-  $datazioneunix = gmdate("d.m.y", $datamessaggio);
-  
-  return $datazioneunix;
-}
+
   function editMessageText($chatId,$message_id,$newText)
   {
     $url = $GLOBALS[completo]."/editMessageText?chat_id=$chatId&message_id=$message_id&parse_mode=HTML&text=".urlencode($newText);
     file_get_contents($url);
   }
-function comandiadmin($utente){
-	$messaggio = "cosa vuole fare admin?";
-    	$tastiera = '&reply_markup={"keyboard":[["crea evento"],["assemblea"],["manda notifica"],["esci da admin"]]}';
-	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
-	file_get_contents($url);
-	if($testo == "esci da admin" ){
-	   editMessageText($queryUserId,$querymsgid,"/start");	
-	}	
-}
-
 
 function inviamessaggiocanale($msg){
 	$utente = "@santacaterina2";
@@ -158,7 +153,20 @@ function inviamessaggiocanale($msg){
 
 	$url = $GLOBALS[completo]."/sendMessage?chat_id=".$utente."&text=".urlencode($msg);
 	file_get_contents($url);
-}	
+}
+
+function comandiadmin($utente){
+	$messaggio = "cosa vuole fare admin?";
+    	$tastiera = '&reply_markup={"keyboard":[["crea evento"],["assemblea"],["manda notifica"],["esci"]]}';
+	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
+	file_get_contents($url);
+	
+}
+//data
+function getdataoggi($datamessaggio){
+  $datazioneunix = gmdate("d.m.y", $datamessaggio);
+  return $datazioneunix;
+}
 //header("Content-Type: application/json");
 //$msg="vuoi fare altro?"; 
 //$parameters = array('chat_id' => $utente, "text" => $msg);
