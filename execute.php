@@ -4,18 +4,19 @@ $web="https://api.telegram.org/bot";
 $token="872839539:AAGgmCXaX9zdSypFKiR4BHxoVK3U-riq3ao";
 $completo="https://api.telegram.org/bot".$token;
 
-$prendofile=file_get_contents("php://input");
-$informazioni=json_decode($prendofile, true);
-$informa=$informazioni['update_id'];
-echo json_encode($informa);
-
-/*
+$updot="100";
 $updates=file_get_contents("https://api.telegram.org/bot872839539:AAGgmCXaX9zdSypFKiR4BHxoVK3U-riq3ao/getupdates?offset=".$updot);
 $update=json_decode($updates, true);
 $upquack=$update['update_id'];
-
 $updot=$upquack + 3;
-*/
+echo json_encode($upquack);
+
+if ( $update > $updot || $update === null)
+	exit;	
+elseif(!$update){
+  exit;
+}
+
 $messaggio=$update['message'];
 $testo=$messaggio['text'];
 $utente=$messaggio['chat']['id'];
@@ -23,18 +24,13 @@ $datazioneunix=$messaggio['date'];
 $dataoggi = getdataoggi($datazioneunix);
 $ultimomsg=$messaggio['message_id'];
 
-  $query = $update['callback_query'];
-  $queryid = $query['id'];
-  $queryUserId = $query['from']['id'];
-  $queryusername = $query['from']['username'];
-  $querydata = $query['data'];
-  $querymsgid = $query['message']['message_id'];
+$query = $update['callback_query'];
+$queryid = $query['id'];
+$queryUserId = $query['from']['id'];
+$queryusername = $query['from']['username'];
+$querydata = $query['data'];
+$querymsgid = $query['message']['message_id'];
 
-if ( $update > $updot || $update === null)
-	exit;	
-elseif(!$update){
-  exit;
-}
 
 
 $msgcanale="fico";
