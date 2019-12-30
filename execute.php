@@ -180,7 +180,12 @@ function tastieradata($utente){
 	$rispost=json_decode($risposta, true);
 	$messaggio=$rispost['message'];
 	$testrisp=$messaggio['text'];
-	return $testrisp;
+	if($testrisp == "1"){
+	   return $testrisp = "/start";
+	}elseif($testrisp == "2"){
+	   exit;
+	}
+	
 
 
 	
