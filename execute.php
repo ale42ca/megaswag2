@@ -155,7 +155,7 @@ function comandiadmin($utente,$testoadmin){
 	$messaggio = "cosa vuole fare admin?";
     	$tastiera = '&reply_markup={"keyboard":[["crea evento"],["assemblea"],["manda notifica"],["esci"]]}';
 	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
-
+	file_get_contents($url);
 
 
 	switch ($testoadmin) {
