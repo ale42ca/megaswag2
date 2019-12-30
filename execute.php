@@ -102,6 +102,34 @@ switch ($testo) {
         $ms = "non ho capito";
 	sendMessage($utente, $ms);
 }
+/*
+	switch ($testoadmin) {
+    		case "crea evento":
+        	$ms = "certamente";
+		sendMessage($admin, $ms);
+		
+        	break;
+		case "assemblea":
+		$ms = "quando vuole fare l' assemblea";
+		$msgcanale="prossima assemblea";
+		sendMessage($admin, $ms);
+		inviamessaggiocanale($msgcanale);	
+
+		break;
+		case "manda notifica":
+		$ms = "notifica inviata";
+		$msgcanale="allert";
+		sendMessage($admin, $ms);
+		inviamessaggiocanale($msgcanale);	
+
+		break;			
+    		case "esci":	
+		tastierastart($utente);	
+   		break;
+	}
+
+*/
+
 if($querydata == "ModificaMessaggio"){
     editMessageText($queryUserId,$querymsgid,"HEYLA!");
     exit();
@@ -146,7 +174,7 @@ function comandiadmin($utente){
     	$tastiera = '&reply_markup={"keyboard":[["crea evento"],["assemblea"],["manda notifica"],["esci"]]}';
 	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
 	$updatesadmin=file_get_contents($url);
-	$updatea=json_decode($updates, true);
+	$updatea=json_decode($updatesadmin, true);
 	$messaggioad=$updatea['message'];
 	$testoadmin=$messaggioad['text'];
 	$utentea=$messaggioad['chat']['id'];
@@ -156,30 +184,7 @@ function comandiadmin($utente){
 		exit();
 	}
 /*
-	switch ($testoadmin) {
-    		case "crea evento":
-        	$ms = "certamente";
-		sendMessage($admin, $ms);
-		
-        	break;
-		case "assemblea":
-		$ms = "quando vuole fare l' assemblea";
-		$msgcanale="prossima assemblea";
-		sendMessage($admin, $ms);
-		inviamessaggiocanale($msgcanale);	
 
-		break;
-		case "manda notifica":
-		$ms = "notifica inviata";
-		$msgcanale="allert";
-		sendMessage($admin, $ms);
-		inviamessaggiocanale($msgcanale);	
-
-		break;			
-    		case "esci":	
-		tastierastart($utente);	
-   		break;
-	}
 */	
 	
 }
