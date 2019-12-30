@@ -93,7 +93,7 @@ switch ($testo) {
 	$ms = "benvenuto admin";
 	sendMessage($utente, $ms);
 		
-	comandiadmin($utente);
+	$testoadmin=comandiadmin($utente);
         break;
     case "esci":	
 	tastierastart($utente);	
@@ -102,6 +102,12 @@ switch ($testo) {
         $ms = "non ho capito";
 	sendMessage($utente, $ms);
 }
+
+if($testoadmin == "crea evento"){
+		$ms = "certamente";
+		sendMessage($utentea, $ms);
+		exit();
+	}
 /*
 	switch ($testoadmin) {
     		case "crea evento":
@@ -177,12 +183,8 @@ function comandiadmin($utente){
 	$updatea=json_decode($updatesadmin, true);
 	$messaggioad=$updatea['message'];
 	$testoadmin=$messaggioad['text'];
-	$utentea=$messaggioad['chat']['id'];
-	if($testoadmin == "crea evento"){
-		$ms = "certamente";
-		sendMessage($utentea, $ms);
-		exit();
-	}
+	return $testoadmin;
+	
 /*
 
 */	
