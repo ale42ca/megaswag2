@@ -3,6 +3,7 @@
 $web="https://api.telegram.org/bot";
 $token="872839539:AAGgmCXaX9zdSypFKiR4BHxoVK3U-riq3ao";
 $completo="https://api.telegram.org/bot".$token;
+
 $prendofile=file_get_contents("php://input");
 $informazioni=json_decode($prendofile, true);
 
@@ -12,7 +13,8 @@ $utente=$messaggio['chat']['id'];
 $datazioneunix=$messaggio['date'];
 $dataoggi = getdataoggi($datazioneunix);
 $ultimomsg=$messaggio['message_id'];
-
+$upquack=$informazioni['update_id'];
+$updot=$upquack + 3;
   $query = $informazioni['callback_query'];
   $queryid = $query['id'];
   $queryUserId = $query['from']['id'];
@@ -20,47 +22,10 @@ $ultimomsg=$messaggio['message_id'];
   $querydata = $query['data'];
   $querymsgid = $query['message']['message_id'];
 
-function is_new_request($requestUpdateId)
-{
-    $filename = "./last_update_id.txt";
+$update=file_get_contents("https://api.telegram.org/bot872839539:AAGgmCXaX9zdSypFKiR4BHxoVK3U-riq3ao/getupdates?offset=".$updot);
 
-    if (filesize($filename)) {
-        $file = fopen($filename, "w");
-        if ($file) {
-            fwrite($file, $requestUpdateId);
-            fclose($file);
-            return true;
-        } else
-            return null;
-    } else {
-        $file = fopen($filename, "w");
-        fwrite($file, 1);
-        fclose($file);
-        return false;
-    }
-}
 
-function set_get_updates_parameters($getUpdates)
-{
-    $filename = "./last_update_id.txt";
-    if (file_exists($filename)) {
-        $file = fopen($filename, "r");
-        $lastUpdateId = fgets($file);
-        fclose($file);
-    } else {
-        $file = fopen($filename, "w");
-        $lastUpdateId = fwrite($file, 1);
-        fclose($file);
-    }
-    return str_replace("200", $lastUpdateId, $getUpdates);
-}
-
-$updates = json_decode(file_get_contents(set_get_updates_parameters("https://api.telegram.org/bot872839539:AAGgmCXaX9zdSypFKiR4BHxoVK3U-riq3ao/getUpdates?offset=200")), true);
-
-// Separate every update in $updates
-
-$isNewRequest = is_new_request($update["update_id"]); // $update["update_id"] is update_id of one of your requests; e.g. 591019242
-if ($isNewRequest === false || $isNewRequest === null)
+if ( $update > $updot || $update === null)
 	exit;	
 elseif(!$informazioni){
   exit;
