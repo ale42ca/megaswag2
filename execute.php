@@ -156,12 +156,7 @@ function comandiadmin($utente){
     	$tastiera = '&reply_markup={"keyboard":[["crea evento"],["assemblea"],["manda notifica"],["esci"]]}';
 	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
 	file_get_contents($url);
-	$prendofile=file_get_contents("php://input");
-	$informazioni=json_decode($prendofile, true);
-
-	$messaggio=$informazioni['message'];
-	$testoadmin=$messaggio['text'];
-	$admin=$messaggio['chat']['id'];
+	
 	switch ($testo) {
     		case "crea evento":
         	$ms = "certamente";
@@ -170,12 +165,21 @@ function comandiadmin($utente){
         	break;
 		case "assemblea":
 		$ms = "quando vuole fare l' assemblea";
+		$msgcanale="prossima assemblea";
 		sendMessage($admin, $ms);
-			
 		inviamessaggiocanale($msgcanale);	
 
 		break;
+		case "manda notifica":
+		$ms = "notifica inviata";
+		$msgcanale="allert";
+		sendMessage($admin, $ms);
+		inviamessaggiocanale($msgcanale);	
 
+		break;			
+    		case "esci":	
+		tastierastart($utente);	
+   		break;
 		default:
 		$ms = "non ho capito";
 		sendMessage($utente, $ms);
@@ -189,20 +193,7 @@ function getdataoggi($datamessaggio){
   return $datazioneunix;
 }
 
-function prendoinfo(){
-	$web="https://api.telegram.org/bot";
-	$token="872839539:AAGgmCXaX9zdSypFKiR4BHxoVK3U-riq3ao";
-	$completo="https://api.telegram.org/bot".$token;
-	$prendofile=file_get_contents("php://input");
-	$informazioni=json_decode($prendofile, true);
 
-	$messaggio=$informazioni['message'];
-	$testo=$messaggio['text'];
-	$utente=$messaggio['chat']['id'];
-	$datazioneunix=$messaggio['date'];
-	$dataoggi = getdataoggi($datazioneunix);
-	$ultimomsg=$messaggio['message_id'];
-}	
 //header("Content-Type: application/json");
 //$msg="vuoi fare altro?"; 
 //$parameters = array('chat_id' => $utente, "text" => $msg);
