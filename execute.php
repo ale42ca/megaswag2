@@ -57,6 +57,7 @@ $dataoggi = getdataoggi($datazioneunix);
   $queryusername = $query['from']['username'];
   $querydata = $query['data'];
   $querymsgid = $query['message']['message_id'];
+
 switch ($testo) {
     case "/start":
         $ms = "ciao";
@@ -66,7 +67,7 @@ switch ($testo) {
     case "prenota":
         $ms = "prenotiamo lo studio";
 	sendMessage($utente, $ms);
-	inviamessaggio();
+	inviamessaggiocanale();
         break;
     case "vedi prenotazioni":
         $ms = "chi ha prenotato lo studio nell' ultima settimana?";
@@ -90,7 +91,7 @@ switch ($testo) {
     case "1admin":
 	$ms = "benvenuto admin";
 	sendMessage($utente, $ms);
-	inviamessaggio();	
+		
 	comandiadmin($utente);
         break;		
     default:
@@ -135,14 +136,16 @@ function comandiadmin($utente){
     	$tastiera = '&reply_markup={"keyboard":[["crea evento"],["assemblea"],["manda notifica"],["esci da admin"]]}';
 	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
 	file_get_contents($url);
-	if($testo == "esci da admin" ){
-	   editMessageText($queryUserId,$querymsgid,"/start");	
-	}	
+	if($testo == "assemblea" ){
+		$msg="nuova assemblea"
+		inviamessaggiocanale($msg);
+		}
+
 }
-function inviamessaggio(){
+function inviamessaggiocanale($msgcanale){
 	$utente = "@santacaterina2";
-	$msg="nonmale";
-	$url = $GLOBALS[completo]."/sendMessage?chat_id=".$utente."&text=".urlencode($msg);
+	
+	$url = $GLOBALS[completo]."/sendMessage?chat_id=".$utente."&text=".urlencode($msgcanale);
 	file_get_contents($url);
 }
 	
