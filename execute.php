@@ -110,11 +110,12 @@ switch ($testo) {
 	$ms = "Oggi è";
 	sendMessage($utente, $ms);
         sendMessage($utente, $dataoggi);
-        break;
+        
 	$keyboradsValue = array(array("dimmi","ora"),array("santa polenta","no"));
 	$replyMarkup = array('keyboard' => $keyboradsValue, 'force_reply' => true,'selective' => true);
 	$encodedMarkup = json_encode($replyMarkup, true);	
-	sendMessage($utente, $encodedMarkup);	
+	sendMessage($utente, $encodedMarkup);
+	break;
     case "1admin":
 	$ms = "benvenuto admin";
 	sendMessage($utente, $ms);
