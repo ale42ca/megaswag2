@@ -104,7 +104,12 @@ switch ($testo) {
 	sendMessage($utente, $ms);
 	inviamessaggiocanale($msgcanale);	
 	comandiadmin($utente);
-        break;		
+        break;
+    case "esci":
+	
+	$comandesci="/start";
+	editMessageText($utente,$ultimomsg,$comandesci);
+   	break;	
     default:
         $ms = "non ho capito";
 	sendMessage($utente, $ms);
@@ -113,12 +118,7 @@ if($querydata == "ModificaMessaggio"){
     editMessageText($queryUserId,$querymsgid,"HEYLA!");
     exit();
 }
-if($testo == "esci"){
-	$comandesci="/start";
-	editMessageText($utente,$ultimomsg,$comandesci);
-   	exit();
-	
-}
+
 	
 function tastierastart($utente){
 	$messaggio = "osserva la tastiera e usa i suoi comandi";
