@@ -202,7 +202,7 @@ function prendoinfo(){
 	$datazioneunix=$messaggio['date'];
 	$dataoggi = getdataoggi($datazioneunix);
 	$ultimomsg=$messaggio['message_id'];
-	
+}	
 //header("Content-Type: application/json");
 //$msg="vuoi fare altro?"; 
 //$parameters = array('chat_id' => $utente, "text" => $msg);
