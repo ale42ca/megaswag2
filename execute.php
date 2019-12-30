@@ -106,8 +106,8 @@ switch ($testo) {
 	comandiadmin($utente);
         break;
     case "esci":	
-	$comandesci="/start";
-	sendMessage($utente, $comandesci);
+	$nviamessaggioutente="/start";
+	inviamessaggioutente($utente, $nviamessaggioutente)
    	break;	
     default:
         $ms = "non ho capito";
@@ -155,6 +155,11 @@ function inviamessaggiocanale($msg){
 	file_get_contents($url);
 }
 
+function inviamessaggioutente($utente, $msg){
+	
+	$url = $GLOBALS[completo]."/sendMessage?chat_id=".$utente."&text=".urlencode($msg);
+	file_get_contents($url);
+}
 function comandiadmin($utente){
 	$messaggio = "cosa vuole fare admin?";
     	$tastiera = '&reply_markup={"keyboard":[["crea evento"],["assemblea"],["manda notifica"],["esci"]]}';
