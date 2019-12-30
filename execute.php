@@ -172,7 +172,7 @@ function tastieracalendario($utente,$dataoggi){
 function tastieradata($utente){
 	$messaggio=" funziona per favore";
 	
-	$tastiera = '&reply_markup={"keyboard":[["1"],["2"],["3"],["4"]], 'force_reply': true,'selective':true}';
+	$tastiera = '&reply_markup={"keyboard":[["1"],["2"],["3"],["4"]], "force_reply":true, "selective":true}';
 	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
 	file_get_contents($url);
 	
