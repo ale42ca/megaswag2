@@ -148,10 +148,11 @@ function comandiadmin($utente){
 	$updatesadmin=file_get_contents($url);
 	$updatea=json_decode($updates, true);
 	$messaggioad=$updatea['message'];
-	$testoadmin=$messaggioad['text'];	
+	$testoadmin=$messaggioad['text'];
+	$utentea=$messaggioad['chat']['id']
 	if($testoadmin === "crea evento"){
 		$ms = "certamente";
-		sendMessage($utente, $ms);
+		sendMessage($utentea, $ms);
 		exit();
 	}
 /*
