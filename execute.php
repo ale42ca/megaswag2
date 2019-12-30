@@ -49,9 +49,10 @@ elseif(!$update){
 $messaggio=$update['message'];
 $testo=$messaggio['text'];
 $utente=$messaggio['chat']['id'];
+$utente=$messaggio['chat']['id'];
 $datazioneunix=$messaggio['date'];
 $dataoggi = getdataoggi($datazioneunix);
-
+$nomeutente=$messaggio['chat']['first_name'];
   $query = $update['callback_query'];
   $queryid = $query['id'];
   $queryUserId = $query['from']['id'];
@@ -59,20 +60,30 @@ $dataoggi = getdataoggi($datazioneunix);
   $querydata = $query['data'];
   $querymsgid = $query['message']['message_id'];
 
-$msgcanale="fico";
+$ms = "Ciao sono Beecky assistente virtuale di radio frequenza libera. Cosa posso fare per te?";
+sendMessage($utente, $ms);
+
 switch ($testo) {
     case "/start":
-        $ms = "ciao";
+        $ms = "Iniziamo!";
 	sendMessage($utente, $ms);
 	tastierastart($utente);	
         break;
     case "prenota":
         $ms = "prenotiamo lo studio";
 	sendMessage($utente, $ms);
+	$ms = "Mi serve che tu mi dica quando vuoi prenotarlo";
+	sendMessage($utente, $ms);
+	//prenotazione();
+	$dataprenotata="oggi";
+	//controllo conflitti
+	$ms = "Perfetto! ora invio una notifica nel gruppo";
+	sendMessage($utente, $ms);
+	$msgcanale= "lo studio è stato prenotato ".$dataprenotata."da".$nomeutente;	
 	inviamessaggiocanale($msgcanale);	
 
         break;
-    case "vedi prenotazioni":
+    	case "vedi prenotazioni":
         $ms = "chi ha prenotato lo studio nell' ultima settimana?";
 	sendMessage($utente, $ms);
 	
@@ -85,7 +96,10 @@ switch ($testo) {
     case "ciao":
         $ms = "ciao, come stai?";
 	sendMessage($utente, $ms);
-        break;
+	
+        $ms = "Sai sono sempre impegnata, ma visto che sei così gentile ti racconto una barzelletta";
+	sendMessage($utente, $ms);	
+	break;
     case "data":
 	$ms = "Oggi è";
 	sendMessage($utente, $ms);
@@ -95,73 +109,32 @@ switch ($testo) {
 	$ms = "benvenuto admin";
 	sendMessage($utente, $ms);
 	comandiadmin($utente);
-		
-	switch ($testo) {
-    		case "crea evento":
-        	$ms = "certamente";
-		sendMessage($admin, $ms);
-		
-        	break;
-		case "assemblea":
-		$ms = "quando vuole fare l' assemblea";
-		$msgcanale="prossima assemblea";
-		sendMessage($admin, $ms);
-		inviamessaggiocanale($msgcanale);	
-
-		break;
-		case "manda notifica":
-		$ms = "notifica inviata";
-		$msgcanale="allert";
-		sendMessage($admin, $ms);
-		inviamessaggiocanale($msgcanale);	
-
-		break;			
-    		case "esci":	
-		tastierastart($utente);	
-   		break;
-	}
-
+	$testoadmin=$testo;
         break;
     case "esci":	
 	tastierastart($utente);	
    	break;	
 
 }
-/*
+
 if($testo == "crea evento"){
 		$ms = "creiamo evento";
 		sendMessage($utente, $ms);
 		$ms = "certamente";
 		sendMessage($utente, $ms);
 		exit();
-	}*/
-/*
-	switch ($testoadmin) {
-    		case "crea evento":
-        	$ms = "certamente";
-		sendMessage($admin, $ms);
-		
-        	break;
-		case "assemblea":
+}elseif($testo == "assemblea"){
 		$ms = "quando vuole fare l' assemblea";
-		$msgcanale="prossima assemblea";
 		sendMessage($admin, $ms);
+		$msgcanale="prossima assemblea";		
 		inviamessaggiocanale($msgcanale);	
-
-		break;
-		case "manda notifica":
-		$ms = "notifica inviata";
+}elseif($testo == "manda notifica"){
+		$ms = "notifica inviata nel canale";
 		$msgcanale="allert";
 		sendMessage($admin, $ms);
-		inviamessaggiocanale($msgcanale);	
-
-		break;			
-    		case "esci":	
-		tastierastart($utente);	
-   		break;
-	}
-
-*/
+		inviamessaggiocanale($msgcanale);
+	
+}
 
 if($querydata == "ModificaMessaggio"){
     editMessageText($queryUserId,$querymsgid,"HEYLA!");
@@ -175,6 +148,7 @@ function tastierastart($utente){
     	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     	file_get_contents($url);
 }
+
 function tastieracalendario($utente,$dataoggi){
     $message = $dataoggi;
    	
