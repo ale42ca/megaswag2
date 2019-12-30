@@ -156,9 +156,11 @@ function comandiadmin($utente){
     	$tastiera = '&reply_markup={"keyboard":[["crea evento"],["assemblea"],["manda notifica"],["esci"]]}';
 	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
 	file_get_contents($url);
-	$messaggioadmin= json_decode(file_get_contents("php://input"), true);
-	$testoadmin=$messaggioadmin['message']['text'];
-	$admin=$messaggioadmin['chat']['id'];
+	$prendofile=file_get_contents("php://input");
+	$informazioni=json_decode($prendofile, true);
+
+	$messaggio=$informazioni['message'];
+	$testo=$messaggio['text'];
 	switch ($testoadmin) {
     		case "crea evento":
         	$ms = "certamente";
