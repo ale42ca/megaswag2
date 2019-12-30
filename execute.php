@@ -95,21 +95,46 @@ switch ($testo) {
 	$ms = "benvenuto admin";
 	sendMessage($utente, $ms);
 	comandiadmin($utente);
-	$testoadmin=$testo;
+	$testoadmin=$testo;	
+	switch ($testoadmin) {
+    		case "crea evento":
+        	$ms = "certamente";
+		sendMessage($admin, $ms);
+		
+        	break;
+		case "assemblea":
+		$ms = "quando vuole fare l' assemblea";
+		$msgcanale="prossima assemblea";
+		sendMessage($admin, $ms);
+		inviamessaggiocanale($msgcanale);	
+
+		break;
+		case "manda notifica":
+		$ms = "notifica inviata";
+		$msgcanale="allert";
+		sendMessage($admin, $ms);
+		inviamessaggiocanale($msgcanale);	
+
+		break;			
+    		case "esci":	
+		tastierastart($utente);	
+   		break;
+	}
+
         break;
     case "esci":	
 	tastierastart($utente);	
    	break;	
 
 }
-
+/*
 if($testo == "crea evento"){
 		$ms = "creiamo evento";
 		sendMessage($utente, $ms);
 		$ms = "certamente";
 		sendMessage($utente, $ms);
 		exit();
-	}
+	}*/
 /*
 	switch ($testoadmin) {
     		case "crea evento":
