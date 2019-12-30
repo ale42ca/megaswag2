@@ -171,11 +171,9 @@ function tastieracalendario($utente,$dataoggi){
 
 function tastieradata($utente){
 	$messaggio=" funziona per favore";
-	$keyboradsValue = array(array("dimmi","ora"),array("santa polenta","no"));
-	$replyMarkup = array('keyboard' => $keyboradsValue, 'force_reply' => true,'selective' => true);
-	$encodedMarkup = json_encode($replyMarkup, true);
-	//$tastiera = '&reply_markup={"keyboard":[["crea evento"],["assemblea"],["manda notifica"],["esci"]]}';
-	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$encodedMarkup;
+	
+	$tastiera = '&reply_markup={"keyboard":[["1"],["2"],["3"],["4"]], 'force_reply': true,'selective':true}';
+	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
 	file_get_contents($url);
 	
 }	
