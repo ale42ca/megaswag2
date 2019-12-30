@@ -78,7 +78,7 @@ switch ($testo) {
 	//controllo conflitti
 	$ms = "Perfetto! ora invio una notifica nel gruppo";
 	sendMessage($utente, $ms);
-	$msgcanale= "lo studio è stato prenotato ".$dataprenotata."da".$nomeutente;	
+	$msgcanale= "lo studio è stato prenotato ".$dataprenotata."da ".$nomeutente;	
 	inviamessaggiocanale($msgcanale);	
 
         break;
