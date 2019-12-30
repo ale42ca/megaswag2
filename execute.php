@@ -4,15 +4,13 @@ $web="https://api.telegram.org/bot";
 $token="872839539:AAGgmCXaX9zdSypFKiR4BHxoVK3U-riq3ao";
 $completo="https://api.telegram.org/bot".$token;
 
-$prendofile=file_get_contents("php://input");
-$updot="900";
-$updates=file_get_contents("https://api.telegram.org/bot872839539:AAGgmCXaX9zdSypFKiR4BHxoVK3U-riq3ao/getupdates?offset=".$updot);
+$update=file_get_contents("php://input");
 $update=json_decode($updates, true);
 $upquack=$update['update_id'];
 $updot=$upquack + 3;
 echo json_encode($upquack);
 
-if ( $update > $updot || $update === null)
+if ( $upquack > $updot || $upquack === null)
 	exit;	
 elseif(!$update){
   exit;
