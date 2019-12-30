@@ -51,12 +51,14 @@ $testo=$messaggio['text'];
 $utente=$messaggio['chat']['id'];
 $datazioneunix=$messaggio['date'];
 $dataoggi = getdataoggi($datazioneunix);
+
   $query = $update['callback_query'];
   $queryid = $query['id'];
   $queryUserId = $query['from']['id'];
   $queryusername = $query['from']['username'];
   $querydata = $query['data'];
   $querymsgid = $query['message']['message_id'];
+
 $msgcanale="fico";
 switch ($testo) {
     case "/start":
@@ -98,9 +100,7 @@ switch ($testo) {
     case "esci":	
 	tastierastart($utente);	
    	break;	
-    default:
-        $ms = "non ho capito";
-	sendMessage($utente, $ms);
+
 }
 
 if($testo == "crea evento"){
