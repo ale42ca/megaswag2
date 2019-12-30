@@ -45,7 +45,7 @@ if ($isNewRequest === false || $isNewRequest === null){
 elseif(!$update){
   exit;
 }
-else{
+
 $messaggio=$update['message'];
 $testo=$messaggio['text'];
 $utente=$messaggio['chat']['id'];
@@ -146,7 +146,7 @@ function inviamessaggio(){
 	file_get_contents($url);
 }
 	
-}
+
 //header("Content-Type: application/json");
 //$msg="vuoi fare altro?"; 
 //$parameters = array('chat_id' => $utente, "text" => $msg);
