@@ -67,7 +67,7 @@ switch ($testo) {
     case "prenota":
         $ms = "prenotiamo lo studio";
 	sendMessage($utente, $ms);
-	inviamessaggiocanale();
+	inviamessaggiocanale($ms);
         break;
     case "vedi prenotazioni":
         $ms = "chi ha prenotato lo studio nell' ultima settimana?";
@@ -136,7 +136,7 @@ function comandiadmin($utente){
     	$tastiera = '&reply_markup={"keyboard":[["crea evento"],["assemblea"],["manda notifica"],["esci da admin"]]}';
 	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
 	file_get_contents($url);
-	if($testo == "assemblea" ){
+	if($testo == "assemblea"){
 		$msg="nuova assemblea"
 		inviamessaggiocanale($msg);
 		}
