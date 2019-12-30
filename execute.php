@@ -155,9 +155,7 @@ function comandiadmin($utente){
 	$messaggio = "cosa vuole fare admin?";
     	$tastiera = '&reply_markup={"keyboard":[["crea evento"],["assemblea"],["manda notifica"],["esci"]]}';
 	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
-	file_get_contents($url);
-	$prendofile=file_get_contents("php://input");
-	$informazioni=json_decode($prendofile, true);
+
 
 	$messaggio=$informazioni['message'];
 	$testo=$messaggio['text'];
