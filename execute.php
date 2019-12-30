@@ -180,9 +180,6 @@ function comandiadmin($utente){
     		case "esci":	
 		tastierastart($utente);	
    		break;
-		default:
-		$ms = "non ho capito";
-		sendMessage($utente, $ms);
 	}
 	
 	
