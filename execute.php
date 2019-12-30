@@ -95,8 +95,8 @@ switch ($testo) {
 	$ms = "benvenuto admin";
 	sendMessage($utente, $ms);
 	comandiadmin($utente);
-	$testoadmin=$testo;	
-	switch ($testoadmin) {
+		
+	switch ($testo) {
     		case "crea evento":
         	$ms = "certamente";
 		sendMessage($admin, $ms);
