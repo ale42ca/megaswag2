@@ -102,7 +102,7 @@ switch ($testo) {
     case "1admin":
 	$ms = "benvenuto admin";
 	sendMessage($utente, $ms);
-	inviamessaggiocanale($msgcanale);	
+		
 	comandiadmin($utente);
         break;
     case "esci":	
@@ -140,30 +140,47 @@ function sendMessage($utente, $msg){
 		file_get_contents($url);
 }
 
-  function editMessageText($chatId,$message_id,$newText)
-  {
+function editMessageText($chatId,$message_id,$newText){
     $url = $GLOBALS[completo]."/editMessageText?chat_id=$chatId&message_id=$message_id&parse_mode=HTML&text=".urlencode($newText);
     file_get_contents($url);
   }
 
 function inviamessaggiocanale($msg){
 	$utente = "@santacaterina2";
-	
-
 	$url = $GLOBALS[completo]."/sendMessage?chat_id=".$utente."&text=".urlencode($msg);
 	file_get_contents($url);
 }
 
-function inviamessaggioutente($utente, $msg){
-	
-	$url = $GLOBALS[completo]."/sendMessage?chat_id=".$utente."&text=".urlencode($msg);
-	file_get_contents($url);
-}
 function comandiadmin($utente){
 	$messaggio = "cosa vuole fare admin?";
     	$tastiera = '&reply_markup={"keyboard":[["crea evento"],["assemblea"],["manda notifica"],["esci"]]}';
 	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
 	file_get_contents($url);
+	$prendofile=file_get_contents("php://input");
+	$informazioni=json_decode($prendofile, true);
+
+	$messaggio=$informazioni['message'];
+	$testoadmin=$messaggio['text'];
+	$admin=$messaggio['chat']['id'];
+	switch ($testo) {
+    		case "crea evento":
+        	$ms = "certamente";
+		sendMessage($admin, $ms);
+		
+        	break;
+		case "assemblea":
+		$ms = "quando vuole fare l' assemblea";
+		sendMessage($admin, $ms);
+			
+		inviamessaggiocanale($msgcanale);	
+
+		break;
+
+		default:
+		$ms = "non ho capito";
+		sendMessage($utente, $ms);
+	}
+	
 	
 }
 //data
@@ -171,6 +188,21 @@ function getdataoggi($datamessaggio){
   $datazioneunix = gmdate("d.m.y", $datamessaggio);
   return $datazioneunix;
 }
+
+function prendoinfo(){
+	$web="https://api.telegram.org/bot";
+	$token="872839539:AAGgmCXaX9zdSypFKiR4BHxoVK3U-riq3ao";
+	$completo="https://api.telegram.org/bot".$token;
+	$prendofile=file_get_contents("php://input");
+	$informazioni=json_decode($prendofile, true);
+
+	$messaggio=$informazioni['message'];
+	$testo=$messaggio['text'];
+	$utente=$messaggio['chat']['id'];
+	$datazioneunix=$messaggio['date'];
+	$dataoggi = getdataoggi($datazioneunix);
+	$ultimomsg=$messaggio['message_id'];
+	
 //header("Content-Type: application/json");
 //$msg="vuoi fare altro?"; 
 //$parameters = array('chat_id' => $utente, "text" => $msg);
