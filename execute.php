@@ -48,6 +48,7 @@ elseif(!$update){
 
 $messaggio=$update['message'];
 $message_id=$update['message']['message_id'];
+
 $testo=$messaggio['text'];
 $utente=$messaggio['chat']['id'];
 $utente=$messaggio['chat']['id'];
@@ -111,7 +112,8 @@ switch ($testo) {
 	sendMessage($utente, $ms);
         sendMessage($utente, $dataoggi);
         tastieradata($utente);
-
+	
+	sendMessage($utente, $testrisp);	
 	break;
     case "1admin":
 	$ms = "benvenuto admin";
@@ -174,7 +176,13 @@ function tastieradata($utente){
 	
 	$tastiera = '&reply_markup={"keyboard":[["1"],["2"],["3"],["4"]], "force_reply":true, "selective":true}';
 	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
-	file_get_contents($url);
+	$risposta=file_get_contents($url);
+	$rispost=json_decode($risposta, true);
+	$messaggio=$rispost['message'];
+	$testrisp=$messaggio['text'];
+	return $testrisp;
+
+
 	
 }	
 function sendMessage($utente, $msg){
