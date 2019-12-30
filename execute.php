@@ -198,7 +198,7 @@ function getdataoggi($datamessaggio){
 }
 
 function deleteMessage($utente, $message_id){
-	$url = $GLOBALS[completo]."/deleteMessage?chat_id=".$utente."&$message_id=".$message_id;
+	$url = $GLOBALS[completo]."/deleteMessage?chat_id=".$utente."&$message_id=".urlencode($message_id);
 	file_get_contents($url);
 }
 //header("Content-Type: application/json");
