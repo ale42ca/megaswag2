@@ -159,7 +159,7 @@ function comandiadmin($utente,$testoadmin){
 	
 	if($testoadmin == "crea evento"){
 		$ms = "certamente";
-		sendMessage($admin, $ms);
+		sendMessage($utente, $ms);
 		exit();
 	}
 /*
