@@ -105,10 +105,9 @@ switch ($testo) {
 	inviamessaggiocanale($msgcanale);	
 	comandiadmin($utente);
         break;
-    case "esci":
-	
+    case "esci":	
 	$comandesci="/start";
-	editMessageText($utente,$ultimomsg,$comandesci);
+	sendMessage($utente, $comandesci);
    	break;	
     default:
         $ms = "non ho capito";
