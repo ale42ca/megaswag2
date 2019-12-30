@@ -92,8 +92,8 @@ switch ($testo) {
     case "1admin":
 	$ms = "benvenuto admin";
 	sendMessage($utente, $ms);
-		
-	$testoadmin=comandiadmin($utente);
+	comandiadmin($utente);
+	$testoadmin=$testo;
         break;
     case "esci":	
 	tastierastart($utente);	
@@ -104,8 +104,10 @@ switch ($testo) {
 }
 
 if($testoadmin == "crea evento"){
+		$ms = "creiamo evento";
+		sendMessage($utente, $ms);
 		$ms = "certamente";
-		sendMessage($utentea, $ms);
+		sendMessage($utente, $ms);
 		exit();
 	}
 /*
@@ -179,15 +181,8 @@ function comandiadmin($utente){
 	$messaggio = "cosa vuole fare admin?";
     	$tastiera = '&reply_markup={"keyboard":[["crea evento"],["assemblea"],["manda notifica"],["esci"]]}';
 	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
-	$updatesadmin=file_get_contents($url);
-	$updatea=json_decode($updatesadmin, true);
-	$messaggioad=$updatea['message'];
-	$testoadmin=$messaggioad['text'];
-	return $testoadmin;
+	file_get_contents($url);
 	
-/*
-
-*/	
 	
 }
 //data
