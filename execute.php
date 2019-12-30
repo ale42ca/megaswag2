@@ -56,12 +56,15 @@ $testo=$messaggio['text'];
 $utente=$messaggio['chat']['id'];
 $datazioneunix=$messaggio['date'];
 $dataoggi = getdataoggi($datazioneunix);
+
   $query = $informazioni['callback_query'];
   $queryid = $query['id'];
   $queryUserId = $query['from']['id'];
   $queryusername = $query['from']['username'];
   $querydata = $query['data'];
   $querymsgid = $query['message']['message_id'];
+
+$msgcanale="fico";
 switch ($testo) {
     case "/start":
         $ms = "ciao";
@@ -71,7 +74,8 @@ switch ($testo) {
     case "prenota":
         $ms = "prenotiamo lo studio";
 	sendMessage($utente, $ms);
-	inviamessaggio();
+	inviamessaggiocanale($msgcanale);	
+
         break;
     case "vedi prenotazioni":
         $ms = "chi ha prenotato lo studio nell' ultima settimana?";
@@ -95,7 +99,7 @@ switch ($testo) {
     case "1admin":
 	$ms = "benvenuto admin";
 	sendMessage($utente, $ms);
-	inviamessaggio();	
+	inviamessaggiocanale($msgcanale);	
 	comandiadmin($utente);
         break;		
     default:
@@ -148,10 +152,9 @@ function comandiadmin($utente){
 }
 
 
-function inviamessaggio(){
+function inviamessaggiocanale($msg){
 	$utente = "@santacaterina2";
-	$msg="nonmale";
-
+	
 
 	$url = $GLOBALS[completo]."/sendMessage?chat_id=".$utente."&text=".urlencode($msg);
 	file_get_contents($url);
