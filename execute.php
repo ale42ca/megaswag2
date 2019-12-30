@@ -175,17 +175,22 @@ function tastieradata($utente){
 	$messaggio=" funziona per favore";
 	
 	$tastiera = '&reply_markup={"keyboard":[["1"],["2"],["3"],["4"]], "force_reply":true, "selective":true}';
+	$parameters = array('chat_id' => $utente, "text" => $messaggio,"parse_mode=HTML" =>$tastiera);
+	$parameters["method"] = "sendMessage";
+	echo json_encode($parameters);
+	/*
 	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
 	$risposta=file_get_contents($url);
 	$rispost=json_decode($risposta, true);
 	$messaggio=$rispost['message'];
 	$testrisp=$messaggio['text'];
+	
 	if($testrisp == "1"){
 	   return $testrisp = "/start";
 	}elseif($testrisp == "2"){
 	   exit;
 	}
-	
+	*/
 
 
 	
