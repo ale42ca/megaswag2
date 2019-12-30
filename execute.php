@@ -147,7 +147,7 @@ function comandiadmin($utente,$testoadmin){
 	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
 	file_get_contents($url);
 		
-	if($testoadmin == "crea evento"){
+	if($testoadmin === "crea evento"){
 		$ms = "certamente";
 		sendMessage($utente, $ms);
 		exit();
