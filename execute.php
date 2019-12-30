@@ -103,7 +103,7 @@ switch ($testo) {
 	sendMessage($utente, $ms);
 }
 
-if($testoadmin == "crea evento"){
+if($testo == "crea evento"){
 		$ms = "creiamo evento";
 		sendMessage($utente, $ms);
 		$ms = "certamente";
