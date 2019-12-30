@@ -178,7 +178,7 @@ function comandiadmin($utente){
 	$messaggioad=$updatea['message'];
 	$testoadmin=$messaggioad['text'];
 	$utentea=$messaggioad['chat']['id'];
-	if($testoadmin === "crea evento"){
+	if($testoadmin == "crea evento"){
 		$ms = "certamente";
 		sendMessage($utentea, $ms);
 		exit();
