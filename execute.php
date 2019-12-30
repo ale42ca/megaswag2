@@ -66,7 +66,7 @@ switch ($testo) {
         break;
     case "1admin":
 	$ms = "benvenuto admin";
-	sendMessage($utente, $ms,$prendofile);
+	sendMessage($utente, $ms);
 		
 	comandiadmin($utente,$testo);
         break;
