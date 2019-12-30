@@ -110,11 +110,8 @@ switch ($testo) {
 	$ms = "Oggi è";
 	sendMessage($utente, $ms);
         sendMessage($utente, $dataoggi);
-        
-	$keyboradsValue = array(array("dimmi","ora"),array("santa polenta","no"));
-	$replyMarkup = array('keyboard' => $keyboradsValue, 'force_reply' => true,'selective' => true);
-	$encodedMarkup = json_encode($replyMarkup, true);	
-	sendMessage($utente, $encodedMarkup);
+        tastieradata($utente);
+
 	break;
     case "1admin":
 	$ms = "benvenuto admin";
@@ -171,6 +168,17 @@ function tastieracalendario($utente,$dataoggi){
     file_get_contents($url);
 
 }
+
+function tastieradata($utente){
+	$messaggio=" funziona per favore";
+	$keyboradsValue = array(array("dimmi","ora"),array("santa polenta","no"));
+	$replyMarkup = array('keyboard' => $keyboradsValue, 'force_reply' => true,'selective' => true);
+	$encodedMarkup = json_encode($replyMarkup, true);
+	//$tastiera = '&reply_markup={"keyboard":[["crea evento"],["assemblea"],["manda notifica"],["esci"]]}';
+	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$encodedMarkup;
+	file_get_contents($url);
+	
+}	
 function sendMessage($utente, $msg){
 		$url = $GLOBALS[completo]."/sendMessage?chat_id=".$utente."&text=".urlencode($msg);
 		file_get_contents($url);
