@@ -156,8 +156,13 @@ function comandiadmin($utente,$testoadmin){
     	$tastiera = '&reply_markup={"keyboard":[["crea evento"],["assemblea"],["manda notifica"],["esci"]]}';
 	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
 	file_get_contents($url);
-
-
+	
+	if($testoadmin == "crea evento"){
+		$ms = "certamente";
+		sendMessage($admin, $ms);
+		exit();
+	}
+/*
 	switch ($testoadmin) {
     		case "crea evento":
         	$ms = "certamente";
@@ -182,7 +187,7 @@ function comandiadmin($utente,$testoadmin){
 		tastierastart($utente);	
    		break;
 	}
-	
+*/	
 	
 }
 //data
