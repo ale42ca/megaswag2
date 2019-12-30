@@ -2,8 +2,8 @@
 $web="https://api.telegram.org/bot";
 $token="872839539:AAGgmCXaX9zdSypFKiR4BHxoVK3U-riq3ao";
 $completo="https://api.telegram.org/bot".$token;
-$prendofile=file_get_contents("php://input");
-$informazioni=json_decode($prendofile, true);
+$updates=file_get_contents("php://input");
+$update=json_decode($updates, true);
 function is_new_request($requestUpdateId)
 {
     $filename = "./last_update_id.txt";
@@ -39,17 +39,19 @@ function set_get_updates_parameters($getUpdates)
 $updates = json_decode(file_get_contents(set_get_updates_parameters("https://api.telegram.org/bot872839539:AAGgmCXaX9zdSypFKiR4BHxoVK3U-riq3ao/getUpdates?offset=100")), true);
 // Separate every update in $updates
 $isNewRequest = is_new_request($update["update_id"]); // $update["update_id"] is update_id of one of your requests; e.g. 591019242
-if ($isNewRequest === false || $isNewRequest === null)
+if ($isNewRequest === false || $isNewRequest === null){
 	exit;	
-elseif(!$informazioni){
+	}
+elseif(!$update){
   exit;
 }
-$messaggio=$informazioni['message'];
+else{
+$messaggio=$update['message'];
 $testo=$messaggio['text'];
 $utente=$messaggio['chat']['id'];
 $datazioneunix=$messaggio['date'];
 $dataoggi = getdataoggi($datazioneunix);
-  $query = $informazioni['callback_query'];
+  $query = $update['callback_query'];
   $queryid = $query['id'];
   $queryUserId = $query['from']['id'];
   $queryusername = $query['from']['username'];
@@ -142,7 +144,9 @@ function inviamessaggio(){
 	$msg="nonmale";
 	$url = $GLOBALS[completo]."/sendMessage?chat_id=".$utente."&text=".urlencode($msg);
 	file_get_contents($url);
-}	
+}
+	
+}
 //header("Content-Type: application/json");
 //$msg="vuoi fare altro?"; 
 //$parameters = array('chat_id' => $utente, "text" => $msg);
