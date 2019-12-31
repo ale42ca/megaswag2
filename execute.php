@@ -96,7 +96,7 @@ switch ($testo) {
 	sendMessage($utente, $ms);	
 	$dataprenotata="oggi";
 	//controllo conflitti
-	inviadatabase($ms);
+	//inviadatabase($ms);
 	$rispostadatabase=getdatabase();
 	sendMessage($utente,$rispostadatabase);	
 	//conferma e upload nel file	
