@@ -98,7 +98,7 @@ switch ($testo) {
 	//controllo conflitti
 	inviadatabase($ms);
 	$rispostadatabase=getdatabase();
-	sendMessage($rispostadatabase);	
+	sendMessage($utente,$rispostadatabase);	
 	//conferma e upload nel file	
 	$ms = "Perfetto! ora invio una notifica nel gruppo";
 	sendMessage($utente, $ms);
