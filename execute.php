@@ -62,8 +62,24 @@ $nomeutente=$messaggio['chat']['first_name'];
   $querydata = $query['data'];
   $querymsgid = $query['message']['message_id'];
 
-
-
+function getdatabase(){
+$file= "file1.txt";
+$line= "non ha funzionato"; 	
+if (file_exists($file)) {
+	$f = fopen($file, 'r');
+	$line = fgets($f);
+	fclose($f);
+}
+ return $line;
+}
+function inviadatabase($ms){
+$file= "file1.txt";	
+if (file_exists($file)) {
+	$fp = fopen('file1.txt', "w+");   
+	fputs($fp, $ms);
+	fclose($fp);
+}
+}
 switch ($testo) {
     case "/start":
 	$ms = "Ciao sono Beecky assistente virtuale di radio frequenza libera. Cosa posso fare per te?";
@@ -80,9 +96,9 @@ switch ($testo) {
 	sendMessage($utente, $ms);	
 	$dataprenotata="oggi";
 	//controllo conflitti
-	inviadatabase($utente, $ms);
+	inviadatabase($ms);
 	$rispostadatabase=getdatabase();
-	sendMessage($utente, $rispostadatabase);	
+	sendMessage($rispostadatabase);	
 	//conferma e upload nel file	
 	$ms = "Perfetto! ora invio una notifica nel gruppo";
 	sendMessage($utente, $ms);
