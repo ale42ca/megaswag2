@@ -74,19 +74,21 @@ switch ($testo) {
         $ms = "prenotiamo lo studio";
 	sendMessage($utente, $ms);
 	$ms = "Mi serve che tu mi dica quando vuoi prenotarlo";
-	
 	sendMessage($utente, $ms);
 	//prenotazione();
 	$ms = "per che ora?";
 	sendMessage($utente, $ms);	
 	$dataprenotata="oggi";
 	//controllo conflitti
-		
+	inviadatabase($utente, $ms);
+	$rispostadatabase=getdatabase();
+	sendMessage($utente, $rispostadatabase);	
 	//conferma e upload nel file	
 	$ms = "Perfetto! ora invio una notifica nel gruppo";
 	sendMessage($utente, $ms);
 	$msgcanale= "lo studio è stato prenotato ".$dataprenotata." da ".$nomeutente;	
-	inviamessaggiocanale($msgcanale);		
+	inviamessaggiocanale($msgcanale);
+		
         break;
 		
     	case "vedi prenotazioni":
