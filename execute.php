@@ -1,4 +1,7 @@
 <?php
+
+include "accesso.php";
+
 $web="https://api.telegram.org/bot";
 $token="872839539:AAGgmCXaX9zdSypFKiR4BHxoVK3U-riq3ao";
 $completo="https://api.telegram.org/bot".$token;
