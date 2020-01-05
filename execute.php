@@ -62,7 +62,7 @@ if (!$result) {
   
 }
 }	
-
+/*
 function getlastprenotationdate(){
 }
 
@@ -71,3 +71,4 @@ function setevent(){
 
 function allarm(){
 }
+*/
