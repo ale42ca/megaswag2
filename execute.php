@@ -48,12 +48,11 @@ function getdataoggi($datamessaggio){
   return $datazioneunix;
 }
 
-$db =pg_connect("host= ec2-54-247-96-169.eu-west-1.compute.amazonaws.com port=5432 dbname=d2hsht934ovhs9 user=maghsyclqxkpyw password=50ac10525450c60de9157e57e0ab6432f320f5ef3d8ee1650818e491644f51bc");
 
 function inseriscidatabase($nomeutente,$dataoggi){
 	$ora= "10:21";
 	$quack="santa paperella";
-	//$query = "INSERT INTO prenotazionistudi(data, username, ora)  VALUES (':$quack',':$quack',':$quack')";
+
 	$query = "INSERT INTO prenotazioni (nome, quando, ora) VALUES ('$nomeutente', '08','$dataoggi')";
 	$result = pg_query($query);
 	
