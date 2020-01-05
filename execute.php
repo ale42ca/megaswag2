@@ -210,9 +210,9 @@ function databasez($nomeutente,$dataoggi){
 	$result = pg_query($query);
 
 if (!$result) {
-  $msg = "An error occurred.\n";			
+  $msg = "An error occurred";			
   sendMessage($utente, $msg); 
-  exit;
+  
 }
 	
 }
