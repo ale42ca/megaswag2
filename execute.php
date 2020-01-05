@@ -211,7 +211,7 @@ function databasez($nomeutente,$dataoggi){
 
 if (!$result) {
   $msg = "An error occurred.\n";			
-  sendMessage($utente, $msg) 
+  sendMessage($utente, $msg); 
   exit;
 }
 	
