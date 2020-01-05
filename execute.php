@@ -32,7 +32,7 @@ if($testo == "/start"){
 		databasez($nomeutente,$dataoggi);
 		exit();
 
-
+}
 
 function sendMessage($utente, $msg){
 		$url = $GLOBALS[completo]."/sendMessage?chat_id=".$utente."&text=".urlencode($msg);
