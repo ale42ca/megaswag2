@@ -63,7 +63,7 @@ $nomeutente=$messaggio['chat']['first_name'];
 
 
 
-if($testo == "/start"){
+if($testo == "a"){
 		$ms = "creiamo evento";
 		sendMessage($utente, $ms);
 		$ms = "certamente";
