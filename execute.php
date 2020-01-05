@@ -193,7 +193,7 @@ function comandiadmin($utente){
 }
 //data
 $db = pg_connect("host= ec2-54-247-96-169.eu-west-1.compute.amazonaws.com port=5432 dbname=d2hsht934ovhs9 user=maghsyclqxkpyw password=50ac10525450c60de9157e57e0ab6432f320f5ef3d8ee1650818e491644f51bc");
-$query = "INSERT INTO prenotazionistudio VALUES ('$_POST[username]','$_POST[data]',
+$query = "INSERT INTO prenotazionistudi VALUES ('$_POST[username]','$_POST[data]',
 '$_POST[ora]','$_POST[created_on]')";
 $result = pg_query($query); 
 function getdataoggi($datamessaggio){
