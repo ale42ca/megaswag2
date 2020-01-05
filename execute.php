@@ -1,6 +1,6 @@
 <?php
 
-include "accesso.php";
+//include "accesso.php";
 
 $web="https://api.telegram.org/bot";
 $token="872839539:AAGgmCXaX9zdSypFKiR4BHxoVK3U-riq3ao";
@@ -58,6 +58,7 @@ switch ($testo) {
 	sendMessage($utente, $ms);
 	$ms = "Mi serve che tu mi dica quando vuoi prenotarlo";
 	sendMessage($utente, $ms);
+	database($nomeutente,$dataoggi);	
 	//prenotazione();
 	$ms = "per che ora?";
 	sendMessage($utente, $ms);	
@@ -110,6 +111,16 @@ switch ($testo) {
 	tastierastart($utente);	
    	break;	
 
+}
+
+function database($nomeutente,$dataoggi){
+	$ora= "10:20";
+	
+	$db =pg_connect("host= ec2-54-247-96-169.eu-west-1.compute.amazonaws.com port=5432 dbname=d2hsht934ovhs9 user=maghsyclqxkpyw password=50ac10525450c60de9157e57e0ab6432f320f5ef3d8ee1650818e491644f51bc");
+	$query = "INSERT INTO  VALUES ('$nomeutente','$dataoggi',
+	'$ora','$dataoggi')";
+	$result = pg_query($query); 
+	
 }
 
 if($testo == "crea evento"){
