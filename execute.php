@@ -4,7 +4,7 @@ $token="872839539:AAGgmCXaX9zdSypFKiR4BHxoVK3U-riq3ao";
 $completo="https://api.telegram.org/bot".$token;
 $updates=file_get_contents("php://input");
 $update=json_decode($updates, true);
-function is_new_request($requestUpdateId)
+
 
 $messaggio=$update['message'];
 $message_id=$update['message']['message_id'];
