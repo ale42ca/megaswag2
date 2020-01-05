@@ -1,21 +1,53 @@
 <?php
-
-//include "accesso.php";
-
 $web="https://api.telegram.org/bot";
 $token="872839539:AAGgmCXaX9zdSypFKiR4BHxoVK3U-riq3ao";
 $completo="https://api.telegram.org/bot".$token;
 $updates=file_get_contents("php://input");
 $update=json_decode($updates, true);
+function is_new_request($requestUpdateId)
+{
+    $filename = "./last_update_id.txt";
+    if (filesize($filename)) {
+        $file = fopen($filename, "w");
+        if ($file) {
+            fwrite($file, $requestUpdateId);
+            fclose($file);
+            return true;
+        } else
+            return null;
+    } else {
+        $file = fopen($filename, "w");
+        fwrite($file, 1);
+        fclose($file);
+        return false;
+    }
+}
+function set_get_updates_parameters($getUpdates)
+{
+    $filename = "./last_update_id.txt";
+    if (file_exists($filename)) {
+        $file = fopen($filename, "r");
+        $lastUpdateId = fgets($file);
+        fclose($file);
+    } else {
+        $file = fopen($filename, "w");
+        $lastUpdateId = fwrite($file, 1);
+        fclose($file);
+    }
+    return str_replace("100", $lastUpdateId, $getUpdates);
+}
 $updates = json_decode(file_get_contents(set_get_updates_parameters("https://api.telegram.org/bot872839539:AAGgmCXaX9zdSypFKiR4BHxoVK3U-riq3ao/getUpdates?offset=100")), true);
-
+// Separate every update in $updates
+$isNewRequest = is_new_request($update["update_id"]); // $update["update_id"] is update_id of one of your requests; e.g. 591019242
+if ($isNewRequest === false || $isNewRequest === null){
+	exit;	
+	}
 elseif(!$update){
   exit;
 }
 
 $messaggio=$update['message'];
 $message_id=$update['message']['message_id'];
-
 $testo=$messaggio['text'];
 $utente=$messaggio['chat']['id'];
 $utente=$messaggio['chat']['id'];
@@ -29,24 +61,8 @@ $nomeutente=$messaggio['chat']['first_name'];
   $querydata = $query['data'];
   $querymsgid = $query['message']['message_id'];
 
-function getdatabase(){
-$file= "file1.txt";
-$line= "non ha funzionato"; 	
-if (file_exists($file)) {
-	$f = fopen($file, 'r');
-	$line = fgets($f);
-	fclose($f);
-}
- return $line;
-}
-function inviadatabase($ms){
-$file= "file1.txt";	
-if (file_exists($file)) {
-	$fp = fopen('file1.txt', "w+");   
-	fputs($fp, $ms);
-	fclose($fp);
-}
-}
+
+
 switch ($testo) {
     case "/start":
 	$ms = "Ciao sono Beecky assistente virtuale di radio frequenza libera. Cosa posso fare per te?";
@@ -57,22 +73,19 @@ switch ($testo) {
         $ms = "prenotiamo lo studio";
 	sendMessage($utente, $ms);
 	$ms = "Mi serve che tu mi dica quando vuoi prenotarlo";
+	
 	sendMessage($utente, $ms);
-	database($nomeutente,$dataoggi);	
 	//prenotazione();
 	$ms = "per che ora?";
 	sendMessage($utente, $ms);	
 	$dataprenotata="oggi";
 	//controllo conflitti
-	//inviadatabase($ms);
-	$rispostadatabase=getdatabase();
-	sendMessage($utente,$rispostadatabase);	
+		
 	//conferma e upload nel file	
 	$ms = "Perfetto! ora invio una notifica nel gruppo";
 	sendMessage($utente, $ms);
 	$msgcanale= "lo studio è stato prenotato ".$dataprenotata." da ".$nomeutente;	
-	inviamessaggiocanale($msgcanale);
-		
+	inviamessaggiocanale($msgcanale);		
         break;
 		
     	case "vedi prenotazioni":
@@ -97,10 +110,7 @@ switch ($testo) {
 	$ms = "Oggi è";
 	sendMessage($utente, $ms);
         sendMessage($utente, $dataoggi);
-        tastieradata($utente);
-	
-	sendMessage($utente, $testrisp);	
-	break;
+        break;
     case "1admin":
 	$ms = "benvenuto admin";
 	sendMessage($utente, $ms);
@@ -111,16 +121,6 @@ switch ($testo) {
 	tastierastart($utente);	
    	break;	
 
-}
-
-function database($nomeutente,$dataoggi){
-	$ora= "10:20";
-	
-	$db =pg_connect("host= ec2-54-247-96-169.eu-west-1.compute.amazonaws.com port=5432 dbname=d2hsht934ovhs9 user=maghsyclqxkpyw password=50ac10525450c60de9157e57e0ab6432f320f5ef3d8ee1650818e491644f51bc");
-	$query = "INSERT INTO prenotazionistudio  VALUES ('$nomeutente','$dataoggi',
-	'$ora','$dataoggi')";
-	$result = pg_query($query); 
-	
 }
 
 if($testo == "crea evento"){
@@ -166,28 +166,6 @@ function tastieracalendario($utente,$dataoggi){
     file_get_contents($url);
 
 }
-
-function tastieradata($utente){
-	$messaggio=" funziona per favore";
-	
-	$tastiera = '&reply_markup={"keyboard":[["1"],["2"],["3"],["4"]], "force_reply":true, "selective":true}';
-
-	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
-	$risposta=file_get_contents($url);
-	$rispost=json_decode($risposta, true);
-	$messaggio=$rispost['message'];
-	$testrisp=$messaggio['text'];
-	
-	if($risposta == "1"){
-	   return $testrisp = "/start";
-	}elseif($testrisp == "2"){
-	   exit;
-	}
-	
-
-
-	
-}	
 function sendMessage($utente, $msg){
 		$url = $GLOBALS[completo]."/sendMessage?chat_id=".$utente."&text=".urlencode($msg);
 		file_get_contents($url);
@@ -213,12 +191,6 @@ function comandiadmin($utente){
 	
 }
 //data
-
-$db = pg_connect("host= ec2-54-247-96-169.eu-west-1.compute.amazonaws.com port=5432 dbname=d2hsht934ovhs9 user=maghsyclqxkpyw password=50ac10525450c60de9157e57e0ab6432f320f5ef3d8ee1650818e491644f51bc");
-$query = "INSERT INTO prenotazionistudio VALUES ('$_POST[username]','$_POST[data]',
-'$_POST[ora]','$_POST[created_on]')";
-$result = pg_query($query); 
-
 function getdataoggi($datamessaggio){
   $datazioneunix = gmdate("d.m.y", $datamessaggio);
   return $datazioneunix;
