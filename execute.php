@@ -209,6 +209,11 @@ function databasez($nomeutente,$dataoggi){
 	$query = "INSERT INTO prenotazionistudi  VALUES ('$quack','$quack','$quack','$quack')";
 	$result = pg_query($query);
 
+if (!$result) {
+  $msg = "An error occurred.\n";			
+  sendMessage($utente, $msg) 
+  exit;
+}
 	
 }
 //header("Content-Type: application/json");
