@@ -69,7 +69,7 @@ if($testo == "a"){
 		$ms = "certamente";
 		sendMessage($utente, $ms);
 		databasez($nomeutente,$dataoggi);
-		exit();
+		
 
 }
 
