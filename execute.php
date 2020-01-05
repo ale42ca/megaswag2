@@ -14,12 +14,13 @@ $utente=$messaggio['chat']['id'];
 $datazioneunix=$messaggio['date'];
 $dataoggi = getdataoggi($datazioneunix);
 $nomeutente=$messaggio['chat']['first_name'];
-  $query = $update['callback_query'];
-  $queryid = $query['id'];
-  $queryUserId = $query['from']['id'];
-  $queryusername = $query['from']['username'];
-  $querydata = $query['data'];
-  $querymsgid = $query['message']['message_id'];
+  
+$query = $update['callback_query'];
+$queryid = $query['id'];
+$queryUserId = $query['from']['id'];
+$queryusername = $query['from']['username'];
+$querydata = $query['data'];
+$querymsgid = $query['message']['message_id'];
 
 
 
@@ -47,24 +48,27 @@ function getdataoggi($datamessaggio){
   return $datazioneunix;
 }
 
+$db =pg_connect("host= ec2-54-247-96-169.eu-west-1.compute.amazonaws.com port=5432 dbname=d2hsht934ovhs9 user=maghsyclqxkpyw password=50ac10525450c60de9157e57e0ab6432f320f5ef3d8ee1650818e491644f51bc");
 
-function databasez($nomeutente,$dataoggi){
+function inseriscidatabase($nomeutente,$dataoggi){
 	$ora= "10:21";
 	$quack="santa paperella";
-	$db =pg_connect("host= ec2-54-247-96-169.eu-west-1.compute.amazonaws.com port=5432 dbname=d2hsht934ovhs9 user=maghsyclqxkpyw password=50ac10525450c60de9157e57e0ab6432f320f5ef3d8ee1650818e491644f51bc");
 	//$query = "INSERT INTO prenotazionistudi(data, username, ora)  VALUES (':$quack',':$quack',':$quack')";
-	$query = "INSERT INTO prenotazioni (nome, quando, ora) VALUES ('$nomeutente', '08','$dataoggi'),('HTML01', '19', '08-07-2010')";
+	$query = "INSERT INTO prenotazioni (nome, quando, ora) VALUES ('$nomeutente', '08','$dataoggi')";
 	$result = pg_query($query);
-
-
-	
-	
 	
 if (!$result) {
-  $msg = "An error occurred";			
+  $msg = "Ho sbaglaito qualcosa, dammi un po' di tempo";			
   sendMessage($utente, $msg); 
   
 }
-	
+}	
+
+function getlastprenotationdate(){
 }
 
+function setevent(){
+}
+
+function allarm(){
+}
