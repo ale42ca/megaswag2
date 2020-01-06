@@ -151,9 +151,9 @@ if($querydata == "Prenota"){
 	$noice=tastieracalendario($utente,$dataoggi,$mesecalendario);
 	editMessageText($queryUserId,$querymsgid,$noice);
 	//}	
-}else{
+//}else{
 	editMessageText($queryUserId,$querymsgid,"pensiamo a quest'anno ahhaah");	
-	}	
+//	}	
     exit();
 }elseif($querydata == "prima"){
         
