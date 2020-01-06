@@ -80,7 +80,7 @@ switch ($testo) {
 	sendMessage($utente, $ms);	
 	$dataprenotata="oggi";
 	//controllo conflitti
-	inserireneldatabase();	
+	inserireneldatabase($utente,$dataoggi);	
 	//conferma e upload nel file	
 	$ms = "Perfetto! ora invio una notifica nel gruppo";
 	sendMessage($utente, $ms);
@@ -92,7 +92,7 @@ switch ($testo) {
         $ms = "chi ha prenotato lo studio in questa  settimana?";
 	sendMessage($utente, $ms);
 	//vediprenotazioni();	
-	
+	prendidaldatabase($utente);
         break;
     case "calendario":
         $ms = "vediamoun po'.... se non ricordo male oggi è";
@@ -201,13 +201,27 @@ function deleteMessage($utente, $message_id){
 	file_get_contents($url);
 }
 
-function inserireneldatabase(){
+function inserireneldatabase($utente,$dataoggi){
 	$db =pg_connect("host= ec2-54-247-96-169.eu-west-1.compute.amazonaws.com port=5432 dbname=d2hsht934ovhs9 user=maghsyclqxkpyw password=50ac10525450c60de9157e57e0ab6432f320f5ef3d8ee1650818e491644f51bc");
-	$query = "INSERT INTO prenotazioni (nome, quando, ora) VALUES ('$nomeutente', '08','$dataoggi')";
+	$query = "INSERT INTO prenotazioni (nome, quando, ora) VALUES ('$utente', '08','$dataoggi')";
 	$result = pg_query($query);
 
 }
+function prendidaldatabase($utente){
+	$db =pg_connect("host= ec2-54-247-96-169.eu-west-1.compute.amazonaws.com port=5432 dbname=d2hsht934ovhs9 user=maghsyclqxkpyw password=50ac10525450c60de9157e57e0ab6432f320f5ef3d8ee1650818e491644f51bc");
+	$result = pg_query($db,"SELECT nome, quando, ora FROM prenotazioni");
 
+	
+	while($row=pg_fetch_assoc($result)){
+		$msg=$row['nome'].$row['quando'].$row['ora'] ;
+		$url = $GLOBALS[completo]."/sendMessage?chat_id=".$utente."&text=".urlencode($msg);
+		file_get_contents($url);	
+	
+
+	}
+
+
+}		
 //header("Content-Type: application/json");
 //$msg="vuoi fare altro?"; 
 //$parameters = array('chat_id' => $utente, "text" => $msg);
