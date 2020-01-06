@@ -146,8 +146,8 @@ if($querydata == "Prenota"){
     exit();
 }elseif($querydata == "dopo"){
 $mesecalendario= $GLOBALS[mese];
-        /*if($mesecalendario < "12"){
-		$mesecalendario= ++$mesecalendario;*/
+        //if($mesecalendario < "12"){
+		$mesecalendario= ++$mesecalendario;
 		$noice=tastieracalendario($utente,$dataoggi,$mesecalendario);
 		editMessageText($queryUserId,$querymsgid,$noice);
 	//}else{
