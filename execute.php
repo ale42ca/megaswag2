@@ -148,8 +148,8 @@ if($querydata == "Prenota"){
 $mesecalendario= $GLOBALS[mese];
         //if($mesecalendario < "12"){
 		$mesecalendario= ++$mesecalendario;
-		$noice=tastieracalendario($utente,$dataoggi,$mesecalendario);
-		editMessageText($queryUserId,$querymsgid,$noice);
+		tastieracalendario($utente,$dataoggi,$mesecalendario);
+		//editMessageText($queryUserId,$querymsgid,$noice);
 	//}else{
 	//	editMessageText($queryUserId,$querymsgid,"pensiamo a quest'anno ahhaah");	
 	//}	
