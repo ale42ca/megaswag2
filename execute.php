@@ -187,7 +187,7 @@ function deleteMessage($utente, $message_id){
 }
 function inserireneldatabase($utente,$dataoggi){
 	$db =pg_connect("host= ec2-54-247-96-169.eu-west-1.compute.amazonaws.com port=5432 dbname=d2hsht934ovhs9 user=maghsyclqxkpyw password=50ac10525450c60de9157e57e0ab6432f320f5ef3d8ee1650818e491644f51bc");
-	$query = "INSERT INTO prenotazioni (nome, quando, ora) VALUES ($utente, '099',$dataoggi)";
+	$query = "INSERT INTO prenotazioni (nome, quando, ora) VALUES ("$utente", '099',"$dataoggi")";
 	$result = pg_query($query);
 }
 function prendidaldatabase($utente){
