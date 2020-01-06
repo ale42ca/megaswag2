@@ -145,8 +145,8 @@ if($querydata == "Prenota"){
     editMessageText($queryUserId,$querymsgid,"HEYLA!");
     exit();
 }elseif($querydata == "dopo"){
-	$mesecalendario= date("m");
-	$mesecalendario= ++$mesecalendario;
+	;
+	$mesecalendario= "2";
 	//editMessageText($queryUserId,$querymsgid,"mese successivo");
    
 		
