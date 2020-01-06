@@ -88,7 +88,7 @@ switch ($testo) {
         $ms = "chi ha prenotato lo studio in questa  settimana?";
 	sendMessage($utente, $ms);
 	//vediprenotazioni();	
-	prendidaldatabase($nomeutente);
+	prendidaldatabase($utente);
         break;
     case "calendario":
         $ms = "vediamoun po'.... se non ricordo male oggi è";
