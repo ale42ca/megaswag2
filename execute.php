@@ -94,7 +94,8 @@ switch ($testo) {
     case "calendario":
         $ms = "vediamoun po'.... se non ricordo male oggi è";
 	sendMessage($utente, $ms);
-	tastieracalendario($utente,$dataoggi);
+	$mesecalendario=date("m"); 	
+	tastieracalendario($utente,$dataoggi,$mesecalendario);
         break;
 		
     case "ciao":
@@ -143,8 +144,23 @@ if($querydata == "Prenota"){
 }elseif($querydata == "Si"){
     editMessageText($queryUserId,$querymsgid,"HEYLA!");
     exit();
-}elseif($querydata == "No"){
+}elseif($querydata == "dopo"){
+        if($mesecalendario < 12){
+	$mesecalendario= ++ $mesecalendario;
+	$noice=tastieracalendario($utente,$dataoggi,$mesecalendario);
+	editMessageText($queryUserId,$querymsgid,$noice);
+		
+}else{
+	editMessageText($queryUserId,$querymsgid,"pensiamo a quest'anno ahhaah");	
+	}	
+    exit();
+}elseif($querydata == "prima"){
+        
+	$noice=tastieracalendario($utente,$dataoggi,$mesecalendario);	
     editMessageText($queryUserId,$querymsgid,"HEYLA!");
+    exit();
+}elseif($querydata == "esci"){
+    editMessageText($queryUserId,$querymsgid,"esci");
     exit();
 }
 	
@@ -154,9 +170,9 @@ function tastierastart($utente){
     	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     	file_get_contents($url);
 }
-function tastieracalendario($utente,$dataoggi){
+function tastieracalendario($utente,$dataoggi,$mesecalendario){
     $message = $dataoggi;
-    $mesecalendario=date("m"); 
+    
 
     if($mesecalendario == "11" or $mesecalendario == "9" or	$mesecalendario == "4" or $mesecalendario == "6"){
     $tastiera = '&reply_markup={"inline_keyboard":[[{"text":"1","callback_data":"Prenota"},{"text":"2","callback_data":"Prenota"},{"text":"3","callback_data":"Prenota"},{"text":"4","callback_data":"Prenota"},{"text":"5","callback_data":"Prenota"},{"text":"6","callback_data":"Prenota"},{"text":"7","callback_data":"Prenota"}],[{"text":"8","callback_data":"Prenota"},{"text":"9","callback_data":"Prenota"},{"text":"10","callback_data":"Prenota"},{"text":"11","callback_data":"Prenota"},{"text":"12","callback_data":"Prenota"},{"text":"13","callback_data":"Prenota"},{"text":"14","callback_data":"Prenota"}],[{"text":"15","callback_data":"Prenota"},{"text":"16","callback_data":"Prenota"},{"text":"17","callback_data":"Prenota"},{"text":"18","callback_data":"Prenota"},{"text":"19","callback_data":"Prenota"},{"text":"20","callback_data":"Prenota"},{"text":"21","callback_data":"Prenota"}],[{"text":"22","callback_data":"Prenota"},{"text":"23","callback_data":"Prenota"},{"text":"24","callback_data":"Prenota"},{"text":"25","callback_data":"Prenota"},{"text":"26","callback_data":"Prenota"},{"text":"27","callback_data":"Prenota"},{"text":"28","callback_data":"Prenota"}],[{"text":"29","callback_data":"Prenota"},{"text":"30","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"}],[{"text":"<<","callback_data":"prima"},{"text":"esci","callback_data":"esci"},{"text":">>","callback_data":"dopo"}]]}';    $url = $GLOBALS[completo].'/sendMessage?chat_id='.$utente.'&parse_mod=HTML&text='.$message.$tastiera;
