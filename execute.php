@@ -145,21 +145,20 @@ if($querydata == "Prenota"){
     editMessageText($queryUserId,$querymsgid,"HEYLA!");
     exit();
 }elseif($querydata == "dopo"){
-	$mesecalendario= $GLOBALS[mesecalendario];
-       // if($mesecalendario < "12"){
-	$mesecalendario= ++$mesecalendario;
-	$noice=tastieracalendario($utente,$dataoggi,$mesecalendario);
-	editMessageText($queryUserId,$querymsgid,$noice);
-	//}	
-//}else{
-	editMessageText($queryUserId,$querymsgid,"pensiamo a quest'anno ahhaah");	
-//	}	
-    exit();
+$mesecalendario= $GLOBALS[mesecalendario];
+        if($mesecalendario < "12"){
+		$mesecalendario= ++$mesecalendario;
+		$noice=tastieracalendario($utente,$dataoggi,$mesecalendario);
+		editMessageText($queryUserId,$querymsgid,$noice);
+	}else{
+		editMessageText($queryUserId,$querymsgid,"pensiamo a quest'anno ahhaah");	
+	}	
+
 }elseif($querydata == "prima"){
         
 	$noice=tastieracalendario($utente,$dataoggi,$mesecalendario);	
     	editMessageText($queryUserId,$querymsgid,"HEYLA!");
-    exit();
+
 }elseif($querydata == "esci"){
     editMessageText($queryUserId,$querymsgid,"esci");
     exit();
