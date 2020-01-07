@@ -155,8 +155,9 @@ if($querydata == "Prenota"){
     editMessageText($queryUserId,$querymsgid,"HEYLA!");
     exit();
 }elseif($querydata == "dopo"){
-	$noice=tastieracalendario($utente,$dataoggi,$mesecalendario);	
-    	editMessageText($queryUserId,$querymsgid,"HEYLA!");
+	$mesecalendario="2";
+	tastieracalendario($utente,$dataoggi,$mesecalendario);	
+  
     	//$tastiera = '&reply_markup={"keyboard":[["prenota"],["calendario"],["vedi prenotazioni"],["data"]]}';
 /*
 	$url = $GLOBALS[completo]."/editMessageText?chat_id=$utente&message_id=$message_id&parse_mode=HTML&text=".$tastiera;
