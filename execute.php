@@ -180,8 +180,9 @@ function tastieracalendario($utente,$dataoggi,$mesecalendario){
     		   
     }
     	$url = $GLOBALS[completo].'/sendMessage?chat_id='.$utente.'&parse_mod=HTML&text='.$message.$tastiera;
-	file_get_contents($url);
 	return $tastiera;
+	file_get_contents($url);
+	
 
 }
 function sendMessage($utente, $msg){
