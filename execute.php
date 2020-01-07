@@ -155,12 +155,13 @@ if($querydata == "Prenota"){
     editMessageText($queryUserId,$querymsgid,"HEYLA!");
     exit();
 }elseif($querydata == "dopo"){
-	
-    	$tastiera = '&reply_markup={"keyboard":[["prenota"],["calendario"],["vedi prenotazioni"],["data"]]}';
-
+	$noice=tastieracalendario($utente,$dataoggi,$mesecalendario);	
+    	editMessageText($queryUserId,$querymsgid,"HEYLA!");
+    	//$tastiera = '&reply_markup={"keyboard":[["prenota"],["calendario"],["vedi prenotazioni"],["data"]]}';
+/*
 	$url = $GLOBALS[completo]."/editMessageText?chat_id=$utente&message_id=$message_id&parse_mode=HTML&text=".$tastiera;
     	file_get_contents($url);
-	
+	*/
 	/*}else{
 		editMessageText($queryUserId,$querymsgid,"pensiamo a quest'anno ahhaah");	
 	}	*/
