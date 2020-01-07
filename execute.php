@@ -177,20 +177,11 @@ function tastieracalendario($utente,$dataoggi,$mesecalendario){
     			}
 
 			if($querydata == "dopo"){
-				$utente=$GLOBALS[utente];
-				$dataoggi=$GLOBALS[dataoggi];
-				$mesecalendario=--$mesecalendario;	
-				tastieracalendario($utente,$dataoggi,$mesecalendario);
+				$mesecalendario=++$mesecalendario;	
 				exit();	
 			}elseif($querydata == "prima"){
-				$utente=$GLOBALS[utente];
-				$dataoggi=$GLOBALS[dataoggi];
 				$mesecalendario=--$mesecalendario;	
-				tastieracalendario($utente,$dataoggi,$mesecalendario);
 				exit();	
-			}elseif($querydata == "esci"){
-			    editMessageText($queryUserId,$querymsgid,"esci");
-			    exit();
 			}		
 	}
 	    	$url = $GLOBALS[completo].'/sendMessage?chat_id='.$utente.'&parse_mod=HTML&text='.$message.$tastiera;
