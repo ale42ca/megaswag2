@@ -145,11 +145,11 @@ if($querydata == "Prenota"){
     editMessageText($queryUserId,$querymsgid,"HEYLA!");
     exit();
 }elseif($querydata == "dopo"){
+	$mesecalendario="2";
+	$tastiera = tastieracalendario($utente,$dataoggi,$mesecalendario);
 	
 	
-	$noice=tastieracalendario($utente,$dataoggi,"2");	
-	
-	editMessageText($queryUserId,$querymsgid,$noice);
+	editMessageText($queryUserId,$querymsgid,$tastiera);
 	/*}else{
 		editMessageText($queryUserId,$querymsgid,"pensiamo a quest'anno ahhaah");	
 	}	*/
@@ -180,8 +180,8 @@ function tastieracalendario($utente,$dataoggi,$mesecalendario){
     		   
     }
     	$url = $GLOBALS[completo].'/sendMessage?chat_id='.$utente.'&parse_mod=HTML&text='.$message.$tastiera;
-	$nice = file_get_contents($url);
-	return $nice;
+	file_get_contents($url);
+	return $tastiera;
 
 }
 function sendMessage($utente, $msg){
