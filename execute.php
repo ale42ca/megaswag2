@@ -149,7 +149,7 @@ if($querydata == "Prenota"){
 	$mesecalendario = "2";
 		
 	$nice = tastieracalendario($utente,$dataoggi,$mesecalendario);
-	editMessageText($queryUserId,$querymsgid,$nice);
+	editMessageText($queryUserId,$querymsgid,"HEYLA!");
 	/*}else{
 		editMessageText($queryUserId,$querymsgid,"pensiamo a quest'anno ahhaah");	
 	}	*/
