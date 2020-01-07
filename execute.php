@@ -147,9 +147,9 @@ if($querydata == "Prenota"){
 }elseif($querydata == "dopo"){
 	
 	$mesecalendario = "2";
-		
+	$noice=tastieracalendario($utente,$dataoggi,$mesecalendario);	
 	
-	editMessageText($queryUserId,$querymsgid,$nice);
+	editMessageText($queryUserId,$querymsgid,$noice);
 	/*}else{
 		editMessageText($queryUserId,$querymsgid,"pensiamo a quest'anno ahhaah");	
 	}	*/
