@@ -162,7 +162,8 @@ function tastierastart($utente){
     	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     	file_get_contents($url);
 }
-// tastiera calendario
+// tastiera calendario 
+/*
 function tastieracalendario($utente,$dataoggi,$mesecalendario){
     	$message = $dataoggi;
 	$querydata="0";	
@@ -194,7 +195,7 @@ function tastieracalendario($utente,$dataoggi,$mesecalendario){
 			}		
 	}
 
-}
+}*/
 //manda messaggio
 function sendMessage($utente, $msg){
 		$url = $GLOBALS[completo]."/sendMessage?chat_id=".$utente."&text=".urlencode($msg);
