@@ -39,6 +39,10 @@ $mese=date("m");
 if($testo == "bene"){
 	$messagio='&reply_markup={"keyboard":[["crea evento"],["assemblea"],["manda notifica"],["esci"]]}';
 	inviamessaggio($utente,$messaggio);
+}elseif($testo == "bene"){
+	
+	$messagio= "boi";
+	inviamessaggio($utente,$messaggio);
 }
 function inviamessaggio($utente,$messaggio){
 	 
