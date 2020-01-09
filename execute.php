@@ -7,15 +7,7 @@ $updates=file_get_contents("php://input");
 $update=json_decode($updates, true);
 
 
-$updates = json_decode(file_get_contents(set_get_updates_parameters("https://api.telegram.org/bot872839539:AAGgmCXaX9zdSypFKiR4BHxoVK3U-riq3ao/getUpdates?offset=100")), true);
-// Separate every update in $updates
-$isNewRequest = is_new_request($update["update_id"]); 
-if ($isNewRequest === false || $isNewRequest === null){
-	exit;	
-}
-elseif(!$update){
-  exit;
-}
+
 //messaggio
 $messaggio=$update['message'];
 $message_id=$update['message']['message_id'];
@@ -32,7 +24,7 @@ $querydata = $query['data'];
 $querymsgid = $query['message']['message_id'];
 //datazione
 $datazioneunix=$messaggio['date'];
-$dataoggi = getdataoggi($datazioneunix);
+//$dataoggi = getdataoggi($datazioneunix);
 $mese=date("m");
 //switch
 //programma invia i messaggi
@@ -55,4 +47,4 @@ function inviamessaggio($utente,$messaggio){
 
 
 
-?>
+
