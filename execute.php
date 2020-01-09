@@ -35,11 +35,13 @@ if($testo == "bene"){
 	
 	$messagio= "boi";
 	inviamessaggio($utente,$messaggio);
+	inviamessaggio($utente,$messaggio);
 }
 function inviamessaggio($utente,$messaggio){
 	header("Content-Type: application/json");
-	$parameters = array('chat_id' => $utente, "text" => $messaggio);
+	$parameters = array('chat_id' => $utente, "text" => $testo);
 	$parameters["method"] = "sendMessage";
+	$parameters["reply_markup"] = '{ "keyboard": [["uno"], ["due"], ["tre"], ["quattro"]], "one_time_keyboard": false}';
 	echo json_encode($parameters);
 }
 	
