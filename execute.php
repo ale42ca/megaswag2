@@ -29,7 +29,7 @@ $mese=date("m");
 //switch
 //programma invia i messaggi
 if($testo == "bene"){
-	$messagio['chat_id' => '$utente' , "text" = '$testo',  "reply_markup" = '{ "keyboard": [["89"], ["0"], ["77"], ["quattro"]], "one_time_keyboard": false}'];
+	$messagio['chat_id' = '$utente' , "text" = '$testo',  "reply_markup" = '{ "keyboard": [["89"], ["0"], ["77"], ["quattro"]], "one_time_keyboard": false}'];
 	echo json_encode($messagio);
 	$messagio="uoiuno";
 	inviamessaggio($utente,$messaggio);
