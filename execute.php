@@ -1,4 +1,5 @@
 <?php
+//url
 $web="https://api.telegram.org/bot";
 $token="872839539:AAGgmCXaX9zdSypFKiR4BHxoVK3U-riq3ao";
 $completo="https://api.telegram.org/bot".$token;
@@ -41,10 +42,11 @@ $updates = json_decode(file_get_contents(set_get_updates_parameters("https://api
 $isNewRequest = is_new_request($update["update_id"]); // $update["update_id"] is update_id of one of your requests; e.g. 591019242
 if ($isNewRequest === false || $isNewRequest === null){
 	exit;	
-	}
+}
 elseif(!$update){
   exit;
 }
+//messaggio
 $messaggio=$update['message'];
 $message_id=$update['message']['message_id'];
 $testo=$messaggio['text'];
@@ -52,13 +54,16 @@ $utente=$messaggio['chat']['id'];
 $utente=$messaggio['chat']['id'];
 $datazioneunix=$messaggio['date'];
 $dataoggi = getdataoggi($datazioneunix);
+$mese=date("m");
 $nomeutente=$messaggio['chat']['first_name'];
-  $query = $update['callback_query'];
-  $queryid = $query['id'];
-  $queryUserId = $query['from']['id'];
-  $queryusername = $query['from']['username'];
-  $querydata = $query['data'];
-  $querymsgid = $query['message']['message_id'];
+//query
+$query = $update['callback_query'];
+$queryid = $query['id'];
+$queryUserId = $query['from']['id'];
+$queryusername = $query['from']['username'];
+$querydata = $query['data'];
+$querymsgid = $query['message']['message_id'];
+//start
 switch ($testo) {
     case "/start":
 	$ms = "Ciao sono Beecky assistente virtuale di radio frequenza libera. Cosa posso fare per te?";
@@ -93,7 +98,8 @@ switch ($testo) {
     case "calendario":
         $ms = "vediamoun po'.... se non ricordo male oggi è";
 	sendMessage($utente, $ms);
-	tastieracalendario($utente,$dataoggi);
+	$mesecalendario=date("m"); 	
+	tastieracalendario($utente,$dataoggi,$mesecalendario);
         break;
 		
     case "ciao":
@@ -118,6 +124,7 @@ switch ($testo) {
 	tastierastart($utente);	
    	break;	
 }
+//admin 
 if($testo == "crea evento"){
 		$ms = "creiamo evento";
 		sendMessage($utente, $ms);
@@ -134,63 +141,85 @@ if($testo == "crea evento"){
 		$msgcanale="allert";
 		sendMessage($admin, $ms);
 		inviamessaggiocanale($msgcanale);
-	
 }
-if($querydata == "ModificaMessaggio"){
+//edit message
+if($querydata == "Prenota"){
+    editMessageText($queryUserId,$querymsgid,"HEYLA!");
+    exit();
+}elseif($querydata == "Si"){
     editMessageText($queryUserId,$querymsgid,"HEYLA!");
     exit();
 }
-	
+//start	
 function tastierastart($utente){
 	$messaggio = "osserva la tastiera e usa i suoi comandi";
     	$tastiera = '&reply_markup={"keyboard":[["prenota"],["calendario"],["vedi prenotazioni"],["data"]]}';
     	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     	file_get_contents($url);
 }
-function tastieracalendario($utente,$dataoggi){
-    $message = $dataoggi;
-   	
-    $tastiera = '&reply_markup={"inline_keyboard":[[{"text":"1","callback_data":"Prenota"},{"text":"2","callback_data":"Prenota"},{"text":"3","callback_data":"Prenota"},{"text":"4","callback_data":"Prenota"},{"text":"5","callback_data":"Prenota"},{"text":"6","callback_data":"Prenota"},{"text":"7","callback_data":"Prenota"}]]}';
-    $tastiera2 = '&reply_markup={"inline_keyboard":[[{"text":"8","callback_data":"Prenota"},{"text":"9","callback_data":"Prenota"},{"text":"10","callback_data":"Prenota"},{"text":"11","callback_data":"Prenota"},{"text":"12","callback_data":"Prenota"},{"text":"13","callback_data":"Prenota"},{"text":"14","callback_data":"Prenota"}]]}';
-    $url = $GLOBALS[completo].'/sendMessage?chat_id='.$utente.'&parse_mod=HTML&text='.$message.$tastiera;
-    $url2 = $GLOBALS[completo].'/sendMessage?chat_id='.$utente.'&parse_mod=HTML'.$message.$tastiera2;	
-    file_get_contents($url);
-}
+// tastiera calendario 
+function tastieracalendario($utente,$dataoggi,$mesecalendario){
+    	$message = $dataoggi;
+	$querydata="0";	
+	while($querydata == "esci"){
+		    if($mesecalendario == "11" or $mesecalendario == "9" or $mesecalendario == "4" or $mesecalendario == "6"){
+   				$tastiera = '&reply_markup={"inline_keyboard":[[{"text":"1","callback_data":"1"},{"text":"2","callback_data":"2"},{"text":"3","callback_data":"3"},{"text":"4","callback_data":"4"},{"text":"5","callback_data":"5"},{"text":"6","callback_data":"6"},{"text":"7","callback_data":"7"}],[{"text":"8","callback_data":"Prenota"},{"text":"9","callback_data":"Prenota"},{"text":"10","callback_data":"Prenota"},{"text":"11","callback_data":"Prenota"},{"text":"12","callback_data":"Prenota"},{"text":"13","callback_data":"Prenota"},{"text":"14","callback_data":"Prenota"}],[{"text":"15","callback_data":"Prenota"},{"text":"16","callback_data":"Prenota"},{"text":"17","callback_data":"Prenota"},{"text":"18","callback_data":"Prenota"},{"text":"19","callback_data":"Prenota"},{"text":"20","callback_data":"Prenota"},{"text":"21","callback_data":"Prenota"}],[{"text":"22","callback_data":"Prenota"},{"text":"23","callback_data":"Prenota"},{"text":"24","callback_data":"Prenota"},{"text":"25","callback_data":"Prenota"},{"text":"26","callback_data":"Prenota"},{"text":"27","callback_data":"Prenota"},{"text":"28","callback_data":"Prenota"}],[{"text":"29","callback_data":"Prenota"},{"text":"30","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"}],[{"text":"<<","callback_data":"prima"},{"text":"esci","callback_data":"esci"},{"text":">>","callback_data":"dopo"}]] , "force_reply": true, "selective": true}';
+    			}elseif($mesecalendario == "2"){
+    				$tastiera = '&reply_markup={"inline_keyboard":[[{"text":"1","callback_data":"Prenota"},{"text":"2","callback_data":"Prenota"},{"text":"3","callback_data":"Prenota"},{"text":"4","callback_data":"Prenota"},{"text":"5","callback_data":"Prenota"},{"text":"6","callback_data":"Prenota"},{"text":"7","callback_data":"Prenota"}],[{"text":"8","callback_data":"Prenota"},{"text":"9","callback_data":"Prenota"},{"text":"10","callback_data":"Prenota"},{"text":"11","callback_data":"Prenota"},{"text":"12","callback_data":"Prenota"},{"text":"13","callback_data":"Prenota"},{"text":"14","callback_data":"Prenota"}],[{"text":"15","callback_data":"Prenota"},{"text":"16","callback_data":"Prenota"},{"text":"17","callback_data":"Prenota"},{"text":"18","callback_data":"Prenota"},{"text":"19","callback_data":"Prenota"},{"text":"20","callback_data":"Prenota"},{"text":"21","callback_data":"Prenota"}],[{"text":"22","callback_data":"Prenota"},{"text":"23","callback_data":"Prenota"},{"text":"24","callback_data":"Prenota"},{"text":"25","callback_data":"Prenota"},{"text":"26","callback_data":"Prenota"},{"text":"27","callback_data":"Prenota"},{"text":"28","callback_data":"Prenota"}],[{"text":"29","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"}],[{"text":"<<","callback_data":"prima"},{"text":"esci","callback_data":"esci"},{"text":">>","callback_data":"dopo"}]]}';  			    
+   			}else{
+    				$tastiera = '&reply_markup={"inline_keyboard":[[{"text":"1","callback_data":"Prenota"},{"text":"2","callback_data":"Prenota"},{"text":"3","callback_data":"Prenota"},{"text":"4","callback_data":"Prenota"},{"text":"5","callback_data":"Prenota"},{"text":"6","callback_data":"Prenota"},{"text":"7","callback_data":"Prenota"}],[{"text":"8","callback_data":"Prenota"},{"text":"9","callback_data":"Prenota"},{"text":"10","callback_data":"Prenota"},{"text":"11","callback_data":"Prenota"},{"text":"12","callback_data":"Prenota"},{"text":"13","callback_data":"Prenota"},{"text":"14","callback_data":"Prenota"}],[{"text":"15","callback_data":"Prenota"},{"text":"16","callback_data":"Prenota"},{"text":"17","callback_data":"Prenota"},{"text":"18","callback_data":"Prenota"},{"text":"19","callback_data":"Prenota"},{"text":"20","callback_data":"Prenota"},{"text":"21","callback_data":"Prenota"}],[{"text":"22","callback_data":"Prenota"},{"text":"23","callback_data":"Prenota"},{"text":"24","callback_data":"Prenota"},{"text":"25","callback_data":"Prenota"},{"text":"26","callback_data":"Prenota"},{"text":"27","callback_data":"Prenota"},{"text":"28","callback_data":"Prenota"}],[{"text":"29","callback_data":"Prenota"},{"text":"30","callback_data":"Prenota"},{"text":"31","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"}],[{"text":"<<","callback_data":"prima"},{"text":"esci","callback_data":"esci"},{"text":">>","callback_data":"dopo"}]]}';
+    			}
+			if($querydata == "dopo"){
+				$mesecalendario=++$mesecalendario;	
+				exit();	
+			}elseif($querydata == "prima"){
+				$mesecalendario=--$mesecalendario;	
+				exit();	
+			}		
+	}
+	    	$url = $GLOBALS[completo].'/sendMessage?chat_id='.$utente.'&parse_mod=HTML&text='.$message.$tastiera;
+		file_get_contents($url);
+}*/
+//manda messaggio
 function sendMessage($utente, $msg){
 		$url = $GLOBALS[completo]."/sendMessage?chat_id=".$utente."&text=".urlencode($msg);
 		file_get_contents($url);
 }
+//modifica messaggio
 function editMessageText($chatId,$message_id,$newText){
     $url = $GLOBALS[completo]."/editMessageText?chat_id=$chatId&message_id=$message_id&parse_mode=HTML&text=".urlencode($newText);
     file_get_contents($url);
-  }
+}
+//messagio canale
 function inviamessaggiocanale($msg){
 	$utente = "@santacaterina2";
 	$url = $GLOBALS[completo]."/sendMessage?chat_id=".$utente."&text=".urlencode($msg);
 	file_get_contents($url);
 }
+//admin 
 function comandiadmin($utente){
 	$messaggio = "cosa vuole fare admin?";
     	$tastiera = '&reply_markup={"keyboard":[["crea evento"],["assemblea"],["manda notifica"],["esci"]]}';
 	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
 	file_get_contents($url);
-	
-	
 }
 //data
 function getdataoggi($datamessaggio){
   $datazioneunix = gmdate("d.m.y", $datamessaggio);
   return $datazioneunix;
 }
+//delete message
 function deleteMessage($utente, $message_id){
 	$url = $GLOBALS[completo]."/deleteMessage?chat_id=".$utente."&$message_id=".urlencode($message_id);
 	file_get_contents($url);
 }
+//inserire dati nel database
 function inserireneldatabase($utente,$dataoggi){
 	$db =pg_connect("host= ec2-54-247-96-169.eu-west-1.compute.amazonaws.com port=5432 dbname=d2hsht934ovhs9 user=maghsyclqxkpyw password=50ac10525450c60de9157e57e0ab6432f320f5ef3d8ee1650818e491644f51bc");
 	$query = "INSERT INTO prenotazioni (nome, quando, ora) VALUES ('$utente', '099','$dataoggi')";
 	$result = pg_query($query);
 }
+//get dati dal database
 function prendidaldatabase($utente){
 	$db =pg_connect("host= ec2-54-247-96-169.eu-west-1.compute.amazonaws.com port=5432 dbname=d2hsht934ovhs9 user=maghsyclqxkpyw password=50ac10525450c60de9157e57e0ab6432f320f5ef3d8ee1650818e491644f51bc");
 	$result = pg_query($db,"SELECT nome, quando, ora FROM prenotazioni  "); //WHERE quando = '099'
@@ -199,10 +228,9 @@ function prendidaldatabase($utente){
 		$msg=$row['nome'].$row['quando'].$row['ora'] ;
 		$url = $GLOBALS[completo]."/sendMessage?chat_id=".$utente."&text=".urlencode($msg);
 		file_get_contents($url);	
-	
 	}
 }
-
+//cancella database
 function deleterow(){
 		$db =pg_connect("host= ec2-54-247-96-169.eu-west-1.compute.amazonaws.com port=5432 dbname=d2hsht934ovhs9 user=maghsyclqxkpyw password=50ac10525450c60de9157e57e0ab6432f320f5ef3d8ee1650818e491644f51bc");
 		$query = "DELETE FROM prenotazioni ";
