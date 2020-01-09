@@ -29,7 +29,7 @@ $mese=date("m");
 //switch
 //programma invia i messaggi
 if($testo == "bene"){
-	$messagio='&reply_markup={"keyboard":[["crea evento"],["assemblea"],["manda notifica"],["esci"]]}';
+	$messagio["reply_markup"] = '{ "keyboard": [["89"], ["0"], ["77"], ["quattro"]], "one_time_keyboard": false}';
 	echo json_encode($messagio);
 	inviamessaggio($utente,$messaggio);
 }elseif($testo == "/start"){
