@@ -36,9 +36,9 @@ if($testo == "bene"){
 	inviamessaggio($utente,$messaggio);
 }elseif($testo == "/start"){
 	
-	$messagio= "boi";
-	inviamessaggio($utente,$messaggio);
-	inviamessaggio($utente,$messaggio);
+	$mess= "boi";
+	inviamessaggio($utente,$mess);
+	inviamessaggio($utente,$mess);
 }
 function inviamessaggio($utente,$messaggio){
 	header("Content-Type: application/json");
@@ -49,6 +49,6 @@ function inviamessaggio($utente,$messaggio){
 	
 
 
-
+?>
 
 
