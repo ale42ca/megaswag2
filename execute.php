@@ -158,6 +158,7 @@ function tastierastart($utente){
     	file_get_contents($url);
 }
 // tastiera calendario 
+/*
 function tastieracalendario($utente,$dataoggi,$mesecalendario){
     	$message = $dataoggi;
 		    if($mesecalendario == "11" or $mesecalendario == "9" or $mesecalendario == "4" or $mesecalendario == "6"){
