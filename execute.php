@@ -15,7 +15,7 @@ $testo=$messaggio['text'];
 $utente=$messaggio['chat']['id'];
 $utente=$messaggio['chat']['id'];
 $datazioneunix=$messaggio['date'];
-$dataoggi = getdataoggi($datazioneunix);
+//$dataoggi = getdataoggi($datazioneunix);
 $mese=date("m");
 $nomeutente=$messaggio['chat']['first_name'];
 
