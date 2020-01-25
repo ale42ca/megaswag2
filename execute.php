@@ -25,19 +25,15 @@ $db =pg_connect("host= ec2-54-247-96-169.eu-west-1.compute.amazonaws.com port=54
 switch ($testo) {
     case "/start":
 	$comando = '1';
+	$ms = "benvenuto admin";
 	prendidaldatabase($comando);
 	sendMessage($utente, $ms);	
 
         break;
    
-    case "1admin":
+    case "esci":
 	$ms = "benvenuto admin";
 	sendMessage($utente, $ms);
-	comandiadmin($utente);
-	$testoadmin=$testo;
-        break;
-    case "esci":	
-	tastierastart($utente);	
    	break;	
 }
 
