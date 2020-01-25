@@ -89,30 +89,30 @@ switch ($testo) {
 	inviamessaggiocanale($msgcanale);		
         break;
 		
-    	case "vedi prenotazioni":
+    	case "calendario prenotazioni":
         $ms = "chi ha prenotato lo studio in questa  settimana?";
 	sendMessage($utente, $ms);
 	//vediprenotazioni();	
 	prendidaldatabase($utente);
         break;
-    case "calendario":
+    case "pulizie":
         $ms = "vediamoun po'.... se non ricordo male oggi è";
 	sendMessage($utente, $ms);
 	$mesecalendario=date("m"); 	
 	tastieracalendario($utente,$dataoggi,$mesecalendario);
         break;
 		
-    case "ciao":
-        $ms = "ciao, come stai?";
+    case "cassa":
+        $ms = "hai aggiunto dei soldi alla cassa?";
 	sendMessage($utente, $ms);
 	$ms = "Sai sono sempre impegnata, ma visto che sei così gentile ti racconto una barzelletta";
 	sendMessage($utente, $ms);	
 	break;
-    case "data":
-	$ms = "Oggi è";
+    case "eventi":
+	$ms = "Questi sono gli eventi della settimana:";
 	sendMessage($utente, $ms);
         sendMessage($utente, $dataoggi);
-	deleterow();	
+	
         break;
     case "1admin":
 	$ms = "benvenuto admin";
@@ -141,7 +141,12 @@ if($testo == "crea evento"){
 		$msgcanale="allert";
 		sendMessage($admin, $ms);
 		inviamessaggiocanale($msgcanale);
+}elseif($testo == "cancella eventi da database"){
+		deleterow();
+		$ms = "dati aggiornati";
+		sendMessage($utente, $ms);
 }
+	
 //edit message
 if($querydata == "Prenota"){
     editMessageText($queryUserId,$querymsgid,"HEYLA!");
@@ -153,7 +158,7 @@ if($querydata == "Prenota"){
 //start	
 function tastierastart($utente){
 	$messaggio = "osserva la tastiera e usa i suoi comandi";
-    	$tastiera = '&reply_markup={"keyboard":[["prenota"],["calendario"],["vedi prenotazioni"],["data"]]}';
+    	$tastiera = '&reply_markup={"keyboard":[["prenota studio"],["calendario prenotazioni"],["cassa"],["eventi"],["pulizie"]]}';
     	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     	file_get_contents($url);
 }
@@ -190,7 +195,7 @@ function inviamessaggiocanale($msg){
 //admin 
 function comandiadmin($utente){
 	$messaggio = "cosa vuole fare admin?";
-    	$tastiera = '&reply_markup={"keyboard":[["crea evento"],["assemblea"],["manda notifica"],["esci"]]}';
+    	$tastiera = '&reply_markup={"keyboard":[["crea evento"],["assemblea"],["manda notifica"],["cancella eventi da database"],["esci"]]}';
 	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
 	file_get_contents($url);
 }
