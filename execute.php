@@ -48,7 +48,7 @@ function sendMessage($utente, $msg){
 // prendi text
 function prendidaldatabase($comando,$db){
 
-	$result = pg_query($db,"SELECT comando FROM comandi WHERE numero = $comando "); 
+	$result = pg_query($db,"SELECT comando FROM comandi WHERE numero = '$comando' "); 
 	
 	while($row=pg_fetch_assoc($result)){
 		$msg=$row['comando'] ;
