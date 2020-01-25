@@ -26,7 +26,7 @@ switch ($testo) {
     case "/start":
 	$comando = '1';
 	$ms = "benvenuto admin";
-	prendidaldatabase($comando);
+	prendidaldatabase($comando,$db);
 	sendMessage($utente, $ms);	
 
         break;
@@ -46,7 +46,7 @@ function sendMessage($utente, $msg){
 
 
 // prendi text
-function prendidaldatabase($comando){
+function prendidaldatabase($comando,$db){
 
 	$result = pg_query($db,"SELECT comando FROM comandi WHERE numero = $comando "); 
 	
