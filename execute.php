@@ -89,30 +89,30 @@ switch ($testo) {
 	inviamessaggiocanale($msgcanale);		
         break;
 		
-    	case "calendario prenotazioni":
+    	case "vedi prenotazioni":
         $ms = "chi ha prenotato lo studio in questa  settimana?";
 	sendMessage($utente, $ms);
 	//vediprenotazioni();	
 	prendidaldatabase($utente);
         break;
-    case "pulizie":
+    case "calendario":
         $ms = "vediamoun po'.... se non ricordo male oggi è";
 	sendMessage($utente, $ms);
 	$mesecalendario=date("m"); 	
 	tastieracalendario($utente,$dataoggi,$mesecalendario);
         break;
 		
-    case "cassa":
-        $ms = "hai aggiunto dei soldi alla cassa?";
+    case "ciao":
+        $ms = "ciao, come stai?";
 	sendMessage($utente, $ms);
 	$ms = "Sai sono sempre impegnata, ma visto che sei così gentile ti racconto una barzelletta";
 	sendMessage($utente, $ms);	
 	break;
-    case "eventi":
-	$ms = "Questi sono gli eventi della settimana:";
+    case "data":
+	$ms = "Oggi è";
 	sendMessage($utente, $ms);
         sendMessage($utente, $dataoggi);
-	
+	deleterow();	
         break;
     case "1admin":
 	$ms = "benvenuto admin";
@@ -141,12 +141,7 @@ if($testo == "crea evento"){
 		$msgcanale="allert";
 		sendMessage($admin, $ms);
 		inviamessaggiocanale($msgcanale);
-}elseif($testo == "cancella eventi da database"){
-		deleterow();
-		$ms = "dati aggiornati";
-		sendMessage($utente, $ms);
 }
-	
 //edit message
 if($querydata == "Prenota"){
     editMessageText($queryUserId,$querymsgid,"HEYLA!");
@@ -158,24 +153,33 @@ if($querydata == "Prenota"){
 //start	
 function tastierastart($utente){
 	$messaggio = "osserva la tastiera e usa i suoi comandi";
-    	$tastiera = '&reply_markup={"keyboard":[["prenota studio"],["calendario prenotazioni"],["cassa"],["eventi"],["pulizie"]]}';
+    	$tastiera = '&reply_markup={"keyboard":[["prenota"],["calendario"],["vedi prenotazioni"],["data"]]}';
     	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     	file_get_contents($url);
 }
 // tastiera calendario 
-
 function tastieracalendario($utente,$dataoggi,$mesecalendario){
     	$message = $dataoggi;
-	if($mesecalendario == "11" or $mesecalendario == "9" or $mesecalendario == "4" or $mesecalendario == "6"){
-   		$tastiera = '&reply_markup={"inline_keyboard":[[{"text":"1","callback_data":"1"},{"text":"2","callback_data":"2"},{"text":"3","callback_data":"3"},{"text":"4","callback_data":"4"},{"text":"5","callback_data":"5"},{"text":"6","callback_data":"6"},{"text":"7","callback_data":"7"}],[{"text":"8","callback_data":"Prenota"},{"text":"9","callback_data":"Prenota"},{"text":"10","callback_data":"Prenota"},{"text":"11","callback_data":"Prenota"},{"text":"12","callback_data":"Prenota"},{"text":"13","callback_data":"Prenota"},{"text":"14","callback_data":"Prenota"}],[{"text":"15","callback_data":"Prenota"},{"text":"16","callback_data":"Prenota"},{"text":"17","callback_data":"Prenota"},{"text":"18","callback_data":"Prenota"},{"text":"19","callback_data":"Prenota"},{"text":"20","callback_data":"Prenota"},{"text":"21","callback_data":"Prenota"}],[{"text":"22","callback_data":"Prenota"},{"text":"23","callback_data":"Prenota"},{"text":"24","callback_data":"Prenota"},{"text":"25","callback_data":"Prenota"},{"text":"26","callback_data":"Prenota"},{"text":"27","callback_data":"Prenota"},{"text":"28","callback_data":"Prenota"}],[{"text":"29","callback_data":"Prenota"},{"text":"30","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"}],[{"text":"<<","callback_data":"prima"},{"text":"esci","callback_data":"esci"},{"text":">>","callback_data":"dopo"}]] , "force_reply": true, "selective": true}';
-    	}elseif($mesecalendario == "2"){
-    		$tastiera = '&reply_markup={"inline_keyboard":[[{"text":"1","callback_data":"Prenota"},{"text":"2","callback_data":"Prenota"},{"text":"3","callback_data":"Prenota"},{"text":"4","callback_data":"Prenota"},{"text":"5","callback_data":"Prenota"},{"text":"6","callback_data":"Prenota"},{"text":"7","callback_data":"Prenota"}],[{"text":"8","callback_data":"Prenota"},{"text":"9","callback_data":"Prenota"},{"text":"10","callback_data":"Prenota"},{"text":"11","callback_data":"Prenota"},{"text":"12","callback_data":"Prenota"},{"text":"13","callback_data":"Prenota"},{"text":"14","callback_data":"Prenota"}],[{"text":"15","callback_data":"Prenota"},{"text":"16","callback_data":"Prenota"},{"text":"17","callback_data":"Prenota"},{"text":"18","callback_data":"Prenota"},{"text":"19","callback_data":"Prenota"},{"text":"20","callback_data":"Prenota"},{"text":"21","callback_data":"Prenota"}],[{"text":"22","callback_data":"Prenota"},{"text":"23","callback_data":"Prenota"},{"text":"24","callback_data":"Prenota"},{"text":"25","callback_data":"Prenota"},{"text":"26","callback_data":"Prenota"},{"text":"27","callback_data":"Prenota"},{"text":"28","callback_data":"Prenota"}],[{"text":"29","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"}],[{"text":"<<","callback_data":"prima"},{"text":"esci","callback_data":"esci"},{"text":">>","callback_data":"dopo"}]]}';  			    
-   	}else{
-    		$tastiera = '&reply_markup={"inline_keyboard":[[{"text":"1","callback_data":"Prenota"},{"text":"2","callback_data":"Prenota"},{"text":"3","callback_data":"Prenota"},{"text":"4","callback_data":"Prenota"},{"text":"5","callback_data":"Prenota"},{"text":"6","callback_data":"Prenota"},{"text":"7","callback_data":"Prenota"}],[{"text":"8","callback_data":"Prenota"},{"text":"9","callback_data":"Prenota"},{"text":"10","callback_data":"Prenota"},{"text":"11","callback_data":"Prenota"},{"text":"12","callback_data":"Prenota"},{"text":"13","callback_data":"Prenota"},{"text":"14","callback_data":"Prenota"}],[{"text":"15","callback_data":"Prenota"},{"text":"16","callback_data":"Prenota"},{"text":"17","callback_data":"Prenota"},{"text":"18","callback_data":"Prenota"},{"text":"19","callback_data":"Prenota"},{"text":"20","callback_data":"Prenota"},{"text":"21","callback_data":"Prenota"}],[{"text":"22","callback_data":"Prenota"},{"text":"23","callback_data":"Prenota"},{"text":"24","callback_data":"Prenota"},{"text":"25","callback_data":"Prenota"},{"text":"26","callback_data":"Prenota"},{"text":"27","callback_data":"Prenota"},{"text":"28","callback_data":"Prenota"}],[{"text":"29","callback_data":"Prenota"},{"text":"30","callback_data":"Prenota"},{"text":"31","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"}],[{"text":"<<","callback_data":"prima"},{"text":"esci","callback_data":"esci"},{"text":">>","callback_data":"dopo"}]]}';
-    	}
-	$url = $GLOBALS[completo].'/sendMessage?chat_id='.$utente.'&parse_mod=HTML&text='.$message.$tastiera;
-	file_get_contents($url);
-}
+	$querydata="0";	
+	while($querydata == "esci"){
+		    if($mesecalendario == "11" or $mesecalendario == "9" or $mesecalendario == "4" or $mesecalendario == "6"){
+   				$tastiera = '&reply_markup={"inline_keyboard":[[{"text":"1","callback_data":"1"},{"text":"2","callback_data":"2"},{"text":"3","callback_data":"3"},{"text":"4","callback_data":"4"},{"text":"5","callback_data":"5"},{"text":"6","callback_data":"6"},{"text":"7","callback_data":"7"}],[{"text":"8","callback_data":"Prenota"},{"text":"9","callback_data":"Prenota"},{"text":"10","callback_data":"Prenota"},{"text":"11","callback_data":"Prenota"},{"text":"12","callback_data":"Prenota"},{"text":"13","callback_data":"Prenota"},{"text":"14","callback_data":"Prenota"}],[{"text":"15","callback_data":"Prenota"},{"text":"16","callback_data":"Prenota"},{"text":"17","callback_data":"Prenota"},{"text":"18","callback_data":"Prenota"},{"text":"19","callback_data":"Prenota"},{"text":"20","callback_data":"Prenota"},{"text":"21","callback_data":"Prenota"}],[{"text":"22","callback_data":"Prenota"},{"text":"23","callback_data":"Prenota"},{"text":"24","callback_data":"Prenota"},{"text":"25","callback_data":"Prenota"},{"text":"26","callback_data":"Prenota"},{"text":"27","callback_data":"Prenota"},{"text":"28","callback_data":"Prenota"}],[{"text":"29","callback_data":"Prenota"},{"text":"30","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"}],[{"text":"<<","callback_data":"prima"},{"text":"esci","callback_data":"esci"},{"text":">>","callback_data":"dopo"}]] , "force_reply": true, "selective": true}';
+    			}elseif($mesecalendario == "2"){
+    				$tastiera = '&reply_markup={"inline_keyboard":[[{"text":"1","callback_data":"Prenota"},{"text":"2","callback_data":"Prenota"},{"text":"3","callback_data":"Prenota"},{"text":"4","callback_data":"Prenota"},{"text":"5","callback_data":"Prenota"},{"text":"6","callback_data":"Prenota"},{"text":"7","callback_data":"Prenota"}],[{"text":"8","callback_data":"Prenota"},{"text":"9","callback_data":"Prenota"},{"text":"10","callback_data":"Prenota"},{"text":"11","callback_data":"Prenota"},{"text":"12","callback_data":"Prenota"},{"text":"13","callback_data":"Prenota"},{"text":"14","callback_data":"Prenota"}],[{"text":"15","callback_data":"Prenota"},{"text":"16","callback_data":"Prenota"},{"text":"17","callback_data":"Prenota"},{"text":"18","callback_data":"Prenota"},{"text":"19","callback_data":"Prenota"},{"text":"20","callback_data":"Prenota"},{"text":"21","callback_data":"Prenota"}],[{"text":"22","callback_data":"Prenota"},{"text":"23","callback_data":"Prenota"},{"text":"24","callback_data":"Prenota"},{"text":"25","callback_data":"Prenota"},{"text":"26","callback_data":"Prenota"},{"text":"27","callback_data":"Prenota"},{"text":"28","callback_data":"Prenota"}],[{"text":"29","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"}],[{"text":"<<","callback_data":"prima"},{"text":"esci","callback_data":"esci"},{"text":">>","callback_data":"dopo"}]]}';  			    
+   			}else{
+    				$tastiera = '&reply_markup={"inline_keyboard":[[{"text":"1","callback_data":"Prenota"},{"text":"2","callback_data":"Prenota"},{"text":"3","callback_data":"Prenota"},{"text":"4","callback_data":"Prenota"},{"text":"5","callback_data":"Prenota"},{"text":"6","callback_data":"Prenota"},{"text":"7","callback_data":"Prenota"}],[{"text":"8","callback_data":"Prenota"},{"text":"9","callback_data":"Prenota"},{"text":"10","callback_data":"Prenota"},{"text":"11","callback_data":"Prenota"},{"text":"12","callback_data":"Prenota"},{"text":"13","callback_data":"Prenota"},{"text":"14","callback_data":"Prenota"}],[{"text":"15","callback_data":"Prenota"},{"text":"16","callback_data":"Prenota"},{"text":"17","callback_data":"Prenota"},{"text":"18","callback_data":"Prenota"},{"text":"19","callback_data":"Prenota"},{"text":"20","callback_data":"Prenota"},{"text":"21","callback_data":"Prenota"}],[{"text":"22","callback_data":"Prenota"},{"text":"23","callback_data":"Prenota"},{"text":"24","callback_data":"Prenota"},{"text":"25","callback_data":"Prenota"},{"text":"26","callback_data":"Prenota"},{"text":"27","callback_data":"Prenota"},{"text":"28","callback_data":"Prenota"}],[{"text":"29","callback_data":"Prenota"},{"text":"30","callback_data":"Prenota"},{"text":"31","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"},{"text":" ","callback_data":"Prenota"}],[{"text":"<<","callback_data":"prima"},{"text":"esci","callback_data":"esci"},{"text":">>","callback_data":"dopo"}]]}';
+    			}
+			if($querydata == "dopo"){
+				$mesecalendario=++$mesecalendario;	
+				exit();	
+			}elseif($querydata == "prima"){
+				$mesecalendario=--$mesecalendario;	
+				exit();	
+			}		
+	}
+	    	$url = $GLOBALS[completo].'/sendMessage?chat_id='.$utente.'&parse_mod=HTML&text='.$message.$tastiera;
+		file_get_contents($url);
+}*/
 //manda messaggio
 function sendMessage($utente, $msg){
 		$url = $GLOBALS[completo]."/sendMessage?chat_id=".$utente."&text=".urlencode($msg);
@@ -195,7 +199,7 @@ function inviamessaggiocanale($msg){
 //admin 
 function comandiadmin($utente){
 	$messaggio = "cosa vuole fare admin?";
-    	$tastiera = '&reply_markup={"keyboard":[["crea evento"],["assemblea"],["manda notifica"],["cancella eventi da database"],["esci"]]}';
+    	$tastiera = '&reply_markup={"keyboard":[["crea evento"],["assemblea"],["manda notifica"],["esci"]]}';
 	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
 	file_get_contents($url);
 }
