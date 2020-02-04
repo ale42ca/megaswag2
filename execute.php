@@ -52,6 +52,7 @@ $utente=$messaggio['chat']['id'];
 $utente=$messaggio['chat']['id'];
 $datazioneunix=$messaggio['date'];
 $dataoggi = getdataoggi($datazioneunix);
+$mese = date[]
 $nomeutente=$messaggio['chat']['first_name'];
 
   $query = $update['callback_query'];
@@ -142,6 +143,10 @@ if($querydata == "ModificaMessaggio"){
     exit();
 }
 
+function getdataoggi($datamessaggio){
+  $datazioneunix = gmdate("d.m.y", $datamessaggio);
+  return $datazioneunix;
+}
 	
 function tastierastart($utente){
 	$messaggio = "osserva la tastiera e usa i suoi comandi";
@@ -187,49 +192,4 @@ function tastieracalendario($utente,$dataoggi,$mese){
 // i comandi necessari a utilizzare il database sono inserisci nel database, cancella ultima row,
 
 //insericsci nel database
-function inserireneldatabase($utente, $dataoggi, $ora, $qualedatabase){
-	
-	$db =pg_connect("host= ec2-54-247-96-169.eu-west-1.compute.amazonaws.com port=5432 dbname=d2hsht934ovhs9 user=maghsyclqxkpyw password=50ac10525450c60de9157e57e0ab6432f320f5ef3d8ee1650818e491644f51bc");
-	if ($qualedatabase==1){
-		$query = "INSERT INTO prenotazioni (ir, nome, quando, ora) VALUES ('','$utente', '$dataoggi', $ora)";
 
-	}($qualedatabase==2){
-		$query = "INSERT INTO birre (ir,nome, quando) VALUES ('','$utente', '$dataoggi', $ora)";
-
-	}($qualedatabase==3){
-		$query = "INSERT INTO fan (ir, nome , , ora) VALUES ('','$utente', '$dataoggi', $ora)";
-
-	}	
-
-	$result = pg_query($query);
-}
-// cancella last $row
-
-function deletelastmessage($utente, $dataoggi,$qualedatabase){
-  $db =pg_connect("host= ec2-54-247-96-169.eu-west-1.compute.amazonaws.com port=5432 dbname=d2hsht934ovhs9 user=maghsyclqxkpyw password=50ac10525450c60de9157e57e0ab6432f320f5ef3d8ee1650818e491644f51bc");
-
-	if ($qualedatabase==1){
-		$query = "DELETE FROM prenotazioni WHERE  nome  = '$utente' ";
-
-	}($qualedatabase==2){
-		$query = "DELETE FROM birre WHERE  nome  = '$utente' ";
-
-	}($qualedatabase==3){
-		$query = "DELETE FROM fan WHERE  nome  = '$utente' ";
-
-	}	
-	$result = pg_query($query);
-}
-// prendi dal database 
-function prendidaldatabase($utente){
-	$db =pg_connect("host= ec2-54-247-96-169.eu-west-1.compute.amazonaws.com port=5432 dbname=d2hsht934ovhs9 user=maghsyclqxkpyw password=50ac10525450c60de9157e57e0ab6432f320f5ef3d8ee1650818e491644f51bc");
-	$result = pg_query($db,"SELECT nome, quando, ora FROM prenotazioni WHERE nome = '$utente'");
-
-	while($row=pg_fetch_assoc($result)){
-		$msg=$row['nome'].$row['quando'].$row['ora'] ;
-		$url = $GLOBALS[completo]."/sendMessage?chat_id=".$utente."&text=".urlencode($msg);
-		file_get_contents($url);
-
-	}
-}
-php>
