@@ -1,4 +1,5 @@
 <?php
+//url
 $web="https://api.telegram.org/bot";
 $token="872839539:AAGgmCXaX9zdSypFKiR4BHxoVK3U-riq3ao";
 $completo="https://api.telegram.org/bot".$token;
@@ -41,10 +42,11 @@ $updates = json_decode(file_get_contents(set_get_updates_parameters("https://api
 $isNewRequest = is_new_request($update["update_id"]); // $update["update_id"] is update_id of one of your requests; e.g. 591019242
 if ($isNewRequest === false || $isNewRequest === null){
 	exit;	
-	}
+}
 elseif(!$update){
   exit;
 }
+//messaggio
 $messaggio=$update['message'];
 $message_id=$update['message']['message_id'];
 $testo=$messaggio['text'];
@@ -52,16 +54,16 @@ $utente=$messaggio['chat']['id'];
 $utente=$messaggio['chat']['id'];
 $datazioneunix=$messaggio['date'];
 $dataoggi = getdataoggi($datazioneunix);
-$mese = date[]
+$mese=date("m");
 $nomeutente=$messaggio['chat']['first_name'];
-
-  $query = $update['callback_query'];
-  $queryid = $query['id'];
-  $queryUserId = $query['from']['id'];
-  $queryusername = $query['from']['username'];
-  $querydata = $query['data'];
-  $querymsgid = $query['message']['message_id'];
-  
+//query
+$query = $update['callback_query'];
+$queryid = $query['id'];
+$queryUserId = $query['from']['id'];
+$queryusername = $query['from']['username'];
+$querydata = $query['data'];
+$querymsgid = $query['message']['message_id'];
+//start
 switch ($testo) {
     case "/start":
 	$ms = "Ciao sono Beecky assistente virtuale di radio frequenza libera. Cosa posso fare per te?";
@@ -89,26 +91,28 @@ switch ($testo) {
 		
     	case "vedi prenotazioni":
         $ms = "chi ha prenotato lo studio in questa  settimana?";
-	      sendMessage($utente, $ms);
-	      //vediprenotazioni();	
-	      prendidaldatabase($utente);
+	sendMessage($utente, $ms);
+	//vediprenotazioni();	
+	prendidaldatabase($utente);
         break;
     case "calendario":
         $ms = "vediamoun po'.... se non ricordo male oggi è";
-	      sendMessage($utente, $ms);
-	      tastieracalendario($utente,$dataoggi);
+	sendMessage($utente, $ms);
+	$mesecalendario=date("m"); 	
+	tastieracalendario($utente,$dataoggi,$mesecalendario);
         break;
 		
     case "ciao":
         $ms = "ciao, come stai?";
-	      sendMessage($utente, $ms);
-	      $ms = "Sai sono sempre impegnata, ma visto che sei così gentile ti racconto una barzelletta";
-	      sendMessage($utente, $ms);	
+	sendMessage($utente, $ms);
+	$ms = "Sai sono sempre impegnata, ma visto che sei così gentile ti racconto una barzelletta";
+	sendMessage($utente, $ms);	
 	break;
     case "data":
 	$ms = "Oggi è";
 	sendMessage($utente, $ms);
         sendMessage($utente, $dataoggi);
+	deleterow();	
         break;
     case "1admin":
 	$ms = "benvenuto admin";
@@ -120,6 +124,7 @@ switch ($testo) {
 	tastierastart($utente);	
    	break;	
 }
+//admin 
 if($testo == "crea evento"){
 		$ms = "creiamo evento";
 		sendMessage($utente, $ms);
@@ -136,24 +141,26 @@ if($testo == "crea evento"){
 		$msgcanale="allert";
 		sendMessage($admin, $ms);
 		inviamessaggiocanale($msgcanale);
-	
 }
-if($querydata == "ModificaMessaggio"){
+//edit message
+if($querydata == "Prenota"){
+    editMessageText($queryUserId,$querymsgid,"HEYLA!");
+    exit();
+}elseif($querydata == "Si"){
     editMessageText($queryUserId,$querymsgid,"HEYLA!");
     exit();
 }
-
-function getdataoggi($datamessaggio){
-  $datazioneunix = gmdate("d.m.y", $datamessaggio);
-  return $datazioneunix;
-}
-	
+//start	
 function tastierastart($utente){
 	$messaggio = "osserva la tastiera e usa i suoi comandi";
     	$tastiera = '&reply_markup={"keyboard":[["prenota"],["calendario"],["vedi prenotazioni"],["data"]]}';
     	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     	file_get_contents($url);
 }
+// tastiera calendario 
+function tastieracalendario($utente,$dataoggi,$mesecalendario){
+    	$message = $dataoggi;
+	$querydata="0";	
 function tastieracalendario($utente,$dataoggi,$mese){
     $message = $dataoggi;
    	
@@ -183,13 +190,66 @@ function tastieracalendario($utente,$dataoggi,$mese){
     $url = $GLOBALS[completo].'/sendMessage?chat_id='.$utente.'&parse_mod=HTML&text='.$message.$tastiera;
     file_get_contents($url);
 }
-
-
-// database prenotazioni avrà ir, utente, data, orario
-// database birre avrà ir, utente, aggiungi birre
-// database fan ir utente
-// database pulizie ir data
-// i comandi necessari a utilizzare il database sono inserisci nel database, cancella ultima row,
-
-//insericsci nel database
-
+}*/
+//manda messaggio
+function sendMessage($utente, $msg){
+		$url = $GLOBALS[completo]."/sendMessage?chat_id=".$utente."&text=".urlencode($msg);
+		file_get_contents($url);
+}
+//modifica messaggio
+function editMessageText($chatId,$message_id,$newText){
+    $url = $GLOBALS[completo]."/editMessageText?chat_id=$chatId&message_id=$message_id&parse_mode=HTML&text=".urlencode($newText);
+    file_get_contents($url);
+}
+//messagio canale
+function inviamessaggiocanale($msg){
+	$utente = "@santacaterina2";
+	$url = $GLOBALS[completo]."/sendMessage?chat_id=".$utente."&text=".urlencode($msg);
+	file_get_contents($url);
+}
+//admin 
+function comandiadmin($utente){
+	$messaggio = "cosa vuole fare admin?";
+    	$tastiera = '&reply_markup={"keyboard":[["crea evento"],["assemblea"],["manda notifica"],["esci"]]}';
+	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
+	file_get_contents($url);
+}
+//data
+function getdataoggi($datamessaggio){
+  $datazioneunix = gmdate("d.m.y", $datamessaggio);
+  return $datazioneunix;
+}
+//delete message
+function deleteMessage($utente, $message_id){
+	$url = $GLOBALS[completo]."/deleteMessage?chat_id=".$utente."&$message_id=".urlencode($message_id);
+	file_get_contents($url);
+}
+//inserire dati nel database
+function inserireneldatabase($utente,$dataoggi){
+	$db =pg_connect("host= ec2-54-247-96-169.eu-west-1.compute.amazonaws.com port=5432 dbname=d2hsht934ovhs9 user=maghsyclqxkpyw password=50ac10525450c60de9157e57e0ab6432f320f5ef3d8ee1650818e491644f51bc");
+	$query = "INSERT INTO prenotazioni (nome, quando, ora) VALUES ('$utente', '099','$dataoggi')";
+	$result = pg_query($query);
+}
+//get dati dal database
+function prendidaldatabase($utente){
+	$db =pg_connect("host= ec2-54-247-96-169.eu-west-1.compute.amazonaws.com port=5432 dbname=d2hsht934ovhs9 user=maghsyclqxkpyw password=50ac10525450c60de9157e57e0ab6432f320f5ef3d8ee1650818e491644f51bc");
+	$result = pg_query($db,"SELECT nome, quando, ora FROM prenotazioni  "); //WHERE quando = '099'
+	
+	while($row=pg_fetch_assoc($result)){
+		$msg=$row['nome'].$row['quando'].$row['ora'] ;
+		$url = $GLOBALS[completo]."/sendMessage?chat_id=".$utente."&text=".urlencode($msg);
+		file_get_contents($url);	
+	}
+}
+//cancella database
+function deleterow(){
+		$db =pg_connect("host= ec2-54-247-96-169.eu-west-1.compute.amazonaws.com port=5432 dbname=d2hsht934ovhs9 user=maghsyclqxkpyw password=50ac10525450c60de9157e57e0ab6432f320f5ef3d8ee1650818e491644f51bc");
+		$query = "DELETE FROM prenotazioni ";
+		$result = pg_query($query);
+	
+}	
+//header("Content-Type: application/json");
+//$msg="vuoi fare altro?"; 
+//$parameters = array('chat_id' => $utente, "text" => $msg);
+//$parameters["method"] = "sendMessage";
+//echo json_encode($parameters)
