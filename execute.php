@@ -52,6 +52,7 @@ $utente=$messaggio['chat']['id'];
 $utente=$messaggio['chat']['id'];
 $datazioneunix=$messaggio['date'];
 $dataoggi = getdataoggi($datazioneunix);
+$mese = date('n');
 $nomeutente=$messaggio['chat']['first_name'];
   $query = $update['callback_query'];
   $queryid = $query['id'];
@@ -93,7 +94,7 @@ switch ($testo) {
     case "calendario":
         $ms = "vediamoun po'.... se non ricordo male oggi è";
 	sendMessage($utente, $ms);
-	tastieracalendario($utente,$dataoggi);
+	tastieracalendario($utente,$dataoggi,$mese);
         break;
 		
     case "ciao":
@@ -146,12 +147,36 @@ function tastierastart($utente){
     	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     	file_get_contents($url);
 }
-function tastieracalendario($utente,$dataoggi){
+function tastieracalendario($utente,$dataoggi,$mese){
     $message = $dataoggi;
-   	
-    $tastiera = '&reply_markup={"inline_keyboard":[[{"text":"1","callback_data":"Prenota"},{"text":"2","callback_data":"Prenota"},{"text":"3","callback_data":"Prenota"},{"text":"4","callback_data":"Prenota"},{"text":"5","callback_data":"Prenota"},{"text":"6","callback_data":"Prenota"},{"text":"7","callback_data":"Prenota"}]]}';
-    $tastiera2 = '&reply_markup={"inline_keyboard":[[{"text":"8","callback_data":"Prenota"},{"text":"9","callback_data":"Prenota"},{"text":"10","callback_data":"Prenota"},{"text":"11","callback_data":"Prenota"},{"text":"12","callback_data":"Prenota"},{"text":"13","callback_data":"Prenota"},{"text":"14","callback_data":"Prenota"}]]}';
+    
+     	
+    if ($mese = 1 || $mese = 3 || $mese = 5 || $mese =  7 || $mese = 8 || $mese = 10 || $mese = 12 ){
+      $tastiera = '&reply_markup={"inline_keyboard":[[{"text":"1","callback_data":"1"},{"text":"2","callback_data":"2"},{"text":"3","callback_data":"3"},{"text":"4","callback_data":"4"},{"text":"5","callback_data":"5"},{"text":"6","callback_data":"6"},{"text":"7","callback_data":"7"}],
+      [{"text":"8","callback_data":"8"},{"text":"9","callback_data":"9"},{"text":"10","callback_data":"10"},{"text":"11","callback_data":"11"},{"text":"12","callback_data":"12"},{"text":"13","callback_data":"13"},{"text":"14","callback_data":"14"}],
+      [{"text":"15","callback_data":"15"},{"text":"16","callback_data":"16"},{"text":"17","callback_data":"17"},{"text":"18","callback_data":"18"},{"text":"19","callback_data":"19"},{"text":"20","callback_data":"20"},{"text":"21","callback_data":"21"}],
+      [{"text":"22","callback_data":"22"},{"text":"23","callback_data":"23"},{"text":"24","callback_data":"24"},{"text":"25","callback_data":"25"},{"text":"26","callback_data":"26"},{"text":"27","callback_data":"27"},{"text":"28","callback_data":"28"}],
+      [{"text":"29","callback_data":"29"},{"text":"30","callback_data":"30"},{"text":"31","callback_data":"31"},{"text":" "},{"text":" "},{"text":" "},{"text":"14"}],[{"text":"prima","callback_data":"meseprima"},{"text":" x ","callback_data":"esci"},{"text":"dopo","callback_data":"mesedopo"}]]}';
+      
+    }else if ($mese = 2){
+      $tastiera = '&reply_markup={"inline_keyboard":[[{"text":"1","callback_data":"1"},{"text":"2","callback_data":"2"},{"text":"3","callback_data":"3"},{"text":"4","callback_data":"4"},{"text":"5","callback_data":"5"},{"text":"6","callback_data":"6"},{"text":"7","callback_data":"7"}],
+      [{"text":"8","callback_data":"8"},{"text":"9","callback_data":"9"},{"text":"10","callback_data":"10"},{"text":"11","callback_data":"11"},{"text":"12","callback_data":"12"},{"text":"13","callback_data":"13"},{"text":"14","callback_data":"14"}],
+      [{"text":"15","callback_data":"15"},{"text":"16","callback_data":"16"},{"text":"17","callback_data":"17"},{"text":"18","callback_data":"18"},{"text":"19","callback_data":"19"},{"text":"20","callback_data":"20"},{"text":"21","callback_data":"21"}],
+      [{"text":"22","callback_data":"22"},{"text":"23","callback_data":"23"},{"text":"24","callback_data":"24"},{"text":"25","callback_data":"25"},{"text":"26","callback_data":"26"},{"text":"27","callback_data":"27"},{"text":"28","callback_data":"28"}],
+      [{"text":"29","callback_data":"29"},{"text":" "},{"text":" "},{"text":" "},{"text":" "},{"text":" "},{"text":"14"}],[{"text":"prima","callback_data":"meseprima"},{"text":" x ","callback_data":"esci"},{"text":"dopo","callback_data":"mesedopo"}]]}';
+      
+    }else {
+      $tastiera = '&reply_markup={"inline_keyboard":[[{"text":"1","callback_data":"1"},{"text":"2","callback_data":"2"},{"text":"3","callback_data":"3"},{"text":"4","callback_data":"4"},{"text":"5","callback_data":"5"},{"text":"6","callback_data":"6"},{"text":"7","callback_data":"7"}],
+      [{"text":"8","callback_data":"8"},{"text":"9","callback_data":"9"},{"text":"10","callback_data":"10"},{"text":"11","callback_data":"11"},{"text":"12","callback_data":"12"},{"text":"13","callback_data":"13"},{"text":"14","callback_data":"14"}],
+      [{"text":"15","callback_data":"15"},{"text":"16","callback_data":"16"},{"text":"17","callback_data":"17"},{"text":"18","callback_data":"18"},{"text":"19","callback_data":"19"},{"text":"20","callback_data":"20"},{"text":"21","callback_data":"21"}],
+      [{"text":"22","callback_data":"22"},{"text":"23","callback_data":"23"},{"text":"24","callback_data":"24"},{"text":"25","callback_data":"25"},{"text":"26","callback_data":"26"},{"text":"27","callback_data":"27"},{"text":"28","callback_data":"28"}],
+      [{"text":"29","callback_data":"29"},{"text":"30","callback_data":"30"},{"text":" "},{"text":" "},{"text":" "},{"text":" "},{"text":"14"}],[{"text":"prima","callback_data":"meseprima"},{"text":" x ","callback_data":"esci"},{"text":"dopo","callback_data":"mesedopo"}]]}';
+      
+    }
+    
     $url = $GLOBALS[completo].'/sendMessage?chat_id='.$utente.'&parse_mod=HTML&text='.$message.$tastiera;
+    file_get_contents($url);
+}
     $url2 = $GLOBALS[completo].'/sendMessage?chat_id='.$utente.'&parse_mod=HTML'.$message.$tastiera2;	
     file_get_contents($url);
 }
