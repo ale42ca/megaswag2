@@ -47,24 +47,22 @@ if ($isNewRequest === false || $isNewRequest === null){
 elseif(!$update){
   exit;
 }
-//utente
-$utente=$messaggio['chat']['id'];
-$utente=$messaggio['chat']['id'];
-$nomeutente=$messaggio['chat']['first_name'];
-//msg
 $messaggio=$update['message'];
 $message_id=$update['message']['message_id'];
 $testo=$messaggio['text'];
-//query msg
+$utente=$messaggio['chat']['id'];
+$utente=$messaggio['chat']['id'];
+$datazioneunix=$messaggio['date'];
+$dataoggi = getdataoggi($datazioneunix);
+$mese=date("m");
+$nomeutente=$messaggio['chat']['first_name'];
+//query
 $query = $update['callback_query'];
 $queryid = $query['id'];
 $queryUserId = $query['from']['id'];
 $queryusername = $query['from']['username'];
 $querydata = $query['data'];
 $querymsgid = $query['message']['message_id'];
-//data
-$datazioneunix=$messaggio['date'];
-$dataoggi = getdataoggi($datazioneunix);
 
 
 switch($testo){
