@@ -79,7 +79,7 @@ switch($testo){
   // code...
     $msg="Salve Admin";
     mandamessaggiutente($utente, $msg);
-    comandiadmin();
+    //comandiadmin();
     break;
   case 'prenota':
     // code...
@@ -108,6 +108,8 @@ switch($testo){
     break;
   case 'esci':
     // qui mettere tastiera start
+    $msg="hey ecco a te una barzeletta";
+    mandamessaggiutente($utente, $msg);			
     break;
 
 }
