@@ -1,16 +1,52 @@
 <?php
 //beecky
 
-// webhook token e update che ci permettono di interagire con il bot
 $web="https://api.telegram.org/bot";
 $token="872839539:AAGgmCXaX9zdSypFKiR4BHxoVK3U-riq3ao";
 $completo="https://api.telegram.org/bot".$token;
 $updates=file_get_contents("php://input");
 $update=json_decode($updates, true);
-
+function is_new_request($requestUpdateId)
+{
+    $filename = "./last_update_id.txt";
+    if (filesize($filename)) {
+        $file = fopen($filename, "w");
+        if ($file) {
+            fwrite($file, $requestUpdateId);
+            fclose($file);
+            return true;
+        } else
+            return null;
+    } else {
+        $file = fopen($filename, "w");
+        fwrite($file, 1);
+        fclose($file);
+        return false;
+    }
+}
+function set_get_updates_parameters($getUpdates)
+{
+    $filename = "./last_update_id.txt";
+    if (file_exists($filename)) {
+        $file = fopen($filename, "r");
+        $lastUpdateId = fgets($file);
+        fclose($file);
+    } else {
+        $file = fopen($filename, "w");
+        $lastUpdateId = fwrite($file, 1);
+        fclose($file);
+    }
+    return str_replace("100", $lastUpdateId, $getUpdates);
+}
 $updates = json_decode(file_get_contents(set_get_updates_parameters("https://api.telegram.org/bot872839539:AAGgmCXaX9zdSypFKiR4BHxoVK3U-riq3ao/getUpdates?offset=100")), true);
-
-
+// Separate every update in $updates
+$isNewRequest = is_new_request($update["update_id"]); // $update["update_id"] is update_id of one of your requests; e.g. 591019242
+if ($isNewRequest === false || $isNewRequest === null){
+	exit;	
+}
+elseif(!$update){
+  exit;
+}
 //utente
 $utente=$messaggio['chat']['id'];
 $utente=$messaggio['chat']['id'];
@@ -56,7 +92,7 @@ switch($testo){
     break;
   case 'birre':
       // code...
-    $msg="";
+    $msg="  ";
     mandamessaggiutente($utente, $msg);
     break;
   case 'prenotazioni':
@@ -71,6 +107,8 @@ switch($testo){
     break;
   case 'esci':
     // qui mettere tastiera start
+    $msg=" ";
+    mandamessaggiutente($utente, $msg);		
     break;
 
 }
