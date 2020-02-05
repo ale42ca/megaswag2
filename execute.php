@@ -104,6 +104,7 @@ public function comandiadmin($utente)
 	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
 	file_get_contents($url);
 }
+/*
 if($testo=="prossimo evento"){
   $msg="settare la prossima assemblea";
   mandamessaggiutente($utente, $msg);
@@ -226,3 +227,4 @@ if($querydata<31){
   $data=$querydata;
   inserireneldatabase();
 }
+*/
