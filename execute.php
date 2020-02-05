@@ -93,7 +93,7 @@ switch($testo){
     break;
   case 'birre':
       // code...
-    $msg="";
+    $msg=" ";
     mandamessaggiutente($utente, $msg);
     break;
   case 'prenotazioni':
