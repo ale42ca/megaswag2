@@ -56,7 +56,7 @@ switch($testo){
     break;
   case 'birre':
       // code...
-    $msg=" Hai preso delle birre?";
+    $msg="";
     mandamessaggiutente($utente, $msg);
     break;
   case 'prenotazioni':
@@ -75,7 +75,11 @@ switch($testo){
 
 }
 
-
+//data
+function getdataoggi($datamessaggio){
+  $datazioneunix = gmdate("d.m.y", $datamessaggio);
+  return $datazioneunix;
+}
 
 // metodo per mandare $messaggio
 public function mandamessaggiutente($utente, $msg)
@@ -188,7 +192,7 @@ function prendidaldatabase($utente,$cosa){
 	}
 }
 
-$mese=1;
+
 function tastieracalendario($utente,$dataoggi,$mese){
     $message = $dataoggi;
 
@@ -220,5 +224,5 @@ function tastieracalendario($utente,$dataoggi,$mese){
 }
 if($querydata<31){
   $data=$querydata;
-  
+  inserireneldatabase();
 }
