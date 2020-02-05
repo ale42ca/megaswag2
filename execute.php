@@ -56,7 +56,7 @@ switch($testo){
     break;
   case 'birre':
       // code...
-    $msg="";
+    $msg=" Hai preso delle birre?";
     mandamessaggiutente($utente, $msg);
     break;
   case 'prenotazioni':
@@ -188,7 +188,7 @@ function prendidaldatabase($utente,$cosa){
 	}
 }
 
-
+$mese=1;
 function tastieracalendario($utente,$dataoggi,$mese){
     $message = $dataoggi;
 
