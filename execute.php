@@ -219,7 +219,7 @@ if($querydata < "32"){
   $ora="12";
   $qualedatabase="1";
   //inserireneldatabase($utente, $data, $ora, $qualedatabase);
-}/*elseif ($querydata == "prima") {
+}elseif ($querydata == "prima") {
       // code...
       $mese=$mese - "1";
       if($mese>"0"){
@@ -228,7 +228,7 @@ if($querydata < "32"){
         // code...
         $mese="1";
       }
-}elseif ($querydata == "dopo") {
+}/*elseif ($querydata == "dopo") {
     // code...
     $mese=$mese + "1";
     if($mese<"13"){
