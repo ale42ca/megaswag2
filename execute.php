@@ -70,8 +70,7 @@ switch($testo){
     break;
   case 'esci':
     // qui mettere tastiera start
-    $msg="hey ecco a te una barzeletta";
-    mandamessaggiutente($utente, $msg);
+    tastierastart($utente);
     break;
 
 }
