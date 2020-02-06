@@ -217,26 +217,26 @@ function tastieracalendario($utente,$dataoggi,$mese){
 if($querydata<31){
   $data=$querydata."/".$mese."/".$anno;
   $ora="12";
-  $qualedatabase=1;
+  $qualedatabase="1";
   //inserireneldatabase($utente, $data, $ora, $qualedatabase);
-}elseif ($querydata== "prima") {
+}else if ($querydata== "prima") {
       // code...
-      $mese=$mese--;
-      if($mese>0){
+      $mese=$mese - "1";
+      if($mese>"0"){
         tastieracalendario($utente,$dataoggi,$mese)
       }else {
         // code...
         $mese="1";
       }
-}elseif ($querydata == "dopo") {
+}else if ($querydata == "dopo") {
     // code...
-    $mese=$mese++;
-    if($mese<13){
+    $mese=$mese += 1;
+    if($mese<"13"){
       tastieracalendario($utente,$dataoggi,$mese)
     }else {
       // code...
       $mese="1";
-      $anno=$anno++;
+      $anno=$anno+=1;
     }
 }
 
