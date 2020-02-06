@@ -8,7 +8,6 @@ $completo="https://api.telegram.org/bot".$token;
 $updates=file_get_contents("php://input");
 $update=json_decode($updates, true);
 
-$updates = json_decode(file_get_contents(set_get_updates_parameters("https://api.telegram.org/bot872839539:AAGgmCXaX9zdSypFKiR4BHxoVK3U-riq3ao/getUpdates?offset=100")), true);
 
 
 //utente
