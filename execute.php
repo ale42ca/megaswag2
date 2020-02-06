@@ -85,7 +85,7 @@ switch($testo){
     // code...
     $msg="prenotiamo lo studio";
     mandamessaggiutente($utente, $msg);
-    //tastieracalendario($utente,$dataoggi,$mese);
+    tastieracalendario($utente,$dataoggi,$mese);
     break;
   case 'calendario':
       // code...
@@ -238,7 +238,7 @@ function prendidaldatabase($utente,$cosa){
 	}
 }
 
-
+*/
 function tastieracalendario($utente,$dataoggi,$mese){
     $message = $dataoggi;
 
@@ -267,7 +267,7 @@ function tastieracalendario($utente,$dataoggi,$mese){
 
     $url = $GLOBALS[completo].'/sendMessage?chat_id='.$utente.'&parse_mod=HTML&text='.$message.$tastiera;
     file_get_contents($url);
-}
+}/*
 if($querydata<31){
   $data=$querydata."/".$mese;
   $ora="12";
