@@ -68,13 +68,13 @@ $querymsgid = $query['message']['message_id'];
 //data
 $datazioneunix=$messaggio['date'];
 $dataoggi = getdataoggi($datazioneunix);
-
+$mese=date("n");
 
 switch($testo){
   case '/start':
     $msg = "Benevenuto sono Beecky assistente di frequenza libera";
     mandamessaggiutente($utente, $msg);
-
+    tastierastart($utente);
     break;
   case '1admin':
     $msg="Salve Admin";
@@ -85,6 +85,7 @@ switch($testo){
     // code...
     $msg="prenotiamo lo studio";
     mandamessaggiutente($utente, $msg);
+    tastieracalendario($utente,$dataoggi,$mese);
     break;
   case 'calendario':
       // code...
@@ -133,7 +134,13 @@ function mandamessaggicanale($msg)
   $url = $GLOBALS[completo]."/sendMessage?chat_id=".$utente."&text=".urlencode($msg);
   file_get_contents($url);
 }
-/*
+//start comandi
+function tastierastart($utente){
+	    $messaggio = "osserva la tastiera e usa i suoi comandi";
+    	$tastiera = '&reply_markup={"keyboard":[["prenota"],["calendario"],["prenotazioni"],["hey"]]}';
+    	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
+    	file_get_contents($url);
+}
 //admin comandi
 function comandiadmin($utente)
 {
@@ -262,7 +269,8 @@ function tastieracalendario($utente,$dataoggi,$mese){
     file_get_contents($url);
 }
 if($querydata<31){
-  $data=$querydata;
-  inserireneldatabase();
+  $data=$querydata."/".$mese;
+  $ora="12.00";
+  $qualedatabase=1;
+  inserireneldatabase($utente, $data, $ora, $qualedatabase);
 }
-*/
