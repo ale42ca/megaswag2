@@ -79,7 +79,7 @@ switch($testo){
   case '1admin':
     $msg="Salve Admin";
     mandamessaggiutente($utente, $msg);
-    comandiadmin();
+    comandiadmin($utente);
     break;
   case 'prenota':
     // code...
@@ -136,7 +136,7 @@ function mandamessaggicanale($msg)
 }
 //start comandi
 function tastierastart($utente){
-	    $messaggio = "osserva la tastiera e usa i suoi comandi";
+	$messaggio = "osserva la tastiera e usa i suoi comandi";
     	$tastiera = '&reply_markup={"keyboard":[["prenota"],["calendario"],["prenotazioni"],["hey"]]}';
     	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     	file_get_contents($url);
@@ -145,8 +145,8 @@ function tastierastart($utente){
 function comandiadmin($utente)
 {
   // code...
-  $messaggio = "cosa vuoi fare?";
-  $tastiera = '&reply_markup={"keyboard":[["prossimo evento"],["rifornimento di birra"],["new tesserato"],["esci"]]}';
+  	$messaggio = "cosa vuoi fare?";
+  	$tastiera = '&reply_markup={"keyboard":[["prossimo evento"],["rifornimento di birra"],["new tesserato"],["esci"]]}';
 	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
 	file_get_contents($url);
 }
@@ -220,18 +220,18 @@ function prendidaldatabase($utente,$cosa){
     $result = pg_query($db,"SELECT  numero FROM birre ";
 
   }($qualedatabase==3){
-    $result = pg_query($db,"SELECT nome, quando FROM ";
+    $result = pg_query($db,"SELECT nome, quando FROM fan";
 
   }
 
 	while($row=pg_fetch_assoc($result)){
-    if ($qualedatabase==1){
-      $msg="lo studio è stato prenotato da".$row['utente']."il giorno".$row['data']."per quest'ora".$row['ora'] ;
-    }($qualedatabase==2){
-      $msg="Birre presenti ".$row['numero'] ;
-    }($qualedatabase==3){
-      $msg=k78 4$row['utente']."tessarato il giorno".$row['data'] ;
-    }
+			    if ($qualedatabase==1){
+			      $msg="lo studio è stato prenotato da".$row['utente']."il giorno".$row['data']."per quest'ora".$row['ora'] ;
+			    }($qualedatabase==2){
+			      $msg="Birre presenti ".$row['numero'] ;
+			    }($qualedatabase==3){
+			      $msg=$row['utente']."tessarato il giorno".$row['data'] ;
+			    }	
 		$url = $GLOBALS[completo]."/sendMessage?chat_id=".$utente."&text=".urlencode($msg);
 		file_get_contents($url);
 
