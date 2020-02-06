@@ -45,7 +45,7 @@ $updates = json_decode(file_get_contents(set_get_updates_parameters("https://api
 // Separate every update in $updates
 $isNewRequest = is_new_request($update["update_id"]); // $update["update_id"] is update_id of one of your requests; e.g. 591019242
 if ($isNewRequest === false || $isNewRequest === null){
-	exit;	
+	exit;
 	}
 elseif(!$update){
   exit;
@@ -153,7 +153,7 @@ function comandiadmin($utente)
 if($testo=="prossimo evento"){
   $msg="settare la prossima assemblea";
   mandamessaggiutente($utente, $msg);
-
+/*
 }else if($testo=="rifornimento di birra"){
   $msg = "quanta birra abbiamo";
   mandamessaggiutente($utente, $msg);
@@ -231,7 +231,7 @@ function prendidaldatabase($utente,$cosa){
 			      $msg="Birre presenti ".$row['numero'] ;
 			    }($qualedatabase==3){
 			      $msg=$row['utente']."tessarato il giorno".$row['data'] ;
-			    }	
+			    }
 		$url = $GLOBALS[completo]."/sendMessage?chat_id=".$utente."&text=".urlencode($msg);
 		file_get_contents($url);
 
@@ -274,3 +274,4 @@ if($querydata<31){
   $qualedatabase=1;
   inserireneldatabase($utente, $data, $ora, $qualedatabase);
 }
+*/
