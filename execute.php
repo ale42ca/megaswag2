@@ -51,7 +51,6 @@ $testo=$messaggio['text'];
 $utente=$messaggio['chat']['id'];
 $utente=$messaggio['chat']['id'];
 $datazioneunix=$messaggio['date'];
-$dataoggi = getdataoggi($datazioneunix);
 $nomeutente=$messaggio['chat']['first_name'];
   $query = $update['callback_query'];
   $queryid = $query['id'];
