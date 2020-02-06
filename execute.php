@@ -85,7 +85,7 @@ switch($testo){
     // code...
     $msg="prenotiamo lo studio";
     mandamessaggiutente($utente, $msg);
-    tastieracalendario($utente,$dataoggi,$mese);
+    //tastieracalendario($utente,$dataoggi,$mese);
     break;
   case 'calendario':
       // code...
