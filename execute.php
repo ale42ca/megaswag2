@@ -221,16 +221,16 @@ if($querydata < "32"){
   //inserireneldatabase($utente, $data, $ora, $qualedatabase);
 }elseif ($querydata == "prima") {
       // code...
-      $mese=$mese - "1";
+      $mese= $mese - "1";
       if($mese>"0"){
         tastieracalendario($utente,$dataoggi,$mese);
       }else {
         // code...
         $mese="1";
       }
-}/*elseif ($querydata == "dopo") {
+}elseif ($querydata == "dopo") {
     // code...
-    $mese=$mese + "1";
+    $mese = $mese + "1";
     if($mese<"13"){
       tastieracalendario($utente,$dataoggi,$mese);
     }else {
@@ -238,6 +238,7 @@ if($querydata < "32"){
       $mese="1";
       $anno=$anno + "1";
     }
+}elseif ($querydata == "esci") {
+    tastierastart($utente);	
 }
 
-*/
