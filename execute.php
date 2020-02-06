@@ -63,7 +63,7 @@ switch ($testo) {
     case "/start":
 	$ms = "Ciao sono Beecky assistente virtuale di radio frequenza libera. Cosa posso fare per te?";
 	sendMessage($utente, $ms);	
-        tastierastart($utente);	
+       
         break;
  
 }
@@ -74,13 +74,5 @@ function sendMessage($utente, $msg){
 		$url = $GLOBALS[completo]."/sendMessage?chat_id=".$utente."&text=".urlencode($msg);
 		file_get_contents($url);
 }
-function editMessageText($chatId,$message_id,$newText){
-    $url = $GLOBALS[completo]."/editMessageText?chat_id=$chatId&message_id=$message_id&parse_mode=HTML&text=".urlencode($newText);
-    file_get_contents($url);
-  }
-function inviamessaggiocanale($msg){
-	$utente = "@santacaterina2";
-	$url = $GLOBALS[completo]."/sendMessage?chat_id=".$utente."&text=".urlencode($msg);
-	file_get_contents($url);
-}
+
 
