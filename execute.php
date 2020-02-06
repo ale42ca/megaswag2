@@ -213,13 +213,13 @@ function tastieracalendario($utente,$dataoggi,$mese){
     			}
     $url = $GLOBALS[completo].'/sendMessage?chat_id='.$utente.'&parse_mod=HTML&text='.$message.$tastiera;
     file_get_contents($url);
-}/*
+}
 if($querydata < "32"){
   $data=$querydata.".".$mese.".".$anno;
   $ora="12";
   $qualedatabase="1";
   //inserireneldatabase($utente, $data, $ora, $qualedatabase);
-}elseif ($querydata == "prima") {
+}/*elseif ($querydata == "prima") {
       // code...
       $mese=$mese - "1";
       if($mese>"0"){
