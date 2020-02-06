@@ -30,6 +30,7 @@ $querymsgid = $query['message']['message_id'];
 $datazioneunix=$messaggio['date'];
 $dataoggi = getdataoggi($datazioneunix);
 $mese=date("n");
+$anno=date("Y");
 
 switch($testo){
   case '/start':
@@ -212,11 +213,30 @@ function tastieracalendario($utente,$dataoggi,$mese){
     			}
     $url = $GLOBALS[completo].'/sendMessage?chat_id='.$utente.'&parse_mod=HTML&text='.$message.$tastiera;
     file_get_contents($url);
-}/*
+}
 if($querydata<31){
-  $data=$querydata."/".$mese;
+  $data=$querydata."/".$mese."/".$anno;
   $ora="12";
   $qualedatabase=1;
-  inserireneldatabase($utente, $data, $ora, $qualedatabase);
+  //inserireneldatabase($utente, $data, $ora, $qualedatabase);
+}elseif ($querydata== "prima") {
+      // code...
+      $mese=$mese--;
+      if($mese>0){
+        tastieracalendario($utente,$dataoggi,$mese)
+      }else {
+        // code...
+        $mese="1";
+      }
+}elseif ($querydata == "dopo") {
+    // code...
+    $mese=$mese++;
+    if($mese<13){
+      tastieracalendario($utente,$dataoggi,$mese)
+    }else {
+      // code...
+      $mese="1";
+      $anno=$anno++;
+    }
 }
-*/
+
