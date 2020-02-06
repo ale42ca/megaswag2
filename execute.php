@@ -215,12 +215,12 @@ function tastieracalendario($utente,$dataoggi,$mese){
     $url = $GLOBALS[completo].'/sendMessage?chat_id='.$utente.'&parse_mod=HTML&text='.$message.$tastiera;
     file_get_contents($url);
 }
-if($querydata < "32"){
+if($query < "32"){
   $data=$querydata.".".$mese.".".$anno;
   $ora="12";
   $qualedatabase="1";
   //inserireneldatabase($utente, $data, $ora, $qualedatabase);
-}elseif ($querydata == "prima") {
+}elseif ($query == "prima") {
       // code...
       $mese= $mese - "1";
       if($mese>"0"){
@@ -229,7 +229,7 @@ if($querydata < "32"){
         // code...
         $mese="1";
       }
-}elseif ($querydata == "dopo") {
+}elseif ($query== "dopo") {
     // code...
     $mese = $mese + "1";
     if($mese<"13"){
@@ -240,7 +240,7 @@ if($querydata < "32"){
       $anno=$anno + "1";
     }
 }
-if ($querydata == "esci") {
+if ($query== "esci") {
     tastierastart($utente);	
 }
 
