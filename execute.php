@@ -59,7 +59,7 @@ $nomeutente=$messaggio['chat']['first_name'];
   $queryusername = $query['from']['username'];
   $querydata = $query['data'];
   $querymsgid = $query['message']['message_id'];
-if ($testo == "/start") {
+if ($testo == '/start') {
   
 	$ms = "Ciao sono Beecky assistente virtuale di radio frequenza libera. Cosa posso fare per te?";
 	sendMessage($utente, $ms);	
