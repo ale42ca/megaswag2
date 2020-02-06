@@ -223,7 +223,7 @@ if($querydata < "32"){
       // code...
       $mese=$mese - "1";
       if($mese>"0"){
-        tastieracalendario($utente,$dataoggi,$mese)
+        tastieracalendario($utente,$dataoggi,$mese);
       }else {
         // code...
         $mese="1";
@@ -232,7 +232,7 @@ if($querydata < "32"){
     // code...
     $mese=$mese + "1";
     if($mese<"13"){
-      tastieracalendario($utente,$dataoggi,$mese)
+      tastieracalendario($utente,$dataoggi,$mese);
     }else {
       // code...
       $mese="1";
