@@ -26,6 +26,7 @@ $queryUserId = $query['from']['id'];
 $queryusername = $query['from']['username'];
 $querydata = $query['data'];
 $querymsgid = $query['message']['message_id'];
+$querymsg = $query['message'];
 //data
 $datazioneunix=$messaggio['date'];
 $dataoggi = getdataoggi($datazioneunix);
@@ -214,12 +215,12 @@ function tastieracalendario($utente,$dataoggi,$mese){
     $url = $GLOBALS[completo].'/sendMessage?chat_id='.$utente.'&parse_mod=HTML&text='.$message.$tastiera;
     file_get_contents($url);
 }
-if($querydata < "32"){
+if($querymsg < "32"){
   $data=$querydata.".".$mese.".".$anno;
   $ora="12";
   $qualedatabase="1";
   //inserireneldatabase($utente, $data, $ora, $qualedatabase);
-}elseif ($querydata == "prima") {
+}elseif ($querymsg == "prima") {
       // code...
       $mese= $mese - "1";
       if($mese>"0"){
@@ -228,7 +229,7 @@ if($querydata < "32"){
         // code...
         $mese="1";
       }
-}elseif ($querydata == "dopo") {
+}elseif ($querymsg == "dopo") {
     // code...
     $mese = $mese + "1";
     if($mese<"13"){
@@ -239,7 +240,7 @@ if($querydata < "32"){
       $anno=$anno + "1";
     }
 }
-if ($querydata == "esci") {
+if ($querymsg == "esci") {
     tastierastart($utente);	
 }
 
