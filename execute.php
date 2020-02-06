@@ -238,7 +238,8 @@ if($querydata < "32"){
       $mese="1";
       $anno=$anno + "1";
     }
-}elseif ($querydata == "esci") {
+}
+if ($querydata == "esci") {
     tastierastart($utente);	
 }
 
