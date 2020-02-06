@@ -149,11 +149,11 @@ function comandiadmin($utente)
   	$tastiera = '&reply_markup={"keyboard":[["prossimo evento"],["rifornimento di birra"],["new tesserato"],["esci"]]}';
 	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
 	file_get_contents($url);
-}
+}/*
 if($testo=="prossimo evento"){
   $msg="settare la prossima assemblea";
   mandamessaggiutente($utente, $msg);
-/*
+
 }else if($testo=="rifornimento di birra"){
   $msg = "quanta birra abbiamo";
   mandamessaggiutente($utente, $msg);
