@@ -68,7 +68,7 @@ $tabella= letturedatabase("SELECT COUNT(*) FROM utenti WHERE utente='$username'"
 			mandamessaggiutente($utente, $GLOBALS['utenterfl']['nomevero']);
 			if(empty($GLOBALS['utenterfl']['password'])){
 				mandamessaggiutente($utente, " dammi una passwpord inserendo /password latuapassword");
-					
+				exit;	
 				
 
 			}
@@ -78,8 +78,9 @@ $tabella= letturedatabase("SELECT COUNT(*) FROM utenti WHERE utente='$username'"
 		  	mandamessaggiutente($utente, "vai via stronzo ");
 			exit;
 		}
-
+	
     tastierastart($utente);
+		
     break;
  case '/password':
     $msg=$comando[1];
@@ -148,19 +149,21 @@ function mandamessaggicanale($msg)
 //start comandi
 function tastierastart($utente){
 	$messaggio = "osserva la tastiera e usa i suoi comandi";
-    	$tastiera = '&reply_markup={"keyboard":[["prenota"],["calendario"],["prenotazioni"],["hey"]]}';
+	if($GLOBALS['utenterfl']['livello']== 1){
+		 $tastiera = '&reply_markup={"keyboard":[["prenota"],["calendario"],["prenotazioni"],["hey"]]}';
+				
+	}else if($GLOBALS['utenterfl']['livello']== 2 ){
+		 $tastiera = '&reply_markup={"keyboard":[["prenota"],["calendario"],["prenotazioni"],["hey"],["prossimo evento"],["rifornimento di birra"],["new tesserato"],["esci"]]}';
+
+	}else {
+		sendmessage($utente, "vai via? NON SEI UN CAZZO");
+	 	exit;
+	}
     	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     	file_get_contents($url);
 }
-//admin comandi
-function comandiadmin($utente)
-{
-  // code...
-  	$messaggio = "cosa vuoi fare?";
-  	$tastiera = '&reply_markup={"keyboard":[["prossimo evento"],["rifornimento di birra"],["new tesserato"],["esci"]]}';
-	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
-	file_get_contents($url);
-}/*
+
+/*
 if($testo=="prossimo evento"){
   $msg="settare la prossima assemblea";
   mandamessaggiutente($utente, $msg);
