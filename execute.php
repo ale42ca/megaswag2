@@ -51,7 +51,7 @@ function letturedatabase($query){
 switch($testo){
   case '/start':
     $msg = "Benevenuto sono Beecky assistente di frequenza libera";
-				    mandamessaggiutente($utente, $utente);
+				    mandamessaggiutente($utente, $nomeutente);
 
 		
     mandamessaggiutente($utente, $msg);
