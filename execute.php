@@ -51,11 +51,15 @@ function letturedatabase($query){
 switch($testo){
   case '/start':
     $msg = "Benevenuto sono Beecky assistente di frequenza libera";
+				    mandamessaggiutente($utente, $utente);
+
+		
     mandamessaggiutente($utente, $msg);
 $tabella= letturedatabase("SELECT COUNT(*) FROM utenti WHERE utente='$utente'");
 		if($tabella[0]['count']){
 					
 		    mandamessaggiutente($utente, "Benvenuto amico mio ");
+			
 		}else {
 		  // code...
 		  
