@@ -52,12 +52,16 @@ switch($testo){
   case '/start':
     $msg = "Benevenuto sono Beecky assistente di frequenza libera";
     mandamessaggiutente($utente, $msg);
-    $tabella= letturedatabase("SELECT * FROM utenti");
-    foreach ($tabella as $riga) {
-      // code...
-       
-       mandamessaggiutente($utente, $riga['nomevero']);
-    }
+$tabella= letturedatabase("SELECT COUNT(*) FROM utenti WHERE utente='$utente'");
+		if($tabella[0]['count']){
+					
+		    mandamessaggiutente($utente, "Benvenuto amico mio ");
+		}else {
+		  // code...
+		  
+			mandamessaggiutente($utente, "vai via stronzo ");
+		}
+
     tastierastart($utente);
     break;
   case '1admin':
