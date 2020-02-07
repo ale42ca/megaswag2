@@ -18,6 +18,7 @@ $testo=$messaggio['text'];
 //utente
 $utente=$messaggio['chat']['id'];
 $nomeutente=$messaggio['chat']['first_name'];
+$username=$messaggio['from']['username'];
 
 //query msg
 $query = $update['callback_query'];
@@ -51,11 +52,11 @@ function letturedatabase($query){
 switch($testo){
   case '/start':
     $msg = "Benevenuto sono Beecky assistente di frequenza libera";
-				    mandamessaggiutente($utente, $nomeutente);
+				    mandamessaggiutente($utente, $username);
 
 		
     mandamessaggiutente($utente, $msg);
-$tabella= letturedatabase("SELECT COUNT(*) FROM utenti WHERE utente='$nomeutente'");
+$tabella= letturedatabase("SELECT COUNT(*) FROM utenti WHERE utente='$username'");
 		if($tabella[0]['count']){
 					
 		    mandamessaggiutente($utente, "Benvenuto amico mio ");
