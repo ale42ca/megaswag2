@@ -86,7 +86,7 @@ $tabella= letturedatabase("SELECT COUNT(*) FROM utenti WHERE utente='$username'"
     $msg=$comando[1];
 			$tabula=letturedatabase("UPDATE utenti SET password= '$msg'  WHERE utente = '$username'");
     			mandamessaggiutente($utente,"ok il prezzo è giusto" );
-		
+						
     break;		
   case '1admin':
     $msg="Salve Admin";
@@ -148,7 +148,9 @@ function mandamessaggicanale($msg)
 }
 //start comandi
 function tastierastart($utente){
+	mandamessaggiutente($utente, $GLOBALS['utenterfl']['livello']);
 	$messaggio = "osserva la tastiera e usa i suoi comandi";
+	
 	if($GLOBALS['utenterfl']['livello']== 1){
 		 $tastiera = '&reply_markup={"keyboard":[["prenota"],["calendario"],["prenotazioni"],["hey"]]}';
 				
