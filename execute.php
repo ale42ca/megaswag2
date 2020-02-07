@@ -83,7 +83,8 @@ $tabella= letturedatabase("SELECT COUNT(*) FROM utenti WHERE utente='$username'"
     break;
  case '/password':
     $msg=$comando[1];
-    mandamessaggiutente($utente,$GLOBALS['utenterfl']['nomevero'] );
+			$tabula=letturedatabase("UPDATE utenti SET password= '$msg'  WHERE utente = '$username'");
+    			mandamessaggiutente($utente,"ok il prezzo è giusto" );
 		
     break;		
   case '1admin':
