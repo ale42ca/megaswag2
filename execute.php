@@ -55,7 +55,7 @@ switch($testo){
 
 		
     mandamessaggiutente($utente, $msg);
-$tabella= letturedatabase("SELECT COUNT(*) FROM utenti WHERE utente='$utente'");
+$tabella= letturedatabase("SELECT COUNT(*) FROM utenti WHERE utente='$nomeutente'");
 		if($tabella[0]['count']){
 					
 		    mandamessaggiutente($utente, "Benvenuto amico mio ");
