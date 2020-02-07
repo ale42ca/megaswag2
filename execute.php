@@ -147,6 +147,7 @@ function mandamessaggicanale($msg)
   file_get_contents($url);
 }
 //start comandi
+/*
 function tastierastart($utente){
 	mandamessaggiutente($utente, $GLOBALS['utenterfl']['livello']);
 	$messaggio = "osserva la tastiera e usa i suoi comandi";
@@ -164,7 +165,7 @@ function tastierastart($utente){
     	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     	file_get_contents($url);
 }
-
+*/
 /*
 if($testo=="prossimo evento"){
   $msg="settare la prossima assemblea";
