@@ -51,8 +51,8 @@ function letturedatabase($query){
   }
 
 
-
-switch($testo){
+$comando= explode(' ', $testo);
+switch($comando[0]){
   case '/start':
     $msg = "Benevenuto sono Beecky assistente di frequenza libera";
 				    mandamessaggiutente($utente, $username);
@@ -70,7 +70,7 @@ $tabella= letturedatabase("SELECT COUNT(*) FROM utenti WHERE utente='$username'"
 				mandamessaggiutente($utente, " dammi una passwpord inserendo /password latuapassword");
 					$msg="/password";
 					  $url = $GLOBALS[completo]."/sendMessage?chat_id=".$utente."&text=".urlencode($msg);
-					file_get_contents($url);
+					  file_get_contents($url);
 				
 				
 
@@ -85,6 +85,11 @@ $tabella= letturedatabase("SELECT COUNT(*) FROM utenti WHERE utente='$username'"
 
     tastierastart($utente);
     break;
+ case '/password':
+    $msg=$comando[1];
+    mandamessaggiutente($utente, $msg);
+		
+    break;		
   case '1admin':
     $msg="Salve Admin";
     mandamessaggiutente($utente, $msg);
