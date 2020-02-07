@@ -67,7 +67,10 @@ $tabella= letturedatabase("SELECT COUNT(*) FROM utenti WHERE utente='$username'"
 			$GLOBALS['utenterfl']= $tabula[0];	
 			mandamessaggiutente($utente, $GLOBALS['utenterfl']['nomevero']);
 			if(empty($GLOBALS['utenterfl']['password'])){
-				mandamessaggiutente($utente, " okokokokkoko");
+				mandamessaggiutente($utente, " dammi una password");
+					$msg="/password";
+					  $url = $GLOBALS[completo]."/sendMessage?chat_id=".$utente."&text=".urlencode($msg);
+					file_get_contents($url);
 				
 				
 
