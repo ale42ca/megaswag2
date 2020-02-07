@@ -33,10 +33,31 @@ $dataoggi = getdataoggi($datazioneunix);
 $mese=date("n");
 $anno=date("Y");
 
+
+
+function letturedatabase($query){
+  $db =pg_connect("host= ec2-54-247-96-169.eu-west-1.compute.amazonaws.com port=5432 dbname=d2hsht934ovhs9 user=maghsyclqxkpyw password=50ac10525450c60de9157e57e0ab6432f320f5ef3d8ee1650818e491644f51bc");
+
+  $result = pg_query($db, $query );
+
+
+	while($row=pg_fetch_assoc($result)){
+
+			  $table[]=$row ;
+	}
+  return $table;
+  }
+
 switch($testo){
   case '/start':
     $msg = "Benevenuto sono Beecky assistente di frequenza libera";
     mandamessaggiutente($utente, $msg);
+    
+    foreach ($tabella as $riga) {
+      // code...
+       
+       mandamessaggiutente($utente, $riga['nomevero']);
+    }
     tastierastart($utente);
     break;
   case '1admin':
@@ -179,7 +200,7 @@ function prendidaldatabase($utente,$cosa){
 */
 function tastieracalendario($utente,$dataoggi,$mese){
     $message = $dataoggi;
-    $mesecalendario=$mese;	
+    $mesecalendario=$mese;
 
 		    if($mesecalendario == "11" or $mesecalendario == "9" or $mesecalendario == "4" or $mesecalendario == "6"){
    				$tastiera = '&reply_markup={"inline_keyboard":[[{"text":"1","callback_data":"1"},{"text":"2","callback_data":"2"},{"text":"3","callback_data":"3"},{"text":"4","callback_data":"4"},{"text":"5","callback_data":"5"},{"text":"6","callback_data":"6"},{"text":"7","callback_data":"7"}],[{"text":"8","callback_data":"8"},{"text":"9","callback_data":"9"},{"text":"10","callback_data":"10"},{"text":"11","callback_data":"11"},{"text":"12","callback_data":"12"},{"text":"13","callback_data":"13"},{"text":"14","callback_data":"14"}],[{"text":"15","callback_data":"15"},{"text":"16","callback_data":"16"},{"text":"17","callback_data":"17"},{"text":"18","callback_data":"18"},{"text":"19","callback_data":"19"},{"text":"20","callback_data":"20"},{"text":"21","callback_data":"21"}],[{"text":"22","callback_data":"22"},{"text":"23","callback_data":"23"},{"text":"24","callback_data":"24"},{"text":"25","callback_data":"25"},{"text":"26","callback_data":"26"},{"text":"27","callback_data":"27"},{"text":"28","callback_data":"28"}],[{"text":"29","callback_data":"29"},{"text":"30","callback_data":"30"},{"text":"31","callback_data":"31"},{"text":" ","callback_data":" "},{"text":" ","callback_data":" "},{"text":" ","callback_data":" "},{"text":" ","callback_data":" "}],[{"text":"<<","callback_data":"prima"},{"text":"esci","callback_data":"esci"},{"text":">>","callback_data":"dopo"}]] , "force_reply": true, "selective": true}';
@@ -217,5 +238,5 @@ if($query < "32"){
     }
 }
 if ($query== "esci") {
-    tastierastart($utente);	
+    tastierastart($utente);
 }
