@@ -34,6 +34,7 @@ $dataoggi = getdataoggi($datazioneunix);
 $mese=date("n");
 $anno=date("Y");
 
+$GLOBALS['utenterfl']=null;
 
 
 function letturedatabase($query){
@@ -49,6 +50,8 @@ function letturedatabase($query){
   return $table;
   }
 
+
+
 switch($testo){
   case '/start':
     $msg = "Benevenuto sono Beecky assistente di frequenza libera";
@@ -60,11 +63,20 @@ $tabella= letturedatabase("SELECT COUNT(*) FROM utenti WHERE utente='$username'"
 		if($tabella[0]['count']){
 					
 		    mandamessaggiutente($utente, "Benvenuto amico mio ");
+			$tabula=letturedatabase("SELECT * FROM utenti WHERE utente='$username'");
+			$GLOBALS['utenterfl']= $tabula[0];	
+			if(!empty($GLOBALS['utenterfl']['password'])){
+				mandamessaggiutente($utente, "dammi una nuova password");
+				
+				
+
+			}
 			
 		}else {
 		  // code...
 		  
 			mandamessaggiutente($utente, "vai via stronzo ");
+			exit;
 		}
 
     tastierastart($utente);
@@ -72,6 +84,7 @@ $tabella= letturedatabase("SELECT COUNT(*) FROM utenti WHERE utente='$username'"
   case '1admin':
     $msg="Salve Admin";
     mandamessaggiutente($utente, $msg);
+		
     comandiadmin($utente);
     break;
   case 'prenota':
