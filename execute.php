@@ -65,9 +65,9 @@ $tabella= letturedatabase("SELECT COUNT(*) FROM utenti WHERE utente='$username'"
 		    mandamessaggiutente($utente, "Benvenuto amico mio ");
 			$tabula=letturedatabase("SELECT * FROM utenti WHERE utente='$username'");
 			$GLOBALS['utenterfl']= $tabula[0];	
-			mandamessaggiutente($utente, "tutto ok");
+			mandamessaggiutente($utente, $GLOBALS['utenterfl']['password']);
 			if(!empty($GLOBALS['utenterfl']['password'])){
-				mandamessaggiutente($utente, "dammi una nuova password");
+				mandamessaggiutente($utente, " okokokokkoko");
 				
 				
 
