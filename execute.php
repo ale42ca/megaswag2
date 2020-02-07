@@ -41,12 +41,12 @@ switch($testo){
   case '/start':
     $msg = "Benevenuto sono Beecky assistente di frequenza libera";
     mandamessaggiutente($utente, $msg);
-
+	/*
     $tabella= letturedatabase("SELECT * FROM utenti");
     foreach ($tabella as $riga) {
       // code...
        mandamessaggiutente($utente, $riga['nomevero']);
-    }
+    }*/
     tastierastart($utente);
 
     break;
