@@ -75,8 +75,7 @@ $tabella= letturedatabase("SELECT COUNT(*) FROM utenti WHERE utente='$username'"
 			
 		}else {
 		  // code...
-		  
-			mandamessaggiutente($utente, "vai via stronzo ");
+		  	mandamessaggiutente($utente, "vai via stronzo ");
 			exit;
 		}
 
@@ -84,7 +83,7 @@ $tabella= letturedatabase("SELECT COUNT(*) FROM utenti WHERE utente='$username'"
     break;
  case '/password':
     $msg=$comando[1];
-    mandamessaggiutente($utente, $msg);
+    mandamessaggiutente($utente,$GLOBALS['utenterfl']['nomevero'] );
 		
     break;		
   case '1admin':
