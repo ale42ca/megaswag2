@@ -57,41 +57,39 @@ switch($comando[0]){
     $msg = "Benevenuto sono Beecky assistente di frequenza libera";
 				    mandamessaggiutente($utente, $username);
 
-		
-    mandamessaggiutente($utente, $msg);
-$tabella= letturedatabase("SELECT COUNT(*) FROM utenti WHERE utente='$username'");
-		if($tabella[0]['count']){
-					
-		    mandamessaggiutente($utente, "Benvenuto amico mio ");
-			$tabula=letturedatabase("SELECT * FROM utenti WHERE utente='$username'");
-			$GLOBALS['utenterfl']= $tabula[0];	
-			mandamessaggiutente($utente, $GLOBALS['utenterfl']['nomevero']);
-			if(empty($GLOBALS['utenterfl']['password'])){
-				mandamessaggiutente($utente, " dammi una passwpord inserendo /password latuapassword");
-				exit;	
-				
 
-			}
-			
+            mandamessaggiutente($utente, $msg);
+            $tabella= letturedatabase("SELECT COUNT(*) FROM utenti WHERE utente='$username'");
+		if($tabella[0]['count']){
+
+		      mandamessaggiutente($utente, "Benvenuto amico mio ");
+			    $tabula=letturedatabase("SELECT * FROM utenti WHERE utente='$username'");
+			    $GLOBALS['utenterfl']= $tabula[0];
+			    mandamessaggiutente($utente, $GLOBALS['utenterfl']['nomevero']);
+  		 if(empty($GLOBALS['utenterfl']['password'])){
+  				  mandamessaggiutente($utente, " dammi una passwpord inserendo /password latuapassword");
+  				  exit;
+  		}
+
 		}else {
 		  // code...
 		  	mandamessaggiutente($utente, "vai via stronzo ");
-			exit;
+			  exit;
 		}
 	
-    tastierastart($utente);
-		
+      tastierastart($utente);
+
     break;
- case '/password':
-    $msg=$comando[1];
+  case '/password':
+      $msg=$comando[1];
 			$tabula=letturedatabase("UPDATE utenti SET password= '$msg'  WHERE utente = '$username'");
-    			mandamessaggiutente($utente,"ok il prezzo è giusto" );
-						
-    break;		
+    	mandamessaggiutente($utente,"ok il prezzo è giusto" );
+
+    break;
   case '1admin':
     $msg="Salve Admin";
     mandamessaggiutente($utente, $msg);
-		
+
     comandiadmin($utente);
     break;
   case 'prenota':
@@ -147,14 +145,13 @@ function mandamessaggicanale($msg)
   file_get_contents($url);
 }
 //start comandi
-/*
 function tastierastart($utente){
 	mandamessaggiutente($utente, $GLOBALS['utenterfl']['livello']);
 	$messaggio = "osserva la tastiera e usa i suoi comandi";
-	
+
 	if($GLOBALS['utenterfl']['livello']== 1){
 		 $tastiera = '&reply_markup={"keyboard":[["prenota"],["calendario"],["prenotazioni"],["hey"]]}';
-				
+
 	}else if($GLOBALS['utenterfl']['livello']== 2 ){
 		 $tastiera = '&reply_markup={"keyboard":[["prenota"],["calendario"],["prenotazioni"],["hey"],["prossimo evento"],["rifornimento di birra"],["new tesserato"],["esci"]]}';
 
@@ -165,7 +162,7 @@ function tastierastart($utente){
     	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     	file_get_contents($url);
 }
-*/
+
 /*
 if($testo=="prossimo evento"){
   $msg="settare la prossima assemblea";
@@ -246,12 +243,13 @@ function tastieracalendario($utente,$dataoggi,$mese){
     $url = $GLOBALS[completo].'/sendMessage?chat_id='.$utente.'&parse_mod=HTML&text='.$message.$tastiera;
     file_get_contents($url);
 }
-if($query < "32"){
-  $data=$querydata.".".$mese.".".$anno;
+if($querymsg < "32"){
+  $data=$querymsg.".".$mese.".".$anno;
   $ora="12";
   $qualedatabase="1";
+  mandamessaggiutente($utente, "tutto ok ora è aggiornato nel database");
   //inserireneldatabase($utente, $data, $ora, $qualedatabase);
-}elseif ($query == "prima") {
+}elseif ($querymsg == "prima") {
       // code...
       $mese= $mese - "1";
       if($mese>"0"){
@@ -260,7 +258,7 @@ if($query < "32"){
         // code...
         $mese="1";
       }
-}elseif ($query== "dopo") {
+}elseif ($querymsg== "dopo") {
     // code...
     $mese = $mese + "1";
     if($mese<"13"){
@@ -271,6 +269,6 @@ if($query < "32"){
       $anno=$anno + "1";
     }
 }
-if ($query== "esci") {
+if ($querymsg== "esci") {
     tastierastart($utente);
 }
