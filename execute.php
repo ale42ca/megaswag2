@@ -86,42 +86,7 @@ switch($comando[0]){
     	mandamessaggiutente($utente,"ok il prezzo è giusto" );
 
     break;
-  case '1admin':
-    $msg="Salve Admin";
-    mandamessaggiutente($utente, $msg);
-
-    comandiadmin($utente);
-    break;
-  case 'prenota':
-    // code...
-    $msg="prenotiamo lo studio";
-    mandamessaggiutente($utente, $msg);
-    tastieracalendario($utente,$dataoggi,$mese);
-    break;
-  case 'calendario':
-      // code...
-    $msg="Calendario";
-    mandamessaggiutente($utente, $msg);
-    break;
-  case 'birre':
-      // code...
-    $msg="";
-    mandamessaggiutente($utente, $msg);
-    break;
-  case 'prenotazioni':
-    // code...
-    $msg="prenotazione radio";
-    mandamessaggiutente($utente, $msg);
-    break;
-  case 'hey':
-    // code...
-    $msg="hey ecco a te una barzeletta";
-    mandamessaggiutente($utente, $msg);
-    break;
-  case 'esci':
-    // qui mettere tastiera start
-    tastierastart($utente);
-    break;
+ 
 
 }
 
