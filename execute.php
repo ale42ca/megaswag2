@@ -111,7 +111,7 @@ function mandamessaggicanale($msg)
 }
 //start comandi
 function tastierastart($utente){
-	mandamessaggiutente($utente, $GLOBALS['utenterfl']['livello']);
+	mandamessaggiutente($utente, "non sono sciuro che funzioni");
 	$messaggio = "osserva la tastiera e usa i suoi comandi";
 
 	if($GLOBALS['utenterfl']['livello']== 1){
