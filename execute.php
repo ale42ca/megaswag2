@@ -247,9 +247,9 @@ if($querymsg < "32"){
   $data=$querymsg.".".$mese.".".$anno;
   $ora="12";
   $qualedatabase="1";
-  mandamessaggiutente($utente, "tutto ok ora è aggiornato nel database");
+  mandamessaggiutente($utente, "AAAAAAAAAAAAAAAAAAaa è aggiornato nel database");
   //inserireneldatabase($utente, $data, $ora, $qualedatabase);
-}elseif ($querymsg == "prima") {
+}elseif ($querymsg== "prima") {
       // code...
       $mese= $mese - "1";
       if($mese>"0"){
