@@ -170,7 +170,6 @@ switch($comando[0]){
     break;
 
 }
-["crea prossimo evento"],["prenotazioni studio"],["calendario eventi"],["Prendo una birra"],["rifornimento di birra"],["new tesserato"],["Hey"]
 //data
 function getdataoggi($datamessaggio){
   $datazioneunix = gmdate("d.m.y", $datamessaggio);
