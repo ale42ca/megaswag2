@@ -97,7 +97,9 @@ switch($comando[0]){
   case 'prenota':
     // code...
     $prenotazione=$comando[1];
-    $msg="prenotiamo lo studio per farlo digita: prenota data  formato prenota dd.mm";
+    $msg="prenotiamo lo studio. Per farlo digita: prenota data ";
+    mandamessaggiutente($utente, $msg);
+    $msg="prenota giorno.mese";
     mandamessaggiutente($utente, $msg);
     $dataprenotazione= explode('.', $prenotazione);
     $meseprenotato=$dataprenotazione[1];
@@ -122,7 +124,7 @@ switch($comando[0]){
         mandamessaggiutente($utente, $msg);
         exit();
     }elseif ($meseprenotato<$mese  and $mese!='12' ) {
-        $msg="Vuoi prenotare nel passato, il che non è molto fico";
+        $msg="Vuoi prenotare nel passato... il che non è molto fico";
         mandamessaggiutente($utente, $msg);
         exit();
     }else  {
@@ -134,12 +136,12 @@ switch($comando[0]){
         mandamessaggiutente($utente, $msg);
         exit();
       }else {
-        $msg="perfetto ora inseirsco nel database /n ti ricordo che se devi eliminare la tua ultima prenotazione devi digitare cancella prenotazione ";
+        $msg="Perfetto aggiorno le informazioni! ti ricordo che se devi eliminare la tua ultima prenotazione devi digitare cancella prenotazione";
         mandamessaggiutente($utente, $msg);
-        inserireneldatabase("INSERT INTO prenotazioni ( utente, giorno, mese) VALUES ('$utente', '$giornoprenotato', $meseprenotato)");
+        inserireneldatabase("INSERT INTO prenotazioni ( utente, giorno, mese) VALUES ('$nomeutente', '$giornoprenotato', $meseprenotato)");
         $msg="avvisiamo sul canale ";
         mandamessaggiutente($utente, $msg);
-        $msg="studio prenotato da".$utente."per il giorno".$giornoprenotato."/".$meseprenotato;
+        $msg="studio prenotato da".$nomeutente."per il giorno".$giornoprenotato."/".$meseprenotato;
         mandamessaggicanale($msg);
       }
 }
