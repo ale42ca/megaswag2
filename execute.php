@@ -53,6 +53,7 @@ function letturedatabase($query){
   }
 
 $comando= explode(' ', $testo);
+strtolower($testo);
 switch($comando[0]){
   case '/start':
     $msg = "Benevenuto sono Beecky assistente di frequenza libera";
@@ -74,7 +75,7 @@ switch($comando[0]){
 
 		}else {
 		  // code...
-		  	mandamessaggiutente($utente, "vai via stronzo ");
+		  	mandamessaggiutente($utente, "la password non è giusta ");
 			  exit;
 		}
 
@@ -121,7 +122,7 @@ switch($comando[0]){
         mandamessaggiutente($utente, $msg);
         exit();
     }elseif ($meseprenotato<$mese  and $mese!='12' ) {
-        $msg="Vuoi prenotare nel passato";
+        $msg="Vuoi prenotare nel passato, il che non è molto fico";
         mandamessaggiutente($utente, $msg);
         exit();
     }else  {
