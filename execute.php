@@ -51,9 +51,9 @@ function letturedatabase($query){
   
   	$result = pg_query($db,$query);
   }
-
-$comando= explode(' ', $testo);
 $testo=strtolower($testo);
+$comando= explode(' ', $testo);
+
 switch($comando[0]){
   case '/start':
     $msg = "Benevenuto sono Beecky assistente di frequenza libera";
