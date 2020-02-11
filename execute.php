@@ -85,7 +85,7 @@ switch($comando[0]){
   case '/password':
       $msg=$comando[1];
 			$tabula=letturedatabase("UPDATE utenti SET password= '$msg'  WHERE utente = '$username'");
-    	mandamessaggiutente($utente,"ok il prezzo è giusto" );
+    	mandamessaggiutente($utente,"ok la password è giusta" );
 
     break;
   case '1admin':
@@ -97,9 +97,9 @@ switch($comando[0]){
   case 'prenota':
     // code...
     $prenotazione=$comando[1];
-    $msg="prenotiamo lo studio. Per farlo digita: prenota data ";
+    $msg="prenotiamo lo studio. Per farlo digita:";
     mandamessaggiutente($utente, $msg);
-    $msg="prenota giorno.mese";
+    $msg="prenota giornoscelto.mesescelto";
     mandamessaggiutente($utente, $msg);
     $dataprenotazione= explode('.', $prenotazione);
     $meseprenotato=$dataprenotazione[1];
