@@ -128,7 +128,7 @@ switch($comando[0]){
       // confronto nel database della data
       $tabrutta= letturedatabase("SELECT * FROM prenotazioni WHERE giorno='$giornoprenotato' AND mese = '$meseprenotato' ");
       if (!empty($tabrutta)) {
-        $personachehaprenotato=$tabrutta[0]]['utente'];
+        $personachehaprenotato=$tabrutta[0]['utente'];
         $msg="purtroppo lo studio è stato già prenotato da ".$personachehaprenotato;
         mandamessaggiutente($utente, $msg);
         exit();
