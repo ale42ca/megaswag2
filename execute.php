@@ -97,13 +97,18 @@ switch($comando[0]){
   case 'prenota':
     // code...
     $prenotazione=$comando[1];
-    $msg="prenotiamo lo studio. Per farlo digita:";
-    mandamessaggiutente($utente, $msg);
-    $msg="prenota giornoscelto.mesescelto";
-    mandamessaggiutente($utente, $msg);
     $dataprenotazione= explode('.', $prenotazione);
     $meseprenotato=$dataprenotazione[1];
     $giornoprenotato=$dataprenotazione[0];
+    if($meseprenotato== null or $meseprenotato== null){
+
+	    $msg="prenotiamo lo studio. Per farlo digita:";
+	    mandamessaggiutente($utente, $msg);
+	    $msg="prenota giornoscelto.mesescelto";
+	    mandamessaggiutente($utente, $msg);
+	    exit();    
+    }
+		
     if($meseprenotato> 12 or $meseprenotato<0){
 
       $msg="hai inserito un mese sbagliato";
@@ -157,9 +162,9 @@ switch($comando[0]){
     $msg="";
     mandamessaggiutente($utente, $msg);
     break;
-  case 'prenotazioni':
+  case 'canc':
     // code...
-    $msg="prenotazione radio";
+    $msg="cancelliamo ultima prenotazione";
     mandamessaggiutente($utente, $msg);
     break;
   case 'hey':
