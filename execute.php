@@ -31,6 +31,7 @@ $querymsg = $query['message'];
 //data
 $datazioneunix=$messaggio['date'];
 $dataoggi = getdataoggi($datazioneunix);
+$giorno=date("j");
 $mese=date("n");
 $anno=date("Y");
 
@@ -39,17 +40,17 @@ $GLOBALS['utenterfl']=null;
 
 function letturedatabase($query){
   $db =pg_connect("host= ec2-54-247-96-169.eu-west-1.compute.amazonaws.com port=5432 dbname=d2hsht934ovhs9 user=maghsyclqxkpyw password=50ac10525450c60de9157e57e0ab6432f320f5ef3d8ee1650818e491644f51bc");
-
   $result = pg_query($db, $query );
-
-
 	while($row=pg_fetch_assoc($result)){
-
 			  $table[]=$row ;
 	}
   return $table;
   }
-
+  function inserireneldatabase($query){
+  	$db =pg_connect("host= ec2-54-247-96-169.eu-west-1.compute.amazonaws.com port=5432 dbname=d2hsht934ovhs9 user=maghsyclqxkpyw password=50ac10525450c60de9157e57e0ab6432f320f5ef3d8ee1650818e491644f51bc");
+  
+  	$result = pg_query($db,$query);
+  }
 
 $comando= explode(' ', $testo);
 switch($comando[0]){
@@ -76,7 +77,7 @@ switch($comando[0]){
 		  	mandamessaggiutente($utente, "vai via stronzo ");
 			  exit;
 		}
-	
+
       tastierastart($utente);
 
     break;
@@ -86,10 +87,90 @@ switch($comando[0]){
     	mandamessaggiutente($utente,"ok il prezzo è giusto" );
 
     break;
- 
+  case '1admin':
+    $msg="Salve Admin";
+    mandamessaggiutente($utente, $msg);
 
+    comandiadmin($utente);
+    break;
+  case 'prenota':
+    // code...
+    $prenotazione=$comando[1];
+    $msg="prenotiamo lo studio per farlo digita: prenota data  formato prenota dd.mm.";
+    mandamessaggiutente($utente, $msg);
+    $dataprenotazione= explode('.', $prenotazione);
+    $meseprenotato=$dataprenotazione[1];
+    $giornoprenotato=$dataprenotazione[0];
+    if($meseprenotato> 12 or $meseprenotato<0){
+
+      $msg="hai inserito un mese sbagliato";
+      mandamessaggiutente($utente, $msg);
+      exit();
+
+    }elseif ($giornoprenotato < 0 or $giornoprenotato>31 ) {
+        $msg="hai inserito un giorno sbagliato";
+        mandamessaggiutente($utente, $msg);
+        exit();
+    }if($meseprenotato== 2 and $giornoprenotato > 29){
+
+        $msg=" 30 giorni ha novembre aprile maggio giugno e settembre di 28 c'è ne è uno tutti gli altri sono di 31";
+        mandamessaggiutente($utente, $msg);
+        exit();
+    }if($meseprenotato== 11 or $meseprenotato== 4 or $meseprenotato== 5 or $meseprenotato== 6 or $meseprenotato== 9 and $giornoprenotato>30){
+        $msg=" 30 giorni ha novembre aprile maggio giugno e settembre di 28 c'è ne è uno tutti gli altri sono di 31";
+        mandamessaggiutente($utente, $msg);
+        exit();
+    }elseif ($meseprenotato<$mese  and $mese!='12' ) {
+        $msg="Vuoi prenotare nel passato";
+        mandamessaggiutente($utente, $msg);
+        exit();
+    }else  {
+      // confronto nel database della data
+      $tabrutta= letturedatabase("SELECT * FROM prenotazioni WHERE giorno='$giornoprenotato' AND mese = '$meseprenotato' ");
+      if (!empty($tabrutta)) {
+        $personachehaprenotato=$tabrutta[0]]['utente']
+        $msg="purtroppo lo studio è stato già prenotato da ".$personachehaprenotato;
+        mandamessaggiutente($utente, $msg);
+        exit();
+      }else {
+        $msg="perfetto ora inseirsco nel database /n ti ricordo che se devi eliminare la tua ultima prenotazione devi digitare cancella prenotazione ";
+        mandamessaggiutente($utente, $msg);
+        inserireneldatabase("INSERT INTO prenotazioni ( utente, giorno, mese) VALUES ('$utente', '$giornoprenotato', $meseprenotato)");
+        $msg="avvisiamo sul canale ";
+        mandamessaggiutente($utente, $msg);
+        $msg="studio prenotato da".$utente."per il giorno".$giornoprenotato."/".$meseprenotato;
+        mandamessaggicanale($msg);
+      }
 }
 
+    break;
+  case 'evento':
+      // code...
+    $msg="creiamo insieme il prossimo evento scrivi il tuo messaggio e invialo poi scrivi evento e la data";
+    mandamessaggiutente($utente, $msg);
+    break;
+  case 'birre':
+      // code...
+    $msg="";
+    mandamessaggiutente($utente, $msg);
+    break;
+  case 'prenotazioni':
+    // code...
+    $msg="prenotazione radio";
+    mandamessaggiutente($utente, $msg);
+    break;
+  case 'hey':
+    // code...
+    $msg="hey ecco a te una barzeletta";
+    mandamessaggiutente($utente, $msg);
+    break;
+  case 'esci':
+    // qui mettere tastiera start
+    tastierastart($utente);
+    break;
+
+}
+["crea prossimo evento"],["prenotazioni studio"],["calendario eventi"],["Prendo una birra"],["rifornimento di birra"],["new tesserato"],["Hey"]
 //data
 function getdataoggi($datamessaggio){
   $datazioneunix = gmdate("d.m.y", $datamessaggio);
@@ -111,17 +192,17 @@ function mandamessaggicanale($msg)
 }
 //start comandi
 function tastierastart($utente){
-	mandamessaggiutente($utente, "non sono sciuro che funzioni");
+	mandamessaggiutente($utente, $GLOBALS['utenterfl']['livello']);
 	$messaggio = "osserva la tastiera e usa i suoi comandi";
 
 	if($GLOBALS['utenterfl']['livello']== 1){
-		 $tastiera = '&reply_markup={"keyboard":[["calendario eventi"],["prenotazioni studio"],["Prendo una birra"],["Hey"]]}';
+		 $tastiera = '&reply_markup={"keyboard":[["prenota"],["calendario"],["prenotazioni"],["hey"]]}';
 
 	}else if($GLOBALS['utenterfl']['livello']== 2 ){
-		 $tastiera = '&reply_markup={"keyboard":[["prenota studio"],["crea prossimo evento"],["prenotazioni studio"],["calendario eventi"],["Prendo una birra"],["rifornimento di birra"],["new tesserato"],["Hey"]]}';
+		 $tastiera = '&reply_markup={"keyboard":[["prenota"],["calendario"],["prenotazioni"],["hey"],["prossimo evento"],["rifornimento di birra"],["new tesserato"],["esci"]]}';
 
 	}else {
-		sendmessage($utente, "Non sei tesserato, entra a far parte di Radio Frequenza Libera, vieni a trovarci in studio!");
+		sendmessage($utente, "vai via? NON SEI UN CAZZO");
 	 	exit;
 	}
     	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
