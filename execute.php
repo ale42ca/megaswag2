@@ -53,7 +53,7 @@ function letturedatabase($query){
   }
 
 $comando= explode(' ', $testo);
-strtolower($testo);
+$testo=strtolower($testo);
 switch($comando[0]){
   case '/start':
     $msg = "Benevenuto sono Beecky assistente di frequenza libera";
