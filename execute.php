@@ -96,7 +96,7 @@ switch($comando[0]){
   case 'prenota':
     // code...
     $prenotazione=$comando[1];
-    $msg="prenotiamo lo studio per farlo digita: prenota data  formato prenota dd.mm.";
+    $msg="prenotiamo lo studio per farlo digita: prenota data  formato prenota dd.mm";
     mandamessaggiutente($utente, $msg);
     $dataprenotazione= explode('.', $prenotazione);
     $meseprenotato=$dataprenotazione[1];
@@ -128,7 +128,7 @@ switch($comando[0]){
       // confronto nel database della data
       $tabrutta= letturedatabase("SELECT * FROM prenotazioni WHERE giorno='$giornoprenotato' AND mese = '$meseprenotato' ");
       if (!empty($tabrutta)) {
-        $personachehaprenotato=$tabrutta[0]]['utente']
+        $personachehaprenotato=$tabrutta[0]]['utente'];
         $msg="purtroppo lo studio è stato già prenotato da ".$personachehaprenotato;
         mandamessaggiutente($utente, $msg);
         exit();
