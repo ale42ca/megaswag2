@@ -48,7 +48,7 @@ function letturedatabase($query){
   }
   function inserireneldatabase($query){
   	$db =pg_connect("host= ec2-54-247-96-169.eu-west-1.compute.amazonaws.com port=5432 dbname=d2hsht934ovhs9 user=maghsyclqxkpyw password=50ac10525450c60de9157e57e0ab6432f320f5ef3d8ee1650818e491644f51bc");
-  
+
   	$result = pg_query($db,$query);
   }
 $testo=strtolower($testo);
@@ -106,9 +106,9 @@ switch($comando[0]){
 	    mandamessaggiutente($utente, $msg);
 	    $msg="prenota giornoscelto.mesescelto";
 	    mandamessaggiutente($utente, $msg);
-	    exit();    
+	    exit();
     }
-		
+
     if($meseprenotato> 12 or $meseprenotato<0){
 
       $msg="hai inserito un mese sbagliato";
@@ -166,6 +166,24 @@ switch($comando[0]){
     // code...
     $msg="cancelliamo ultima prenotazione";
     mandamessaggiutente($utente, $msg);
+    $cancella=$comando[1];
+    if($cancella== null){
+      exit();
+    }
+    if($cancella=="evento"){
+      //cancella ultimo evento
+      
+      inserireneldatabase("DELETE FROM evento WHERE ir in ( SELECT ir FROM users ORDER BY ir desc LIMIT 1 ) ");
+    }elseif ($cancella=="prenotazione") {
+      
+      inserireneldatabase("DELETE FROM prenotazioni WHERE ir in ( SELECT ir FROM users ORDER BY ir desc LIMIT 1 ) ");
+      $msg=" ultima prenotazione cancellata";
+      mandamessaggiutente($utente, $msg);
+    }elseif ($cancella=="birra") {
+      
+      // cancella
+    }
+
     break;
   case 'hey':
     // code...
