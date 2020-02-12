@@ -313,7 +313,7 @@ $db =pg_connect("host= ec2-54-247-96-169.eu-west-1.compute.amazonaws.com port=54
 			    if ($quale== "1"){
 			      $msg="lo studio è stato prenotato da".$row['utente']."per il giorno".$row['giorno']."/".$row['mese']."per quest'ora".$row['ora'] ;
 			    }($quale== "2"){
-			      $msg="evento".$row['data'] ;
+			      $msg="evento".$row['giorno'] ;
 			    }($quale== "3"){
 			      $msg=$row['utente']."tessarato il giorno".$row['data'] ;
 			    }
