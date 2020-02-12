@@ -317,6 +317,7 @@ $db =pg_connect("host= ec2-54-247-96-169.eu-west-1.compute.amazonaws.com port=54
 			    }($quale== "3"){
 			      $msg=$row['utente']."tessarato il giorno".$row['data'] ;
 			    }
+	}
 		$url = $GLOBALS[completo]."/sendMessage?chat_id=".$utente."&text=".urlencode($msg);
 		file_get_contents($url);
 	}
