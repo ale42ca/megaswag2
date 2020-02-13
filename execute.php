@@ -35,7 +35,8 @@ $giorno=date("j");
 $mese=date("n");
 $anno=date("Y");
 
-$GLOBALS['utenterfl']=null;
+$datiutente=letturedatabase("SELECT * FROM utenti WHERE utente='$username'");
+$GLOBALS['utenterfl']['livello']=$datiutente[0];
 
 
 function letturedatabase($query){
