@@ -256,11 +256,11 @@ switch($comando[0]){
 	if($calendario==null){
 	    $msg="ecco a te le ultimi 10 eventi";
 	    mandamessaggiutente($utente, $msg);
-	    elencodatabase("SELECT utente, giorno, mese FROM prenotazioni WHERE ir in ( SELECT ir FROM prenotazioni ORDER BY ir desc LIMIT 10 )");
+	    elencodatabase(1,"SELECT utente, giorno, mese FROM prenotazioni WHERE ir in ( SELECT ir FROM prenotazioni ORDER BY ir desc LIMIT 10 )");
 	}else if($calendario==prenotazioni){
-    $msg="ecco a te le ultime 10 prenotazioni dello studio";
-    mandamessaggiutente($utente, $msg);
-    elencodatabase("SELECT utente, giorno, mese FROM prenotazioni WHERE ir in ( SELECT ir FROM prenotazioni ORDER BY ir desc LIMIT 10 )");
+	    $msg="ecco a te le ultime 10 prenotazioni dello studio";
+	    mandamessaggiutente($utente, $msg);
+	    elencodatabase(2,"SELECT utente, giorno, mese FROM prenotazioni WHERE ir in ( SELECT ir FROM prenotazioni ORDER BY ir desc LIMIT 10 )");
 
 	}
 
@@ -316,15 +316,17 @@ function tastierastart($utente){
     	file_get_contents($url);
 }
 
-function elencodatabase($query){
+function elencodatabase($quale,$query){
 $db =pg_connect("host= ec2-54-247-96-169.eu-west-1.compute.amazonaws.com port=5432 dbname=d2hsht934ovhs9 user=maghsyclqxkpyw password=50ac10525450c60de9157e57e0ab6432f320f5ef3d8ee1650818e491644f51bc");
 
     $result = pg_query($db,$query) ;
 
 	while($row=pg_fetch_assoc($result)){
-
-	 $msg="lo studio è stato prenotato da ".$row['utente']."per il giorno ".$row['giorno']."/".$row['mese'] ;
-
+	if($quale==1){
+	 	$msg="lo studio è stato prenotato da ".$row['utente']."per il giorno ".$row['giorno']."/".$row['mese'] ;
+	}else if($quale==2){
+		$msg="evento ".$row['evento']."per il giorno ".$row['giorno']."/".$row['mese'] ;
+	}
 	}
 		$url = $GLOBALS[completo]."/sendMessage?chat_id=".$utente."&text=".urlencode($msg);
 		file_get_contents($url);
