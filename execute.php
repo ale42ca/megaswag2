@@ -256,11 +256,11 @@ switch($comando[0]){
 	if($calendario==null){
 	    $msg="ecco a te le ultimi 10 eventi";
 	    mandamessaggiutente($utente, $msg);
-	    elencodatabase(1,"SELECT utente, giorno, mese FROM prenotazioni WHERE ir in ( SELECT ir FROM prenotazioni ORDER BY ir desc LIMIT 10 )");
+	    elencodatabase(2,"SELECT evento , utente, giorno, mese FROM eventi WHERE ir in ( SELECT ir FROM eventi ORDER BY ir desc LIMIT 10 )");
 	}else if($calendario==prenotazioni){
 	    $msg="ecco a te le ultime 10 prenotazioni dello studio";
 	    mandamessaggiutente($utente, $msg);
-	    elencodatabase(2,"SELECT utente, giorno, mese FROM prenotazioni WHERE ir in ( SELECT ir FROM prenotazioni ORDER BY ir desc LIMIT 10 )");
+	    elencodatabase(1,"SELECT utente, giorno, mese FROM prenotazioni WHERE ir in ( SELECT ir FROM prenotazioni ORDER BY ir desc LIMIT 10 )");
 
 	}
 
