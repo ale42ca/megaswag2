@@ -70,7 +70,7 @@ switch($comando[0]){
 			    $GLOBALS['utenterfl']= $tabula[0];
 			    mandamessaggiutente($utente, $GLOBALS['utenterfl']['nomevero']);
   		 if(empty($GLOBALS['utenterfl']['password'])){
-  				  mandamessaggiutente($utente, " dammi una passwpord inserendo /password latuapassword");
+  				  mandamessaggiutente($utente, " dammi una password inserendo /password latuapassword");
   				  exit;
   		}
 
@@ -328,7 +328,8 @@ $db =pg_connect("host= ec2-54-247-96-169.eu-west-1.compute.amazonaws.com port=54
 	}else if($quale==2){
 		$msg="evento ".$row['evento']."per il giorno ".$row['giorno']."/".$row['mese'] ;
 	}
-	}
+	
 		$url = $GLOBALS[completo]."/sendMessage?chat_id=".$utente."&text=".urlencode($msg);
 		file_get_contents($url);
 	}
+}
