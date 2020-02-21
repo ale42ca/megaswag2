@@ -260,7 +260,7 @@ switch($comando[0]){
 	}else if($calendario==prenotazioni){
       $msg="ecco a te le ultime 10 prenotazioni dello studio";
       mandamessaggiutente($utente, $msg);
-      $tabrutta= elencodatabase("SELECT utente, giorno, mese FROM prenotazioni WHERE ir in ( SELECT ir FROM prenotazioni ORDER BY ir desc LIMIT 10 )");
+      $tabrutta= letturedatabase("SELECT utente, giorno, mese FROM prenotazioni WHERE ir in ( SELECT ir FROM prenotazioni ORDER BY ir desc LIMIT 10 )");
 
 	}
     for ($i=0; $i <10 ; $i++) {
@@ -320,16 +320,3 @@ function tastierastart($utente){
     	file_get_contents($url);
 }
 
-function elencodatabase($query){
-$db =pg_connect("host= ec2-54-247-96-169.eu-west-1.compute.amazonaws.com port=5432 dbname=d2hsht934ovhs9 user=maghsyclqxkpyw password=50ac10525450c60de9157e57e0ab6432f320f5ef3d8ee1650818e491644f51bc");
-
-    $result = pg_query($db,$query) ;
-
-	while($row=pg_fetch_assoc($result)){
-
-	 $msg="lo studio è stato prenotato da ".$row['utente']."per il giorno ".$row['giorno']."/".$row['mese'] ;
-
-	}
-		$url = $GLOBALS[completo]."/sendMessage?chat_id=".$utente."&text=".urlencode($msg);
-		file_get_contents($url);
-	}
