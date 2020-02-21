@@ -261,8 +261,7 @@ switch($comando[0]){
       $msg="ecco a te le ultime 10 prenotazioni dello studio";
       mandamessaggiutente($utente, $msg);
       $tabrutta= letturedatabase("SELECT utente, giorno, mese FROM prenotazioni WHERE ir in ( SELECT ir FROM prenotazioni ORDER BY ir desc LIMIT 10 )");
-
-	}
+      }
     $lenght=count($tabrutta);		
     for ($i=0; $i<$lenght ; $i++) {
       $msg=$tabrutta[$i]["utente"]." il giorno".$tabrutta[$i]["giorno"]."/".$tabrutta[$i]["mese"];
