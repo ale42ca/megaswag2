@@ -259,7 +259,7 @@ switch($comando[0]){
       exit();
     }
     $calendario=$comando[1];
-	if($calendario==eventi){
+	if($calendario=="eventi"){
 	    $msg="per vedere calendario basta scrivere calendario + prenotazioni o eventi";
 	    mandamessaggiutente($utente, $msg);
 	    $tabrutta= elencodatabase("SELECT utente, giorno, mese FROM prenotazioni WHERE ir in ( SELECT ir FROM prenotazioni ORDER BY ir desc LIMIT 10 )");
@@ -268,7 +268,7 @@ switch($comando[0]){
 	      mandamessaggiutente($utente,$msg);
 	    }	
 	
-	}else if($calendario==prenotazioni){
+	}else if($calendario=="prenotazioni"){
 	      $msg="ecco a te le ultime 10 prenotazioni dello studio";
 	      mandamessaggiutente($utente, $msg);
 	      $tabrutta= letturedatabase("SELECT utente, giorno, mese FROM prenotazioni WHERE ir in ( SELECT ir FROM prenotazioni ORDER BY ir desc LIMIT 10 )");
