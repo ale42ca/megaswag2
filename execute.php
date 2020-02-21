@@ -125,7 +125,7 @@ switch($comando[0]){
     if($GLOBALS['utenterfl']['livello']<1){
       exit();
     }
-    mandamessaggiutente($utente,"prenotiamo );
+    mandamessaggiutente($utente,"prenotiamo" );
 
     $prenotazione=$comando[1];
     $dataprenotazione= explode('.', $prenotazione);
@@ -134,8 +134,8 @@ switch($comando[0]){
     if($meseprenotato== null or $meseprenotato== null){
 
 	    
-	    mandamessaggiutente($utente, "prenotiamo lo studio. Per farlo digita:");
-	    $msg="prenota giornoscelto.mesescelto";
+	    mandamessaggiutente($utente, "prenotiamo lo studio Per farlo digita:");
+	    $msg="prenota giornoscelto mesescelto";
 	    mandamessaggiutente($utente, $msg);
 	    exit();
     }
