@@ -133,8 +133,8 @@ switch($comando[0]){
     $giornoprenotato=$dataprenotazione[0];
     if($meseprenotato== null or $meseprenotato== null){
 
-	    $msg="prenotiamo lo studio. Per farlo digita:";
-	    mandamessaggiutente($utente, $msg);
+	    
+	    mandamessaggiutente($utente, "prenotiamo lo studio. Per farlo digita:");
 	    $msg="prenota giornoscelto.mesescelto";
 	    mandamessaggiutente($utente, $msg);
 	    exit();
