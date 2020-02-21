@@ -39,7 +39,7 @@ try {
     	$tabula=letturedatabase("SELECT * FROM utenti WHERE utente='$username'");
 	$GLOBALS['utenterfl']= $tabula[0];
 } catch (Exception $e) {
-    $e->getMessage(), "\n";
+    $e="ok";
     $comando[0]='/start';	
 }
 
