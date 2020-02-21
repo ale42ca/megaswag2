@@ -35,7 +35,13 @@ $giorno=date("j");
 $mese=date("n");
 $anno=date("Y");
 
-$GLOBALS['utenterfl']=null;
+try {
+    	$tabula=letturedatabase("SELECT * FROM utenti WHERE utente='$username'");
+	$GLOBALS['utenterfl']= $tabula[0];
+} catch (Exception $e) {
+    $e->getMessage(), "\n";
+    $comando[0]='/start';	
+}
 
 
 function letturedatabase($query){
