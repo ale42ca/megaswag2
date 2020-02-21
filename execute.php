@@ -92,7 +92,7 @@ switch($comando[0]){
             $tabella= letturedatabase("SELECT COUNT(*) FROM utenti WHERE utente='$username'");
 		if($tabella[0]['count']){
 
-		      mandamessaggiutente($utente, "cosa vuoi fare".$nomeutente." ?");
+		      mandamessaggiutente($utente, "cosa vuoi fare ?");
 			    $tabula=letturedatabase("SELECT * FROM utenti WHERE utente='$username'");
 			    $GLOBALS['utenterfl']= $tabula[0];
 			    mandamessaggiutente($utente, $GLOBALS['utenterfl']['nomevero']);
