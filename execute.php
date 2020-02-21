@@ -259,7 +259,7 @@ switch($comando[0]){
       exit();
     }
     $calendario=$comando[1];
-	if($calendario==null){
+	if($calendario==eventi){
 	    $msg="ecco a te le ultimi 10 eventi";
 	    mandamessaggiutente($utente, $msg);
 	    $tabrutta= elencodatabase("SELECT utente, giorno, mese FROM prenotazioni WHERE ir in ( SELECT ir FROM prenotazioni ORDER BY ir desc LIMIT 10 )");
