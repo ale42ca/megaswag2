@@ -267,7 +267,7 @@ switch($comando[0]){
 	      $msg=$tabrutta[$i]["utente"]." il giorno".$tabrutta[$i]["giorno"]."/".$tabrutta[$i]["mese"];
 	      mandamessaggiutente($utente,$msg);
 	    }
-	    }
+	    
 	
 	}else if($calendario=="prenotazioni"){
 	      $msg="ecco a te le ultime 10 prenotazioni dello studio";
