@@ -291,8 +291,9 @@ switch($comando[0]){
     }
     $birra=$comando[1];
     $tabirra= letturedatabase("SELECT birre FROM birra WHERE ir in ( SELECT ir FROM prenotazioni ORDER BY ir desc LIMIT 1 ) ");
-    mandamessaggiutente($utente, "le birre totali".$tabirra[0]["birre"]);
-		
+    mandamessaggiutente($utente, "le birre totali ".$tabirra[0]["birre"]);
+    $nbirra=$tabirra[0]["birre"];
+
     $tastiera = '&reply_markup={"keyboard":[["birra consumata"],["esci"]]}';
         $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$tastiera;
     	file_get_contents($url);
@@ -300,15 +301,19 @@ switch($comando[0]){
 
     if($birra>0){
       mandamessaggiutente($utente, "ti ricordo che puoi indicare che se hai preso + birre puoi indicare quante ne hai prese");    
-      $birra=$tabirra[0]["birre"]+$birra;
-      inserireneldatabase("INSERT INTO birra ( birre, utente, data ) VALUES ('$birra', '$utente', '$dataoggi')");
+      $nbirra=$tabirra[0]["birre"]+$birra;
+      inserireneldatabase("INSERT INTO birra ( birre, utente, data ) VALUES ('$nbirra', '$utente', '$dataoggi')");
       exit();
     }
     if($birra=="consumata"){
       //cancella ultimo evento
-
-      inserireneldatabase("UPDATE birra SET birre = birre - 1 ");
-      $tabirra= letturedatabase("SELECT birre FROM birra WHERE ir in ( SELECT ir FROM prenotazioni ORDER BY ir desc LIMIT 1 ) ");
+    if($nbirra==0){
+       mandamessaggiutente($utente, "le birre sono esaurite");
+       exit();
+	    
+    }		    
+      $nbirra=$tabirra[0]["birre"]-1;
+      $tabirra= letturedatabase("INSERT INTO birra ( birre, utente, data ) VALUES ('$nbirra', '$utente', '$dataoggi') ");
       $birra=$tabirra[0]["birre"];
       mandamessaggiutente($utente, "preso una  birra");
     }
