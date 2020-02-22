@@ -290,7 +290,9 @@ switch($comando[0]){
       exit();
     }
     $birra=$comando[1];
-    mandamessaggiutente($utente, "le birre");
+    $tabirra= letturedatabase("SELECT birre FROM birra WHERE ir in ( SELECT ir FROM prenotazioni ORDER BY ir desc LIMIT 1 ) ");
+    mandamessaggiutente($utente, "le birre totali".$tabirra[0]["birre"]);
+		
     $tastiera = '&reply_markup={"keyboard":[["birra consumata"],["esci"]]}';
         $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$tastiera;
     	file_get_contents($url);
@@ -298,13 +300,16 @@ switch($comando[0]){
 
     if($birra>0){
       mandamessaggiutente($utente, "ti ricordo che puoi indicare che se hai preso + birre puoi indicare quante ne hai prese");    
-      inserireneldatabase("INSERT INTO birra ( birre, utente, data ) VALUES (birre = birre + '$birra', '$utente', '$dataoggi')");
+      $birra=$tabirra[0]["birre"]+$birra;
+      inserireneldatabase("INSERT INTO birra ( birre, utente, data ) VALUES ('$birra', '$utente', '$dataoggi')");
       exit();
     }
     if($birra=="consumata"){
       //cancella ultimo evento
 
       inserireneldatabase("UPDATE birra SET birre = birre - 1 ");
+      $tabirra= letturedatabase("SELECT birre FROM birra WHERE ir in ( SELECT ir FROM prenotazioni ORDER BY ir desc LIMIT 1 ) ");
+      $birra=$tabirra[0]["birre"];
       mandamessaggiutente($utente, "preso una  birra");
     }
 		
