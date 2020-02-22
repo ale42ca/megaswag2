@@ -91,17 +91,15 @@ switch($comando[0]){
 			$tabula=letturedatabase("SELECT * FROM utenti WHERE utente='$username'");
 			$GLOBALS['utenterfl']= $tabula[0];
 			mandamessaggiutente($utente, $GLOBALS['utenterfl']['nomevero']);
-  		    if(empty($GLOBALS['utenterfl']['password'])){
-  				      mandamessaggiutente($utente, " dammi una passwpord inserendo /password latuapassword");
-  				      exit();
-  		    }
-	}else {
-		  // code...
+      if(empty($GLOBALS['utenterfl']['password'])){
+          mandamessaggiutente($utente, " dammi una password inserendo /password latuapassword");
+          exit();
+      }
+	}else{
 		  mandamessaggiutente($utente, "la password non è giusta ");
 			exit();
 	}
   if($GLOBALS['utenterfl']['livello']<1){
-      mandamessaggiutente($utente, "non hai i permessi necessari");  
       exit();
   }else {
     /**********************************  tastierastart($utente);
@@ -124,7 +122,6 @@ switch($comando[0]){
   case 'prenota':
 
     if($GLOBALS['utenterfl']['livello']<1){
-      mandamessaggiutente($utente, "non hai i permessi necessari");  
       exit();
     }
 
@@ -174,8 +171,7 @@ switch($comando[0]){
   case 'evento':
       // code...
     if($GLOBALS['utenterfl']['livello']<1){
-      mandamessaggiutente($utente, "non hai i permessi necessari");  
-      exit();
+        exit();
     }
     $msg="creiamo insieme il prossimo evento scrivi il tuo messaggio e invialo poi scrivi evento e la data";
     mandamessaggiutente($utente, $msg);
@@ -231,18 +227,13 @@ switch($comando[0]){
     break;
   case 'birre':
     if($GLOBALS['utenterfl']['livello']<1){
-      mandamessaggiutente($utente, "non hai i permessi necessari");  
-      exit();
+        exit();
     }
     $msg="";
     mandamessaggiutente($utente, $msg);
     break;
   case 'canc':
     // code...
-    if($GLOBALS['utenterfl']['livello']<1){
-      mandamessaggiutente($utente, "non hai i permessi necessari");  
-      exit();
-    }		
     $msg="cancelliamo ultima prenotazione";
     mandamessaggiutente($utente, $msg);
     $cancella=$comando[1];
@@ -266,7 +257,6 @@ switch($comando[0]){
   case 'calendario':
     // code...
     if($GLOBALS['utenterfl']['livello']<1){
-      mandamessaggiutente($utente, "non hai i permessi necessari");  
       exit();
     }
     $calendario=$comando[1];
@@ -292,18 +282,10 @@ switch($comando[0]){
     break;
   case 'new':
     // code...
-    if($GLOBALS['utenterfl']['livello']<1){
-      mandamessaggiutente($utente, "non hai i permessi necessari");  
-      exit();
-    }		
     $msg="hey ecco a te una barzeletta";
     mandamessaggiutente($utente, $msg);
     break;
   case 'esci':
-    if($GLOBALS['utenterfl']['livello']<1){
-      mandamessaggiutente($utente, "non hai i permessi necessari");  
-      exit();
-    }		
     // qui mettere tastiera start
     //tastierastart($utente);
     break;
