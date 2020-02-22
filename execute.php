@@ -261,16 +261,15 @@ switch($comando[0]){
     }
     $calendario=$comando[1];
 	if($calendario==eventi){
-	    $msg="ecco a te le ultimi 10 eventi";
-	    mandamessaggiutente($utente, $msg);
-	    $tabrutta= elencodatabase("SELECT utente, giorno, mese FROM prenotazioni WHERE ir in ( SELECT ir FROM prenotazioni ORDER BY ir desc LIMIT 10 )");
+      $msg="ecco a te le ultime 10 eventi";
+      mandamessaggiutente($utente, $msg);
+      $tabrutta= letturedatabase("SELECT utente, giorno, mese FROM eventi WHERE ir in ( SELECT ir FROM eventi ORDER BY ir desc LIMIT 10 )");
       for ($i=0; $i<10 ; $i++) {
         $msg=$tabrutta[$i]["utente"]." il giorno".$tabrutta[$i]["giorno"]."/".$tabrutta[$i]["mese"];
         mandamessaggiutente($utente,$msg);
-
+        
       }
       exit();
-
   }else if($calendario==prenotazioni){
       $msg="ecco a te le ultime 10 prenotazioni dello studio";
       mandamessaggiutente($utente, $msg);
