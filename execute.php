@@ -298,7 +298,7 @@ switch($comando[0]){
 
     if(is_int($birra)){
       mandamessaggiutente($utente, "ti ricordo che puoi indicare che se hai preso + birre puoi indicare quante ne hai prese");    
-      inserireneldatabase("UPDATE birra SET birre = birre + '$birra'");
+      inserireneldatabase("INSERT INTO birra ( birra, utente, data ) VALUES ('$birra', '$nomevero', '$dataoggi')'");
       exit();
     }
     if($birra=="consumata"){
