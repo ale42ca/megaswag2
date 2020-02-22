@@ -261,20 +261,20 @@ switch($comando[0]){
     }
     $calendario=$comando[1];
 	if($calendario==eventi){
-      $msg="ecco a te le ultime 10 eventi";
+      $msg="ecco a te le ultime 5 eventi";
       mandamessaggiutente($utente, $msg);
       $tabrutta= letturedatabase("SELECT utente, giorno, mese FROM eventi WHERE ir in ( SELECT ir FROM eventi ORDER BY ir desc LIMIT 10 )");
-      for ($i=0; $i<10 ; $i++) {
+      for ($i=0; $i<5 ; $i++) {
         $msg=$tabrutta[$i]["utente"]." il giorno".$tabrutta[$i]["giorno"]."/".$tabrutta[$i]["mese"];
         mandamessaggiutente($utente,$msg);
         
       }
       exit();
   }else if($calendario==prenotazioni){
-      $msg="ecco a te le ultime 10 prenotazioni dello studio";
+      $msg="ecco a te le ultime 5 prenotazioni dello studio";
       mandamessaggiutente($utente, $msg);
       $tabrutta= letturedatabase("SELECT utente, giorno, mese FROM prenotazioni WHERE ir in ( SELECT ir FROM prenotazioni ORDER BY ir desc LIMIT 10 )");
-      for ($i=0; $i<10 ; $i++) {
+      for ($i=0; $i<5 ; $i++) {
         $msg=$tabrutta[$i]["utente"]." il giorno".$tabrutta[$i]["giorno"]."/".$tabrutta[$i]["mese"];
         mandamessaggiutente($utente,$msg);
         
@@ -284,10 +284,29 @@ switch($comando[0]){
 
 
     break;
-  case 'new':
+  case 'birra':
     // code...
-    $msg="hey ecco a te una barzeletta";
-    mandamessaggiutente($utente, $msg);
+    if($GLOBALS['utenterfl']['livello']<1){
+      exit();
+    }
+    $birra=$comando[1];
+    mandamessaggiutente($utente, "le birre");
+    $tastiera = '&parse_mode=HTML&text=&reply_markup={"keyboard":[["birra consumata"],["esci"]]}';
+    mandamessaggiutente($utente, $tastiera);
+				
+
+    if(is_int($birra)){
+      mandamessaggiutente($utente, "ti ricordo che puoi indicare che se hai preso + birre puoi indicare quante ne hai prese");    
+      inserireneldatabase("UPDATE birra SET birre = birre + '$birra'");
+      exit();
+    }
+    if($birra=="consumata"){
+      //cancella ultimo evento
+
+      inserireneldatabase("UPDATE birra SET birre = birre - 1 ");
+      $msg=" ultima birra";
+      mandamessaggiutente($utente, $msg);
+    }
     break;
   case 'esci':
     // qui mettere tastiera start
