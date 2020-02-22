@@ -296,7 +296,7 @@ switch($comando[0]){
     	file_get_contents($url);
 				
 
-    if(is_int($birra)){
+    if($birra>0){
       mandamessaggiutente($utente, "ti ricordo che puoi indicare che se hai preso + birre puoi indicare quante ne hai prese");    
       inserireneldatabase("INSERT INTO birra ( birra, utente, data ) VALUES ('$birra', '$nomevero', '$dataoggi')'");
       exit();
@@ -305,9 +305,9 @@ switch($comando[0]){
       //cancella ultimo evento
 
       inserireneldatabase("UPDATE birra SET birre = birre - 1 ");
-      $msg=" ultima birra";
-      mandamessaggiutente($utente, $msg);
+      mandamessaggiutente($utente, "preso una  birra");
     }
+		
     break;
   case 'esci':
     // qui mettere tastiera start
