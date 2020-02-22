@@ -292,7 +292,7 @@ switch($comando[0]){
     $birra=$comando[1];
     mandamessaggiutente($utente, "le birre");
     $tastiera = '&reply_markup={"keyboard":[["birra consumata"],["esci"]]}';
-        $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
+        $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$tastiera;
     	file_get_contents($url);
 				
 
