@@ -291,7 +291,7 @@ switch($comando[0]){
     }
     $birra=$comando[1];
     mandamessaggiutente($utente, "le birre");
-    $tastiera = '&parse_mode=HTML&text=&reply_markup={"keyboard":[["birra consumata"],["esci"]]}';
+    $tastiera = '&reply_markup={"keyboard":[["birra consumata"],["esci"]]}';
     mandamessaggiutente($utente, $tastiera);
 				
 
