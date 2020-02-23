@@ -291,7 +291,9 @@ switch($comando[0]){
     }
     $birra=$comando[1];
     $tabirra= letturedatabase("SELECT birre FROM birra WHERE ir in ( SELECT ir FROM prenotazioni ORDER BY ir desc LIMIT 1 ) ");
-    mandamessaggiutente($utente, "le birre totali ".$tabirra[0]["birre"]);
+    $msg=$tabirra[0]["birre"];
+    mandamessaggiutente($utente, $msg);
+    mandamessaggiutente($utente, "le birre totali ");
     $nbirra=$tabirra[0]["birre"];
 
     $tastiera = '&reply_markup={"keyboard":[["birra consumata"],["esci"]]}';
