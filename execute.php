@@ -295,13 +295,13 @@ switch($comando[0]){
     mandamessaggiutente($utente, "le birre totali ".$msgbirra);
 
     $tastiera = '&reply_markup={"keyboard":[["birra consumata"],["esci"]]}';
-        $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$tastiera;
-    	file_get_contents($url);
+    $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$tastiera;
+    file_get_contents($url);
 				
 
     if($birra>0){
       mandamessaggiutente($utente, "ti ricordo che puoi indicare che se hai preso + birre puoi indicare quante ne hai prese");    
-      $nbirra=$msgbirra+$birra;
+      $nbirra=$msgbirra+$comando[1];
       inserireneldatabase("INSERT INTO birra ( birre, utente, data ) VALUES ('$nbirra', '$utente', '$dataoggi')");
       exit();
     }
