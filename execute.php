@@ -302,7 +302,7 @@ switch($comando[0]){
     if($birra>0){
       mandamessaggiutente($utente, "ti ricordo che puoi indicare che se hai preso + birre puoi indicare quante ne hai prese");    
       $nbirra=$msgbirra+$comando[1];
-      inserireneldatabase("INSERT INTO birra  VALUES ('$nbirra', '$utente', '$dataoggi')");
+      inserireneldatabase("INSERT INTO birra  VALUES (ir, '$nbirra', '$utente', '$dataoggi')");
       exit();
     }
     if($birra=="consumata"){
@@ -313,7 +313,7 @@ switch($comando[0]){
 	    
     }		    
       $nbirra=$msgbirra-1;
-      $tabirra= letturedatabase("INSERT INTO birra  VALUES ('$nbirra', '$utente', '$dataoggi') ");
+      $tabirra= letturedatabase("INSERT INTO birra  VALUES (ir, '$nbirra', '$utente', '$dataoggi') ");
       mandamessaggiutente($utente, "preso una  birra");
     }
 		
