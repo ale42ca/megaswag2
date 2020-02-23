@@ -291,10 +291,8 @@ switch($comando[0]){
     }
     $birra=$comando[1];
     $tabirra= letturedatabase("SELECT birre FROM birra");
-    $msg=$tabirra[0]["birre"];
-    mandamessaggiutente($utente, $msg);
-    mandamessaggiutente($utente, "le birre totali ");
-    $nbirra=$tabirra[0]["birre"];
+    $msgbirra=$tabirra[0]["birre"];
+    mandamessaggiutente($utente, "le birre totali ".$msgbirra);
 
     $tastiera = '&reply_markup={"keyboard":[["birra consumata"],["esci"]]}';
         $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$tastiera;
@@ -303,20 +301,19 @@ switch($comando[0]){
 
     if($birra>0){
       mandamessaggiutente($utente, "ti ricordo che puoi indicare che se hai preso + birre puoi indicare quante ne hai prese");    
-      $nbirra=$tabirra[0]["birre"]+$birra;
+      $nbirra=$msgbirra+$birra;
       inserireneldatabase("INSERT INTO birra ( birre, utente, data ) VALUES ('$nbirra', '$utente', '$dataoggi')");
       exit();
     }
     if($birra=="consumata"){
       //cancella ultimo evento
-    if($nbirra==0){
-       mandamessaggiutente($utente, "le birre sono esaurite");
-       exit();
+      if($nbirra==0){
+       	mandamessaggiutente($utente, "le birre sono esaurite");
+       	exit();
 	    
     }		    
-      $nbirra=$tabirra[0]["birre"]-1;
+      $nbirra=$msgbirra-1;
       $tabirra= letturedatabase("INSERT INTO birra ( birre, utente, data ) VALUES ('$nbirra', '$utente', '$dataoggi') ");
-      $birra=$tabirra[0]["birre"];
       mandamessaggiutente($utente, "preso una  birra");
     }
 		
