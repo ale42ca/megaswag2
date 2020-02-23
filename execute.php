@@ -290,7 +290,7 @@ switch($comando[0]){
       exit();
     }
     $birra=$comando[1];
-    $tabirra= letturedatabase("SELECT birre FROM birra WHERE ir in ( SELECT ir FROM prenotazioni ORDER BY ir desc LIMIT 1 ) ");
+    $tabirra= letturedatabase("SELECT birre FROM birra");
     $msg=$tabirra[0]["birre"];
     mandamessaggiutente($utente, $msg);
     mandamessaggiutente($utente, "le birre totali ");
