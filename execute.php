@@ -299,7 +299,7 @@ switch($comando[0]){
     file_get_contents($url);
 				
 
-    if($birra>0){
+    if($birra== null or is_numeric($birra)){
       mandamessaggiutente($utente, "ti ricordo che puoi indicare che se hai preso + birre puoi indicare quante ne hai prese");    
       $nbirra=$msgbirra+$comando[1];
       inserireneldatabase("INSERT INTO birra  VALUES (ir, '$nbirra', '$utente', '$dataoggi')");
