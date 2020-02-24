@@ -133,8 +133,8 @@ switch($comando[0]){
     $meseprenotato=$dataprenotazione[1];
     $giornoprenotato=$dataprenotazione[0];
     if($meseprenotato== null or $meseprenotato== null){
-	    mandamessaggiutente($utente, "prenotiamo lo studio. Per farlo digita:");
-	    mandamessaggiutente($utente, "prenota giornoscelto.mesescelto");
+	    mandamessaggiutente($utente, "Prenotiamo lo studio, per farlo digita:");
+	    mandamessaggiutente($utente, "prenota (giorno scelto).(mese scelto)");
 	    exit();
     }
 
@@ -165,7 +165,7 @@ switch($comando[0]){
 	      mandamessaggiutente($utente, "Perfetto aggiorno le informazioni! ti ricordo che se devi eliminare la tua ultima prenotazione usa funzione canc");
 	      inserireneldatabase("INSERT INTO prenotazioni ( utente, giorno, mese) VALUES ('$username', '$giornoprenotato', $meseprenotato)");
 	      mandamessaggiutente($utente, "avvisiamo sul canale ");
-	      $msg="studio prenotato da ".$nomeutente."per il giorno ".$giornoprenotato."/".$meseprenotato;
+	      $msg="studio prenotato da ".$nomeutente." per il giorno ".$giornoprenotato."/".$meseprenotato;
 	      mandamessaggicanale($msg);
 	    }
 }
@@ -177,7 +177,7 @@ switch($comando[0]){
  	 mandamessaggiutente($utente,"non hai i permessi");
 	 exit();
     }
-    $msg="creiamo insieme il prossimo evento scrivi il tuo messaggio e invialo poi scrivi evento e la data";
+    $msg="creiamo insieme il prossimo evento";
     mandamessaggiutente($utente, $msg);
     $evento=$comando[1];
     $newevento= explode('.', $evento);
@@ -185,8 +185,8 @@ switch($comando[0]){
     $giornoprenotato=$newevento[1];
     $cosaevento=$newevento[0];
     if($meseprenotato== null or $meseprenotato== null){
-	    mandamessaggiutente($utente, "Creiamo evento, per farlo digita:");
-	    mandamessaggiutente($utente, "Prenota giornoscelto.mesescelto");
+	    mandamessaggiutente($utente, "Creiamo evento per farlo digita:");
+	    mandamessaggiutente($utente, "evento (nome evento).(giorno scelto).(mese scelto)");
 	    exit();
     }
 	if($cosaevento==null){
@@ -266,7 +266,7 @@ switch($comando[0]){
       $tabrutta= letturedatabase("SELECT utente, giorno, mese FROM eventi WHERE ir in ( SELECT ir FROM eventi ORDER BY ir desc LIMIT 10 )");
       $int=count($tabrutta);
 	    if($int<1){
-		 mandamessaggiutente($utente,"non ci sono eventi" );
+		 mandamessaggiutente($utente,"non ci sono eventi");
 		 exit();
 	    }
       mandamessaggiutente($utente, "ecco a te le ultime 5 eventi");
@@ -277,21 +277,32 @@ switch($comando[0]){
       }
       exit();
   }else if($calendario==prenotazioni){
-
-
       $tabrutta= letturedatabase("SELECT utente, giorno, mese FROM prenotazioni WHERE ir in ( SELECT ir FROM prenotazioni ORDER BY ir desc LIMIT 10 )");
       $int=count($tabrutta);
 	    if($int<1){
-		 mandamessaggiutente($utente,"non ci sono prenotazioni" );
+		 mandamessaggiutente($utente,"non ci sono prenotazioni");
 		 exit();
 	    }
-      mandamessaggiutente($utente, "ecco a te le ultime 5 prenotazioni dello studio");
-      for ($i=0; $i<5 ; $i++) {
-        $msg=$tabrutta[$i]["utente"]." il giorno".$tabrutta[$i]["giorno"]."/".$tabrutta[$i]["mese"];
-        mandamessaggiutente($utente,$msg);
-
-      }
-      exit();
+     	 mandamessaggiutente($utente, "ecco a te le ultime 5 prenotazioni dello studio");
+	      for ($i=0; $i<5 ; $i++) {
+		$msg=$tabrutta[$i]["utente"]." il giorno".$tabrutta[$i]["giorno"]."/".$tabrutta[$i]["mese"];
+		mandamessaggiutente($utente,$msg);
+	      }
+      		exit();
+  }else if($calendario==tue){
+	      $tabrutta= letturedatabase("SELECT utente, giorno, mese FROM prenotazioni WHERE utente='$username' AND ir in ( SELECT ir FROM prenotazioni ORDER BY ir desc LIMIT 10 )");
+      	      $int=count($tabrutta);
+	    if($int<1){
+		 mandamessaggiutente($utente,"non ci sono prenotazioni");
+		 exit();
+	    }
+     	 	mandamessaggiutente($utente, "ecco a te le ultime tue 5 prenotazioni dello studio");
+	      for ($i=0; $i<5 ; $i++) {
+		$msg=$tabrutta[$i]["utente"]." il giorno".$tabrutta[$i]["giorno"]."/".$tabrutta[$i]["mese"];
+		mandamessaggiutente($utente,$msg);
+	      }
+	
+	
 	}
 
     break;
@@ -314,13 +325,13 @@ switch($comando[0]){
 	}
 
 	if($birra>0 or is_numeric($birra)){
-	  mandamessaggiutente($utente, "Digita birra +/-(numero birre)");
+	  mandamessaggiutente($utente, "Digita: birra +/-(numero birre)");
 	  $nbirra=$msgbirra+$birra;
 	  inserireneldatabase("INSERT INTO birra (birre, utente, data) VALUES ( '$nbirra', '$username', '$dataoggi')");
 	  exit();
 	}
 	if($birra<0){
-	  mandamessaggiutente($utente, "Hai preso ".$birra." birre");
+	  mandamessaggiutente($utente, "birre diminuite");
 	  $nbirra=$msgbirra+$birra;
 	  inserireneldatabase("INSERT INTO birra (birre, utente, data) VALUES ( '$nbirra', '$username', '$dataoggi')");
 	  exit();
@@ -406,7 +417,12 @@ function tastieracanc($utente){
 
 function tastieracalendario($utente){
     $messaggio = "calendario";
+    if($GLOBALS['utenterfl']['livello']==1){
     $tastiera = '&reply_markup={"keyboard":[["calendario eventi"],["calendario prenotazioni"],["esci"]]}';
+
+    }else if($GLOBALS['utenterfl']['livello']>1){
+    $tastiera = '&reply_markup={"keyboard":[["calendario eventi"],["calendario prenotazioni"],["calendario tue prenotazioni"],["esci"]]}';
+    }	
     $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     file_get_contents($url);
 
