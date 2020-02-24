@@ -313,9 +313,7 @@ switch($comando[0]){
 	}
 	if($birra=="consumata"){
 	  if($nbirra==0){
-	    mandamessaggiutente($utente, "le birre sono esaurite");
 	    exit();
-
 	}		    
 	  $nbirra=$msgbirra-1;
 	  inserireneldatabase("INSERT INTO birra (birre, utente, data) VALUES ('$nbirra', '$username', '$dataoggi') ");
