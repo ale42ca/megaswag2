@@ -232,7 +232,7 @@ switch($comando[0]){
 
   case 'canc':
     // code...
-    if($GLOBALS['utenterfl']['livello']<1){
+    if($GLOBALS['utenterfl']['livello']<2){
  	 mandamessaggiutente($utente,"non hai i permessi" );
 	 exit();
     }
@@ -377,13 +377,15 @@ if($comando[0]=="aiuto"){
 }
 if($comando[0]=="raccontami qualcosa"){
 	mandamessaggiutente($utente, "Ti racconto una barzeletta");
-	$file = "frasi.txt";
+	$file = fopen("frasi.txt","r");
+		
 	$file_arr = file($file);
 	$num_lines = count($file_arr);
 	$last_arr_index = $num_lines - 1;
 	$rand_index = rand(0, $last_arr_index);
 	$rand_text = $file_arr[$rand_index];
 	mandamessaggiutente($utente, $rand_text);
+	fclose($file);
 }
 
 function tastierastart($utente){
