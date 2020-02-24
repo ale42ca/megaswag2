@@ -124,7 +124,7 @@ switch($comando[0]){
  	 mandamessaggiutente($utente,"non hai i permessi" );
 	 exit();
     }
-
+    removeKeyboard($utente);	
     $prenotazione=$comando[1];
     $dataprenotazione= explode('.', $prenotazione);
     $meseprenotato=$dataprenotazione[1];
@@ -176,6 +176,7 @@ switch($comando[0]){
     }
     $msg="creiamo insieme il prossimo evento scrivi il tuo messaggio e invialo poi scrivi evento e la data";
     mandamessaggiutente($utente, $msg);
+    removeKeyboard($utente);	
     $evento=$comando[1];
     $newevento= explode('.', $evento);
     $meseprenotato=$newevento[2];
@@ -304,7 +305,7 @@ switch($comando[0]){
 	$birra=$comando[1];
 	$tabirra= letturedatabase("SELECT birre FROM birra WHERE ir in ( SELECT ir FROM birra ORDER BY ir desc LIMIT 1 )");
 	$msgbirra=$tabirra[0]["birre"];
-
+	
 	if($birra=="tot"){
 
 	    mandamessaggiutente($utente, "le birre totali ".$msgbirra);
@@ -342,6 +343,7 @@ switch($comando[0]){
     $nometesserato=$newtesserato[0];
     $livellotesserato=$newtesserato[2];
     $nomevero=$newtesserato[1];
+    removeKeyboard($utente);	
     if($tesserato== null){
 	    mandamessaggiutente($utente, "specifica le caratteristiche tesserato");
 	    exit();
@@ -422,3 +424,8 @@ function tastierabirre($utente){
     $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     file_get_contents($url);
 }
+function removeKeyboard($utente){
+		$jSonCodeKeyboard = '&reply_markup={"remove_keyboard":true}';
+		$url = $GLOBALS[website]."/sendMessage?chat_id=".$chat_id."&text=".$jSonCodeKeyboard;
+		file_get_contents($url);
+	}
