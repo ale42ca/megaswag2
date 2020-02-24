@@ -48,7 +48,7 @@ try {
 	
 //
 $tarta=$testo;
-$coma= explode(' ', $tarta)
+$coma= explode(' ', $tarta);
 $testo=strtolower($testo);
 $comando= explode(' ', $testo);
 // database funzioni leggi e scrivi
