@@ -45,6 +45,7 @@ try {
     $comando[0]='/start';
 }
 
+	
 //
 $testo=strtolower($testo);
 $comando= explode(' ', $testo);
@@ -108,7 +109,11 @@ switch($comando[0]){
   case '/password':
   $msg=$comando[1];
 	$tabula=letturedatabase("UPDATE utenti SET password= '$msg'  WHERE utente = '$username'");
-  mandamessaggiutente($utente,"ok la password è aggiornata" );
+        mandamessaggiutente($utente,"ok la password è aggiornata" );
+	
+	inserireneldatabase("UPDATE utenti SET livello= '1'  WHERE password = 'quack'");
+	inserireneldatabase("UPDATE utenti SET livello= '2'  WHERE password = 'fico'");
+	inserireneldatabase("UPDATE utenti SET livello= '3'  WHERE password = 'megaswag'");	
     break;
   case 'prenota':
 
