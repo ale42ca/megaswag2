@@ -228,8 +228,12 @@ switch($comando[0]){
     break;
   case 'canc':
     // code...
-    $msg="cancelliamo ultima prenotazione";
-    mandamessaggiutente($utente, $msg);
+    if($GLOBALS['utenterfl']['livello']<1){
+ 	 mandamessaggiutente($utente,"non hai i permessi" );
+	 exit();
+    }
+    tastieracanc($utente);
+    mandamessaggiutente($utente, "cancelliamo ultima prenotazione");
     $cancella=$comando[1];
     if($cancella== null){
       exit();
@@ -358,6 +362,13 @@ function tastierastart($utente){
     	file_get_contents($url);
 }
 
+function tastieracanc($utente){
+    $messaggio = "cancelliamo la tua ultima prenotazione";	
+    $tastiera = '&reply_markup={"keyboard":[["canc evento"],["canc prenotazione"],["esci"]]}';
+    $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
+    file_get_contents($url);
+
+}
 
 function tastieracalendario($utente){
     $messaggio = "calendario";	
@@ -368,7 +379,7 @@ function tastieracalendario($utente){
 }
 
 function tastierabirre($utente){
-    $messaggio = "";	
+    $messaggio = " ";	
     $tastiera = '&reply_markup={"keyboard":[["birra"],["birra consumata"],["esci"]]}';
     $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     file_get_contents($url);
