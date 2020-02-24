@@ -47,6 +47,8 @@ try {
 
 	
 //
+$tarta=$testo;
+$coma= explode(' ', $tarta)
 $testo=strtolower($testo);
 $comando= explode(' ', $testo);
 // database funzioni leggi e scrivi
@@ -333,9 +335,10 @@ switch($comando[0]){
     }
     $msg="inseriamo new tesserato: indicami utenteidtelegram.nomevero.livello,";
     mandamessaggiutente($utente, $msg);
-    $tesserato=$comando[1];
+    $tesserato=$coma[1];
     $newtesserato= explode('.', $tesserato);
     ////////////////////////
+    $tarta		
     $nometesserato=$newtesserato[0];
     $livellotesserato=$newtesserato[2];
     $nomevero=$newtesserato[1];
