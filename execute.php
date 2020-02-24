@@ -226,7 +226,7 @@ switch($comando[0]){
 	 exit();
     }
     tastieracanc($utente);
-    mandamessaggiutente($utente, "cancelliamo ultima prenotazione");
+
     $cancella=$comando[1];
     if($cancella== null){
       exit();
