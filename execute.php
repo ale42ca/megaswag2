@@ -372,7 +372,7 @@ if($comando[0]=="aiuto"){
 
 
 }
-if($comando[0]=="raccontami qualcosa"){
+if($comando[0]=="raccontami"){
   $tabirra= letturedatabase("SELECT frasi FROM frasi ORDER BY RANDOM() LIMIT 1");
   $msg=$tabirra[0]["frasi"];
   mandamessaggiutente($utente, $msg);
