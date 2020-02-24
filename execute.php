@@ -21,6 +21,7 @@ $nomeutente=$messaggio['chat']['first_name'];
 $username=$messaggio['from']['username'];
 
 //query msg
+/*
 $query = $update['callback_query'];
 $queryid = $query['id'];
 $queryUserId = $query['from']['id'];
@@ -28,6 +29,7 @@ $queryusername = $query['from']['username'];
 $querydata = $query['data'];
 $querymsgid = $query['message']['message_id'];
 $querymsg = $query['message'];
+*/
 //data
 $datazioneunix=$messaggio['date'];
 $dataoggi = getdataoggi($datazioneunix);
@@ -153,18 +155,18 @@ switch($comando[0]){
     }else {
       // confronto nel database della data
       $tabrutta= letturedatabase("SELECT * FROM prenotazioni WHERE giorno='$giornoprenotato' AND mese = '$meseprenotato' ");
-      if(!empty($tabrutta)){
-      $personachehaprenotato=$tabrutta[0]['utente'];
-      $msg="purtroppo lo studio è stato già prenotato da ".$personachehaprenotato;
-      mandamessaggiutente($utente, $msg);
-      exit();
-    }else {
-      mandamessaggiutente($utente, "Perfetto aggiorno le informazioni! ti ricordo che se devi eliminare la tua ultima prenotazione devi digitare cancella prenotazione");
-      inserireneldatabase("INSERT INTO prenotazioni ( utente, giorno, mese) VALUES ('$nomeutente', '$giornoprenotato', $meseprenotato)");
-      mandamessaggiutente($utente, "avvisiamo sul canale ");
-      $msg="studio prenotato da".$nomeutente."per il giorno".$giornoprenotato."/".$meseprenotato;
-      mandamessaggicanale($msg);
-    }
+	      if(!empty($tabrutta)){
+	      $personachehaprenotato=$tabrutta[0]['utente'];
+	      $msg="purtroppo lo studio è stato già prenotato da ".$personachehaprenotato;
+	      mandamessaggiutente($utente, $msg);
+	      exit();
+	    }else {
+	      mandamessaggiutente($utente, "Perfetto aggiorno le informazioni! ti ricordo che se devi eliminare la tua ultima prenotazione devi digitare cancella prenotazione");
+	      inserireneldatabase("INSERT INTO prenotazioni ( utente, giorno, mese) VALUES ('$username', '$giornoprenotato', $meseprenotato)");
+	      mandamessaggiutente($utente, "avvisiamo sul canale ");
+	      $msg="studio prenotato da ".$nomeutente."per il giorno ".$giornoprenotato."/".$meseprenotato;
+	      mandamessaggicanale($msg);
+	    }
 }
 
     break;
@@ -220,7 +222,7 @@ switch($comando[0]){
     }else  {
         $msg="Perfetto aggiorno le informazioni! ti ricordo che se devi eliminare la tua ultima prenotazione devi digitare canc evento";
         mandamessaggiutente($utente, $msg);
-        inserireneldatabase("INSERT INTO evento ( utente, giorno, mese, evento) VALUES ('$nomeutente', '$giornoprenotato', '$meseprenotato', '$cosaevento')");
+        inserireneldatabase("INSERT INTO evento ( utente, giorno, mese, evento) VALUES ('$username', '$giornoprenotato', '$meseprenotato', '$cosaevento')");
         $msg="avvisiamo sul canale ";
         mandamessaggiutente($utente, $msg);
         $msg="nuovo evento:".$cosaevento."per il giorno".$giornoprenotato."/".$meseprenotato;
@@ -248,7 +250,7 @@ switch($comando[0]){
       mandamessaggiutente($utente, $msg);
     }elseif ($cancella=="prenotazione") {
 
-      inserireneldatabase("DELETE FROM prenotazioni WHERE utente='$nomeutente' AND ir in ( SELECT ir FROM prenotazioni ORDER BY ir desc LIMIT 1 ) ");
+      inserireneldatabase("DELETE FROM prenotazioni WHERE utente='$username' AND ir in ( SELECT ir FROM prenotazioni ORDER BY ir desc LIMIT 1 ) ");
       $msg=" ultima tua prenotazione cancellata";
       mandamessaggiutente($utente, $msg);
     }
@@ -424,8 +426,3 @@ function tastierabirre($utente){
     $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     file_get_contents($url);
 }
-function removeKeyboard($utente){
-		$jSonCodeKeyboard = '&reply_markup={"remove_keyboard":true}';
-		$url = $GLOBALS[website]."/sendMessage?chat_id=".$chat_id."&text=".$jSonCodeKeyboard;
-		file_get_contents($url);
-	}
