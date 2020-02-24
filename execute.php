@@ -177,7 +177,7 @@ switch($comando[0]){
  	 mandamessaggiutente($utente,"non hai i permessi");
 	 exit();
     }
-    $msg="creiamo insieme il prossimo evento";
+    $msg="Creiamo evento";
     mandamessaggiutente($utente, $msg);
     $evento=$comando[1];
     $newevento= explode('.', $evento);
@@ -185,7 +185,7 @@ switch($comando[0]){
     $giornoprenotato=$newevento[1];
     $cosaevento=$newevento[0];
     if($meseprenotato== null or $meseprenotato== null){
-	    mandamessaggiutente($utente, "Creiamo evento per farlo digita:");
+	    mandamessaggiutente($utente, "per farlo digita:");
 	    mandamessaggiutente($utente, "evento (nome evento).(giorno scelto).(mese scelto)");
 	    exit();
     }
