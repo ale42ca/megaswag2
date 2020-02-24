@@ -104,7 +104,7 @@ switch($comando[0]){
 		  mandamessaggiutente($utente, "la password non è giusta ");
 			exit();
 	}
-  if($GLOBALS['utenterfl']['livello']<1){
+  if($GLOBALS['utenterfl']['livello']<1 or $GLOBALS['utenterfl']['livello']==null){
       exit();
   }else {
     tastierastart($utente);
@@ -115,9 +115,9 @@ switch($comando[0]){
 	$tabula=letturedatabase("UPDATE utenti SET password= '$msg'  WHERE utente = '$username'");
         mandamessaggiutente($utente,"ok la password è aggiornata" );
 
-	inserireneldatabase("UPDATE utenti SET livello= '1'  WHERE password = 'quack'");
-	inserireneldatabase("UPDATE utenti SET livello= '2'  WHERE password = 'frequenza'");
-	inserireneldatabase("UPDATE utenti SET livello= '3'  WHERE password = 'lib.era'");
+	inserireneldatabase("UPDATE utenti SET livello= '1'  WHERE password = 'frequenza'");
+	inserireneldatabase("UPDATE utenti SET livello= '2'  WHERE password = 'lib.era'");
+	inserireneldatabase("UPDATE utenti SET livello= '3'  WHERE password = '1admin'");
 	tastierastart($utente);
     break;
   case 'prenota':
@@ -228,7 +228,7 @@ switch($comando[0]){
 
   case 'canc':
     // code...
-    if($GLOBALS['utenterfl']['livello']<1){
+    if($GLOBALS['utenterfl']['livello']<2){
  	 mandamessaggiutente($utente,"non hai i permessi" );
 	 exit();
     }
@@ -328,8 +328,8 @@ switch($comando[0]){
     break;
   case 'new':
       // code...
-    if($GLOBALS['utenterfl']['livello']<2){
- 	 mandamessaggiutente($utente,"non hai i permessi" );
+    if($GLOBALS['utenterfl']['livello']<3){
+ 	 mandamessaggiutente($utente,"non hai i permessi");
 	 exit();
     }
     $msg="inseriamo new tesserato: indicami utenteidtelegram.nomevero.livello";
@@ -378,10 +378,10 @@ if($comando[0]=="raccontami"){
 
 function tastierastart($utente){
     $messaggio = "osserva la tastiera e usa i suoi comandi";
-    if($GLOBALS['utenterfl']['livello']<3){
+    if($GLOBALS['utenterfl']['livello']==1){
         $tastiera = '&reply_markup={"keyboard":[["calendario"],["birra"],["aiuto"]]}';
 
-    }else if($GLOBALS['utenterfl']['livello']<4){
+    }else if($GLOBALS['utenterfl']['livello']>1){
         $tastiera = '&reply_markup={"keyboard":[["prenota"],["evento"],["calendario"],["birra"],["canc"],["aiuto"]]}';
     }
 	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
