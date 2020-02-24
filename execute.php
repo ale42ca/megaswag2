@@ -297,8 +297,13 @@ switch($comando[0]){
 	$birra=$comando[1];
 	$tabirra= letturedatabase("SELECT birre FROM birra WHERE ir in ( SELECT ir FROM birra ORDER BY ir desc LIMIT 1 )");
 	$msgbirra=$tabirra[0]["birre"];
-	mandamessaggiutente($utente, "le birre totali ".$msgbirra);
 
+	if($birra=="tot"){
+
+	    mandamessaggiutente($utente, "le birre totali ".$msgbirra);
+	    exit();
+
+	}	
 
 	if($birra>0 or is_numeric($birra)){
 	  mandamessaggiutente($utente, "ti ricordo che puoi indicare che se hai preso + birre puoi indicare quante ne hai prese");    
@@ -377,7 +382,7 @@ function tastieracalendario($utente){
 
 function tastierabirre($utente){
     $messaggio = "birra";	
-    $tastiera = '&reply_markup={"keyboard":[["birra"],["birra consumata"],["esci"]]}';
+    $tastiera = '&reply_markup={"keyboard":[["birra tot"],["birra consumata"],["esci"]]}';
     $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     file_get_contents($url);
 }
