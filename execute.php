@@ -218,14 +218,7 @@ switch($comando[0]){
         mandamessaggicanale($msg);
       }
     break;
-  case 'birre':
-    if($GLOBALS['utenterfl']['livello']<1){
- 	 mandamessaggiutente($utente,"non hai i permessi");
-	 exit();
-    }
-    $msg="";
-    mandamessaggiutente($utente, $msg);
-    break;
+
   case 'canc':
     // code...
     if($GLOBALS['utenterfl']['livello']<1){
@@ -296,7 +289,7 @@ switch($comando[0]){
     break;
   case 'birra':
     // code...
-    if($GLOBALS['utenterfl']['livello']<2){
+    if($GLOBALS['utenterfl']['livello']<1){
  	 mandamessaggiutente($utente,"non hai i permessi" );
 	 exit();
     }
@@ -314,15 +307,15 @@ switch($comando[0]){
 	  exit();
 	}
 	if($birra=="consumata"){
-	  //cancella ultimo evento
 	  if($nbirra==0){
 	    mandamessaggiutente($utente, "le birre sono esaurite");
 	    exit();
 
 	}		    
 	  $nbirra=$msgbirra-1;
-	  $tabirra= letturedatabase("INSERT INTO birra (birre, utente, data) VALUES ('$nbirra', '$username', '$dataoggi') ");
+	  inserireneldatabase("INSERT INTO birra (birre, utente, data) VALUES ('$nbirra', '$username', '$dataoggi') ");
 	  mandamessaggiutente($utente, "preso una  birra");
+	  exit();	
 	}
 		
     break;
@@ -350,8 +343,13 @@ if($comando[0]=="aiuto"){
 }
 function tastierastart($utente){
 	$messaggio = "osserva la tastiera e usa i suoi comandi";
-        $tastiera = '&reply_markup={"keyboard":[["prenota"],["calendario"],["birra"],["aiuto"]]}';
-    	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
+    if($GLOBALS['utenterfl']['livello']<1){
+        $tastiera = '&reply_markup={"keyboard":[["calendario"],["birra"],["aiuto"]]}';
+	 
+    }else{	
+        $tastiera = '&reply_markup={"keyboard":[["prenota"],["calendario"],["birra"],["canc"],["aiuto"]]}';
+    }
+	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     	file_get_contents($url);
 }
 function tastieraaiuto($utente){
