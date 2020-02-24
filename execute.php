@@ -327,13 +327,13 @@ if($comando[0]=="aiuto"){
     	    $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
             file_get_contents($url);
 	if($comando[1]=="prenota"){	
-		mandamessaggiutente($utente, "Per prenotare ".$username);
+		mandamessaggiutente($utente, "Per prenotare ");
 }
 	if($comando[1]=="calendario"){
-		mandamessaggiutente($utente, "Per visualizzare calendario ".$username);
+		mandamessaggiutente($utente, "Per visualizzare calendario ");
 }
 	if($comando[1]=="eventi"){
-		mandamessaggiutente($utente, "Per creare un evento".$username);
+		mandamessaggiutente($utente, "Per creare un evento");
 }
 	if($comando[1]=="birra"){
 		mandamessaggiutente($utente, "Birra ");
@@ -343,24 +343,16 @@ if($comando[0]=="aiuto"){
 }
 function tastierastart($utente){
 	$messaggio = "osserva la tastiera e usa i suoi comandi";
-    	$tastiera = '&reply_markup={"keyboard":[["prenota"],["calendario"],["vedi prenotazioni"],["data"]]}';
+        $tastiera = '&reply_markup={"keyboard":[["prenota"],["calendario"],["birra"],["aiuto"]]}';
     	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     	file_get_contents($url);
-}
-function tastierastart($utente){
-    
-	
-    $tastiera = '&reply_markup={"keyboard":[["prenota"],["calendario"],["birra"],["aiuto"]]}';
-    $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=".$tastiera;
-    file_get_contents($url);
-	
-
 }
 
 
 function tastieracalendario($utente){
+    $messaggio = "calendario";	
     $tastiera = '&reply_markup={"keyboard":[["calendario eventi"],["calendario prenotazioni"],["esci"]]}';
-    $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$tastiera;
+    $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     file_get_contents($url);
 
 }
