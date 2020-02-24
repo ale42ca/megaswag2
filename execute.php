@@ -278,7 +278,7 @@ switch($comando[0]){
       
 
       $tabrutta= letturedatabase("SELECT utente, giorno, mese FROM prenotazioni WHERE ir in ( SELECT ir FROM prenotazioni ORDER BY ir desc LIMIT 10 )");
-      $int=count($tabrutta)
+      $int=count($tabrutta);
 	    if($int<1){
 		 mandamessaggiutente($utente,"non ci sono prenotazioni" );
 		 exit();
