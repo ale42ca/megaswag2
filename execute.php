@@ -118,6 +118,8 @@ switch($comando[0]){
 	inserireneldatabase("UPDATE utenti SET livello= '1'  WHERE password = 'frequenza'");
 	inserireneldatabase("UPDATE utenti SET livello= '2'  WHERE password = 'lib.era'");
 	inserireneldatabase("UPDATE utenti SET livello= '3'  WHERE password = '1admin'");
+	$tabula=letturedatabase("SELECT * FROM utenti WHERE utente='$username'");
+	$GLOBALS['utenterfl']= $tabula[0];
 	tastierastart($utente);
     break;
   case 'prenota':
