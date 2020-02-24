@@ -300,34 +300,30 @@ switch($comando[0]){
  	 mandamessaggiutente($utente,"non hai i permessi" );
 	 exit();
     }
-    tastierabirre($utente);
-    $birra=$comando[1];
-    $tabirra= letturedatabase("SELECT birre FROM birra WHERE ir in ( SELECT ir FROM evento ORDER BY ir desc LIMIT 1 )");
-    $msgbirra=$tabirra[0]["birre"];
-    mandamessaggiutente($utente, "le birre totali ".$msgbirra);
+	tastierabirre($utente);
+	$birra=$comando[1];
+	$tabirra= letturedatabase("SELECT birre FROM birra WHERE ir in ( SELECT ir FROM birra ORDER BY ir desc LIMIT 1 )");
+	$msgbirra=$tabirra[0]["birre"];
+	mandamessaggiutente($utente, "le birre totali ".$msgbirra);
 
-    $tastiera = '&reply_markup={"keyboard":[["birra consumata"],["esci"]]}';
-    $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$tastiera;
-    file_get_contents($url);
-				
 
-    if($birra>0 or is_numeric($birra)){
-      mandamessaggiutente($utente, "ti ricordo che puoi indicare che se hai preso + birre puoi indicare quante ne hai prese");    
-      $nbirra=$msgbirra+$comando[1];
-      inserireneldatabase("INSERT INTO birra  VALUES (ir, '$nbirra', '$username', '$dataoggi')");
-      exit();
-    }
-    if($birra=="consumata"){
-      //cancella ultimo evento
-      if($nbirra==0){
-       	mandamessaggiutente($utente, "le birre sono esaurite");
-       	exit();
-	    
-    }		    
-      $nbirra=$msgbirra-1;
-      $tabirra= letturedatabase("INSERT INTO birra  VALUES (ir, '$nbirra', '$username', '$dataoggi') ");
-      mandamessaggiutente($utente, "preso una  birra");
-    }
+	if($birra>0 or is_numeric($birra)){
+	  mandamessaggiutente($utente, "ti ricordo che puoi indicare che se hai preso + birre puoi indicare quante ne hai prese");    
+	  $nbirra=$msgbirra+$birra;
+	  inserireneldatabase("INSERT INTO birra (birre, utente, data) VALUES ( '$nbirra', '$username', '$dataoggi')");
+	  exit();
+	}
+	if($birra=="consumata"){
+	  //cancella ultimo evento
+	  if($nbirra==0){
+	    mandamessaggiutente($utente, "le birre sono esaurite");
+	    exit();
+
+	}		    
+	  $nbirra=$msgbirra-1;
+	  $tabirra= letturedatabase("INSERT INTO birra (birre, utente, data) VALUES ('$nbirra', '$username', '$dataoggi') ");
+	  mandamessaggiutente($utente, "preso una  birra");
+	}
 		
     break;
   case 'esci':
