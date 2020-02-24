@@ -257,9 +257,13 @@ switch($comando[0]){
     tastieracalendario($utente);		
     $calendario=$comando[1];
 	if($calendario==eventi){
-      $msg="ecco a te le ultime 5 eventi";
-      mandamessaggiutente($utente, $msg);
       $tabrutta= letturedatabase("SELECT utente, giorno, mese FROM eventi WHERE ir in ( SELECT ir FROM eventi ORDER BY ir desc LIMIT 10 )");
+      $int=count($tabrutta)
+	    if($int<1){
+		 mandamessaggiutente($utente,"non ci sono eventi" );
+		 exit();
+	    }	      
+      mandamessaggiutente($utente, "ecco a te le ultime 5 eventi");
       for ($i=0; $i<5 ; $i++) {
         $msg=$tabrutta[$i]["utente"]." il giorno".$tabrutta[$i]["giorno"]."/".$tabrutta[$i]["mese"];
         mandamessaggiutente($utente,$msg);
@@ -267,9 +271,15 @@ switch($comando[0]){
       }
       exit();
   }else if($calendario==prenotazioni){
-      $msg="ecco a te le ultime 5 prenotazioni dello studio";
-      mandamessaggiutente($utente, $msg);
+      
+
       $tabrutta= letturedatabase("SELECT utente, giorno, mese FROM prenotazioni WHERE ir in ( SELECT ir FROM prenotazioni ORDER BY ir desc LIMIT 10 )");
+      $int=count($tabrutta)
+	    if($int<1){
+		 mandamessaggiutente($utente,"non ci sono prenotazioni" );
+		 exit();
+	    }
+      mandamessaggiutente($utente, "ecco a te le ultime 5 prenotazioni dello studio");	
       for ($i=0; $i<5 ; $i++) {
         $msg=$tabrutta[$i]["utente"]." il giorno".$tabrutta[$i]["giorno"]."/".$tabrutta[$i]["mese"];
         mandamessaggiutente($utente,$msg);
@@ -286,7 +296,7 @@ switch($comando[0]){
  	 mandamessaggiutente($utente,"non hai i permessi" );
 	 exit();
     }
- //   tastierabirre($utente);
+    tastierabirre($utente);
     $birra=$comando[1];
     $tabirra= letturedatabase("SELECT birre FROM birra");
     $msgbirra=$tabirra[0]["birre"];
@@ -300,7 +310,7 @@ switch($comando[0]){
     if($birra>0 or is_numeric($birra)){
       mandamessaggiutente($utente, "ti ricordo che puoi indicare che se hai preso + birre puoi indicare quante ne hai prese");    
       $nbirra=$msgbirra+$comando[1];
-      inserireneldatabase("INSERT INTO birra  VALUES (ir, '$nbirra', '$utente', '$dataoggi')");
+      inserireneldatabase("INSERT INTO birra  VALUES (ir, '$nbirra', '$username', '$dataoggi')");
       exit();
     }
     if($birra=="consumata"){
@@ -311,7 +321,7 @@ switch($comando[0]){
 	    
     }		    
       $nbirra=$msgbirra-1;
-      $tabirra= letturedatabase("INSERT INTO birra  VALUES (ir, '$nbirra', '$utente', '$dataoggi') ");
+      $tabirra= letturedatabase("INSERT INTO birra  VALUES (ir, '$nbirra', '$username', '$dataoggi') ");
       mandamessaggiutente($utente, "preso una  birra");
     }
 		
