@@ -285,7 +285,6 @@ switch($comando[0]){
       exit();
 	}
 
-
     break;
   case 'birra':
     // code...
@@ -311,17 +310,36 @@ switch($comando[0]){
 	  inserireneldatabase("INSERT INTO birra (birre, utente, data) VALUES ( '$nbirra', '$username', '$dataoggi')");
 	  exit();
 	}
-	if($birra=="consumata"){
-	  if($nbirra==0){
-	    exit();
-	}		    
-	  $nbirra=$msgbirra-1;
-	  inserireneldatabase("INSERT INTO birra (birre, utente, data) VALUES ('$nbirra', '$username', '$dataoggi') ");
-	  mandamessaggiutente($utente, "preso una  birra");
-	  exit();	
+	if($birra<0){
+	  mandamessaggiutente($utente, "Hai preso ".$birre." birra");
+	  $nbirra=$msgbirra+$birra;
+	  inserireneldatabase("INSERT INTO birra (birre, utente, data) VALUES ( '$nbirra', '$username', '$dataoggi')");
+	  exit();		    
+	  	
 	}
 		
     break;
+  case 'new':
+      // code...
+    if($GLOBALS['utenterfl']['livello']<2){
+ 	 mandamessaggiutente($utente,"non hai i permessi" );
+	 exit();
+    }
+    $msg="inseriamo new tesserato: indicami utenteidtelegram.nomevero.livello,";
+    mandamessaggiutente($utente, $msg);
+    $tesserato=$comando[1];
+    $newtesserato= explode('.', $tesserato);
+    ////////////////////////
+    $nometesserato=$newtesserato[0];
+    $livellotesserato=$newtesserato[2];
+    $nomevero=$newtesserato[1];
+    if($tesserato== null){
+	    mandamessaggiutente($utente, "specifica le caratteristiche tesserato");
+	    exit();
+    }
+    inserireneldatabase("INSERT INTO utenti ( utente, nomevero, livello, giorno, mese, anno) VALUES ('$nometesserato','$nomevero', '$livellotesserato', '$giorno', '$mese','$anno')");
+
+    break;		
   case 'esci':
     tastierastart($utente);
 
@@ -339,7 +357,7 @@ if($comando[0]=="aiuto"){
 		mandamessaggiutente($utente, "Per creare un evento scrivi sulla tastiera: (evento) poi (nome dell' evento) (.) (giorno)  (.) e (mese) ");
 }
 	if($comando[1]=="birra"){
-		mandamessaggiutente($utente, "");
+		mandamessaggiutente($utente, "scrivi (birra) (+/-)(numero birre) per aggiungere togliere birre");
 }
 	
 
