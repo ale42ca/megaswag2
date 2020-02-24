@@ -321,7 +321,7 @@ switch($comando[0]){
 
     break;
 }
-if(comando=="aiuto"){
+if($comando[0]=="aiuto"){
 	mandamessaggiutente($utente, "Tranquillo ci penso io");
 }
 function tastierastart($utente){
