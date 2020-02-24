@@ -392,7 +392,7 @@ function tastierastart($utente){
 }
 function tastieraaiuto($utente){
     $messaggio = "Ti aiuto io";	
-    $tastiera = '&reply_markup={"keyboard":[["raccontami qualcosa"],["aiuto prenotazione"],["aiuto calendario"],["aiuto eventi"],["aiuto birra"],["esci"]]}';
+    $tastiera = '&reply_markup={"keyboard":[["esci"]]}';
     $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     file_get_contents($url);
 
