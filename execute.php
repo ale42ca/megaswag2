@@ -47,7 +47,7 @@ try {
     $comando[0]='/start';
 }
 
-	
+
 //
 $tarta=$testo;
 $coma= explode(' ', $tarta);
@@ -114,7 +114,7 @@ switch($comando[0]){
   $msg=$comando[1];
 	$tabula=letturedatabase("UPDATE utenti SET password= '$msg'  WHERE utente = '$username'");
         mandamessaggiutente($utente,"ok la password è aggiornata" );
-	
+
 	inserireneldatabase("UPDATE utenti SET livello= '1'  WHERE password = 'quack'");
 	inserireneldatabase("UPDATE utenti SET livello= '2'  WHERE password = 'frequenza'");
 	inserireneldatabase("UPDATE utenti SET livello= '3'  WHERE password = 'lib.era'");
@@ -177,7 +177,6 @@ switch($comando[0]){
     }
     $msg="creiamo insieme il prossimo evento scrivi il tuo messaggio e invialo poi scrivi evento e la data";
     mandamessaggiutente($utente, $msg);
-	
     $evento=$comando[1];
     $newevento= explode('.', $evento);
     $meseprenotato=$newevento[2];
@@ -231,7 +230,7 @@ switch($comando[0]){
 
   case 'canc':
     // code...
-    if($GLOBALS['utenterfl']['livello']<2){
+    if($GLOBALS['utenterfl']['livello']<1){
  	 mandamessaggiutente($utente,"non hai i permessi" );
 	 exit();
     }
@@ -261,7 +260,7 @@ switch($comando[0]){
  	 mandamessaggiutente($utente,"non hai i permessi" );
 	 exit();
     }
-    tastieracalendario($utente);		
+    tastieracalendario($utente);
     $calendario=$comando[1];
 	if($calendario==eventi){
       $tabrutta= letturedatabase("SELECT utente, giorno, mese FROM eventi WHERE ir in ( SELECT ir FROM eventi ORDER BY ir desc LIMIT 10 )");
@@ -269,16 +268,16 @@ switch($comando[0]){
 	    if($int<1){
 		 mandamessaggiutente($utente,"non ci sono eventi" );
 		 exit();
-	    }	      
+	    }
       mandamessaggiutente($utente, "ecco a te le ultime 5 eventi");
       for ($i=0; $i<5 ; $i++) {
         $msg=$tabrutta[$i]["utente"]." il giorno".$tabrutta[$i]["giorno"]."/".$tabrutta[$i]["mese"];
         mandamessaggiutente($utente,$msg);
-        
+
       }
       exit();
   }else if($calendario==prenotazioni){
-      
+
 
       $tabrutta= letturedatabase("SELECT utente, giorno, mese FROM prenotazioni WHERE ir in ( SELECT ir FROM prenotazioni ORDER BY ir desc LIMIT 10 )");
       $int=count($tabrutta);
@@ -286,11 +285,11 @@ switch($comando[0]){
 		 mandamessaggiutente($utente,"non ci sono prenotazioni" );
 		 exit();
 	    }
-      mandamessaggiutente($utente, "ecco a te le ultime 5 prenotazioni dello studio");	
+      mandamessaggiutente($utente, "ecco a te le ultime 5 prenotazioni dello studio");
       for ($i=0; $i<5 ; $i++) {
         $msg=$tabrutta[$i]["utente"]." il giorno".$tabrutta[$i]["giorno"]."/".$tabrutta[$i]["mese"];
         mandamessaggiutente($utente,$msg);
-        
+
       }
       exit();
 	}
@@ -306,16 +305,16 @@ switch($comando[0]){
 	$birra=$comando[1];
 	$tabirra= letturedatabase("SELECT birre FROM birra WHERE ir in ( SELECT ir FROM birra ORDER BY ir desc LIMIT 1 )");
 	$msgbirra=$tabirra[0]["birre"];
-	
+
 	if($birra=="tot"){
 
 	    mandamessaggiutente($utente, "le birre totali ".$msgbirra);
 	    exit();
 
-	}	
+	}
 
 	if($birra>0 or is_numeric($birra)){
-	  mandamessaggiutente($utente, "ti ricordo che puoi indicare che se hai preso + birre puoi indicare quante ne hai prese");    
+	  mandamessaggiutente($utente, "ti ricordo che puoi indicare che se hai preso + birre puoi indicare quante ne hai prese");
 	  $nbirra=$msgbirra+$birra;
 	  inserireneldatabase("INSERT INTO birra (birre, utente, data) VALUES ( '$nbirra', '$username', '$dataoggi')");
 	  exit();
@@ -324,10 +323,10 @@ switch($comando[0]){
 	  mandamessaggiutente($utente, "Hai preso ".$birre." birra");
 	  $nbirra=$msgbirra+$birra;
 	  inserireneldatabase("INSERT INTO birra (birre, utente, data) VALUES ( '$nbirra', '$username', '$dataoggi')");
-	  exit();		    
-	  	
+	  exit();
+
 	}
-		
+
     break;
   case 'new':
       // code...
@@ -340,18 +339,17 @@ switch($comando[0]){
     $tesserato=$coma[1];
     $newtesserato= explode('.', $tesserato);
     ////////////////////////
-    		
+
     $nometesserato=$newtesserato[0];
     $livellotesserato=$newtesserato[2];
     $nomevero=$newtesserato[1];
-    removeKeyboard($utente);	
     if($tesserato== null){
 	    mandamessaggiutente($utente, "specifica le caratteristiche tesserato");
 	    exit();
     }
     inserireneldatabase("INSERT INTO utenti ( utente, nomevero, livello, giorno, mese, anno) VALUES ('$nometesserato','$nomevero', '$livellotesserato', '$giorno', '$mese','$anno')");
 
-    break;		
+    break;
   case 'esci':
     tastierastart($utente);
 
@@ -359,54 +357,47 @@ switch($comando[0]){
 }
 if($comando[0]=="aiuto"){
 	tastieraaiuto($utente);
-	if($comando[1]=="prenotazione"){	
-		mandamessaggiutente($utente, "Per prenotare scrivi sulla tastiera: (prenota) poi (giorno) aggiungendo (.) e (mese) ");
+	if($comando[1]=="prenotazione"){
+		mandamessaggiutente($utente, "Per prenotare scrivi sulla tastiera: (prenota).(giorno).(mese)");
 }
 	if($comando[1]=="calendario"){
-		mandamessaggiutente($utente, "il calendario ti permette di vedere le prenotazioni");
+		mandamessaggiutente($utente, "il calendario ti permette di vedere ultime  prenotazioni");
 }
 	if($comando[1]=="eventi"){
-		mandamessaggiutente($utente, "Per creare un evento scrivi sulla tastiera: (evento) poi (nome dell' evento) (.) (giorno)  (.) e (mese) ");
+		mandamessaggiutente($utente, "Per creare un evento scrivi sulla tastiera: (evento) (nome dell' evento).(giorno).(mese)");
 }
 	if($comando[1]=="birra"){
-		mandamessaggiutente($utente, "scrivi (birra) (+/-)(numero birre) per aggiungere togliere birre");
+		mandamessaggiutente($utente, "scrivi (birra)(+/-)(numero birre) per aggiungere/togliere birre");
 }
-	
+
 
 }
 if($comando[0]=="raccontami qualcosa"){
 	mandamessaggiutente($utente, "Ti racconto una barzeletta");
-	$file = fopen("frasi.txt","r");
-		
-	$file_arr = file($file);
-	$num_lines = count($file_arr);
-	$last_arr_index = $num_lines - 1;
-	$rand_index = rand(0, $last_arr_index);
-	$rand_text = $file_arr[$rand_index];
-	mandamessaggiutente($utente, $rand_text);
-	fclose($file);
+  $tabrutta= letturedatabase("SELECT frasi FROM frasi WHERE ir in ( SELECT ir FROM prenotazioni ORDER BY ir desc LIMIT 1 )");
+	mandamessaggiutente($utente, $tabrutta[0]["frasi"]);
 }
 
 function tastierastart($utente){
     $messaggio = "osserva la tastiera e usa i suoi comandi";
     if($GLOBALS['utenterfl']['livello']<3){
         $tastiera = '&reply_markup={"keyboard":[["calendario"],["birra"],["aiuto"]]}';
-	 
-    }else if($GLOBALS['utenterfl']['livello']<4){	
+
+    }else if($GLOBALS['utenterfl']['livello']<4){
         $tastiera = '&reply_markup={"keyboard":[["prenota"],["evento"],["calendario"],["birra"],["canc"],["aiuto"]]}';
     }
 	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     	file_get_contents($url);
 }
 function tastieraaiuto($utente){
-    $messaggio = "Ti aiuto io";	
+    $messaggio = "Ti aiuto io";
     $tastiera = '&reply_markup={"keyboard":[["raccontami qualcosa"],["aiuto prenotazione"],["aiuto calendario"],["aiuto eventi"],["aiuto birra"],["esci"]]}';
     $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     file_get_contents($url);
 
 }
 function tastieracanc($utente){
-    $messaggio = "cancelliamo la tua ultima prenotazione";	
+    $messaggio = "cancelliamo la tua ultima prenotazione";
     $tastiera = '&reply_markup={"keyboard":[["canc evento"],["canc prenotazione"],["esci"]]}';
     $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     file_get_contents($url);
@@ -414,7 +405,7 @@ function tastieracanc($utente){
 }
 
 function tastieracalendario($utente){
-    $messaggio = "calendario";	
+    $messaggio = "calendario";
     $tastiera = '&reply_markup={"keyboard":[["calendario eventi"],["calendario prenotazioni"],["esci"]]}';
     $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     file_get_contents($url);
@@ -422,7 +413,7 @@ function tastieracalendario($utente){
 }
 
 function tastierabirre($utente){
-    $messaggio = "birra";	
+    $messaggio = "birra";
     $tastiera = '&reply_markup={"keyboard":[["birra tot"],["esci"]]}';
     $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     file_get_contents($url);
