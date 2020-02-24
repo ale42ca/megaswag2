@@ -374,7 +374,7 @@ if($comando[0]=="aiuto"){
 }
 if($comando[0]=="raccontami qualcosa"){
 	mandamessaggiutente($utente, "Ti racconto una barzeletta");
-  $tabrutta= letturedatabase("SELECT frasi FROM frasi WHERE ir in ( SELECT ir FROM prenotazioni ORDER BY  RAND() LIMIT 1)");
+  $tabrutta= letturedatabase("SELECT frasi FROM frasi ORDER BY RANDOM() LIMIT 1");
 	mandamessaggiutente($utente, $tabrutta[0]["frasi"]);
 }
 
