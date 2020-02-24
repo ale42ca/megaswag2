@@ -160,7 +160,7 @@ switch($comando[0]){
 	      mandamessaggiutente($utente, $msg);
 	      exit();
 	    }else {
-	      mandamessaggiutente($utente, "Perfetto aggiorno le informazioni! ti ricordo che se devi eliminare la tua ultima prenotazione devi digitare cancella prenotazione");
+	      mandamessaggiutente($utente, "Perfetto aggiorno le informazioni! ti ricordo che se devi eliminare la tua ultima prenotazione usa funzione canc");
 	      inserireneldatabase("INSERT INTO prenotazioni ( utente, giorno, mese) VALUES ('$username', '$giornoprenotato', $meseprenotato)");
 	      mandamessaggiutente($utente, "avvisiamo sul canale ");
 	      $msg="studio prenotato da ".$nomeutente."per il giorno ".$giornoprenotato."/".$meseprenotato;
@@ -172,7 +172,7 @@ switch($comando[0]){
   case 'evento':
       // code...
     if($GLOBALS['utenterfl']['livello']<2){
- 	 mandamessaggiutente($utente,"non hai i permessi" );
+ 	 mandamessaggiutente($utente,"non hai i permessi");
 	 exit();
     }
     $msg="creiamo insieme il prossimo evento scrivi il tuo messaggio e invialo poi scrivi evento e la data";
@@ -183,14 +183,12 @@ switch($comando[0]){
     $giornoprenotato=$newevento[1];
     $cosaevento=$newevento[0];
     if($meseprenotato== null or $meseprenotato== null){
-	    $msg="creiamo evento. Per farlo digita:";
-	    mandamessaggiutente($utente, $msg);
-	    $msg="prenota giornoscelto.mesescelto";
-	    mandamessaggiutente($utente, $msg);
+	    mandamessaggiutente($utente, "Creiamo evento, per farlo digita:");
+	    mandamessaggiutente($utente, "Prenota giornoscelto.mesescelto");
 	    exit();
     }
 	if($cosaevento==null){
-		$msg="non hai specificato l' evento.";
+		$msg="non hai specificato l'evento.";
 	    mandamessaggiutente($utente, $msg);
 	}
 
@@ -218,12 +216,12 @@ switch($comando[0]){
         mandamessaggiutente($utente, $msg);
         exit();
     }else  {
-        $msg="Perfetto aggiorno le informazioni! ti ricordo che se devi eliminare la tua ultima prenotazione devi digitare canc evento";
+        $msg="Perfetto aggiorno le informazioni! ti ricordo che se devi eliminare la tua ultima prenotazione usa la funzione canc";
         mandamessaggiutente($utente, $msg);
         inserireneldatabase("INSERT INTO evento ( utente, giorno, mese, evento) VALUES ('$username', '$giornoprenotato', '$meseprenotato', '$cosaevento')");
-        $msg="avvisiamo sul canale ";
+        $msg="avvisiamo sul canale";
         mandamessaggiutente($utente, $msg);
-        $msg="nuovo evento:".$cosaevento."per il giorno".$giornoprenotato."/".$meseprenotato;
+        $msg="nuovo evento: ".$cosaevento." per il giorno ".$giornoprenotato."/".$meseprenotato;
         mandamessaggicanale($msg);
       }
     break;
@@ -244,12 +242,12 @@ switch($comando[0]){
       //cancella ultimo evento
 
       inserireneldatabase("DELETE FROM evento WHERE ir in ( SELECT ir FROM evento ORDER BY ir desc LIMIT 1 ) ");
-      $msg=" ultimo evento cancellato";
+      $msg="ultimo evento cancellato";
       mandamessaggiutente($utente, $msg);
     }elseif ($cancella=="prenotazione") {
 
       inserireneldatabase("DELETE FROM prenotazioni WHERE utente='$username' AND ir in ( SELECT ir FROM prenotazioni ORDER BY ir desc LIMIT 1 ) ");
-      $msg=" ultima tua prenotazione cancellata";
+      $msg="ultima tua prenotazione cancellata";
       mandamessaggiutente($utente, $msg);
     }
 
@@ -298,7 +296,7 @@ switch($comando[0]){
   case 'birra':
     // code...
     if($GLOBALS['utenterfl']['livello']<1){
- 	 mandamessaggiutente($utente,"non hai i permessi" );
+ 	 mandamessaggiutente($utente,"non hai i permessi");
 	 exit();
     }
 	tastierabirre($utente);
@@ -314,13 +312,13 @@ switch($comando[0]){
 	}
 
 	if($birra>0 or is_numeric($birra)){
-	  mandamessaggiutente($utente, "ti ricordo che puoi indicare che se hai preso + birre puoi indicare quante ne hai prese");
+	  mandamessaggiutente($utente, "Digita birra +/-(numero birre)");
 	  $nbirra=$msgbirra+$birra;
 	  inserireneldatabase("INSERT INTO birra (birre, utente, data) VALUES ( '$nbirra', '$username', '$dataoggi')");
 	  exit();
 	}
 	if($birra<0){
-	  mandamessaggiutente($utente, "Hai preso ".$birre." birra");
+	  mandamessaggiutente($utente, "Hai preso ".$birra." birre");
 	  $nbirra=$msgbirra+$birra;
 	  inserireneldatabase("INSERT INTO birra (birre, utente, data) VALUES ( '$nbirra', '$username', '$dataoggi')");
 	  exit();
@@ -334,7 +332,7 @@ switch($comando[0]){
  	 mandamessaggiutente($utente,"non hai i permessi" );
 	 exit();
     }
-    $msg="inseriamo new tesserato: indicami utenteidtelegram.nomevero.livello,";
+    $msg="inseriamo new tesserato: indicami utenteidtelegram.nomevero.livello";
     mandamessaggiutente($utente, $msg);
     $tesserato=$coma[1];
     $newtesserato= explode('.', $tesserato);
@@ -344,7 +342,7 @@ switch($comando[0]){
     $livellotesserato=$newtesserato[2];
     $nomevero=$newtesserato[1];
     if($tesserato== null){
-	    mandamessaggiutente($utente, "specifica le caratteristiche tesserato");
+	    mandamessaggiutente($utente, "specifica meglio le caratteristiche tesserato");
 	    exit();
     }
     inserireneldatabase("INSERT INTO utenti ( utente, nomevero, livello, giorno, mese, anno) VALUES ('$nometesserato','$nomevero', '$livellotesserato', '$giorno', '$mese','$anno')");
@@ -358,16 +356,16 @@ switch($comando[0]){
 if($comando[0]=="aiuto"){
 	tastieraaiuto($utente);
 	if($comando[1]=="prenotazione"){
-		mandamessaggiutente($utente, "Per prenotare scrivi sulla tastiera: (prenota).(giorno).(mese)");
+		mandamessaggiutente($utente, "Per prenotare scrivi sulla tastiera: (prenota)( )(giorno).(mese)");
 }
 	if($comando[1]=="calendario"){
-		mandamessaggiutente($utente, "il calendario ti permette di vedere ultime  prenotazioni");
+		mandamessaggiutente($utente, "il calendario ti permette di vedere ultime 5 prenotazioni o eventi, controlla prenotazioni anche sul canale");
 }
 	if($comando[1]=="eventi"){
-		mandamessaggiutente($utente, "Per creare un evento scrivi sulla tastiera: (evento) (nome dell' evento).(giorno).(mese)");
+		mandamessaggiutente($utente, "Per creare un evento scrivi sulla tastiera: (evento)( )(nome dell'evento).(giorno).(mese)");
 }
 	if($comando[1]=="birra"){
-		mandamessaggiutente($utente, "scrivi (birra)(+/-)(numero birre) per aggiungere/togliere birre");
+		mandamessaggiutente($utente, "scrivi (birra)( )(+/-)(numero birre) per aggiungere/togliere birre");
 }
 
 
