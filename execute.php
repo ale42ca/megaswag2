@@ -112,8 +112,9 @@ switch($comando[0]){
     break;
   case 'prenota':
 
-    if($GLOBALS['utenterfl']['livello']<1){
-      exit();
+    if($GLOBALS['utenterfl']['livello']<2){
+ 	 mandamessaggiutente($utente,"non hai i permessi" );
+	 exit();
     }
 
     $prenotazione=$comando[1];
@@ -161,8 +162,9 @@ switch($comando[0]){
     break;
   case 'evento':
       // code...
-    if($GLOBALS['utenterfl']['livello']<1){
-        exit();
+    if($GLOBALS['utenterfl']['livello']<2){
+ 	 mandamessaggiutente($utente,"non hai i permessi" );
+	 exit();
     }
     $msg="creiamo insieme il prossimo evento scrivi il tuo messaggio e invialo poi scrivi evento e la data";
     mandamessaggiutente($utente, $msg);
@@ -218,7 +220,8 @@ switch($comando[0]){
     break;
   case 'birre':
     if($GLOBALS['utenterfl']['livello']<1){
-        exit();
+ 	 mandamessaggiutente($utente,"non hai i permessi");
+	 exit();
     }
     $msg="";
     mandamessaggiutente($utente, $msg);
@@ -248,7 +251,8 @@ switch($comando[0]){
   case 'calendario':
     // code...
     if($GLOBALS['utenterfl']['livello']<1){
-      exit();
+ 	 mandamessaggiutente($utente,"non hai i permessi" );
+	 exit();
     }
     tastieracalendario($utente);		
     $calendario=$comando[1];
@@ -278,8 +282,9 @@ switch($comando[0]){
     break;
   case 'birra':
     // code...
-    if($GLOBALS['utenterfl']['livello']<1){
-      exit();
+    if($GLOBALS['utenterfl']['livello']<2){
+ 	 mandamessaggiutente($utente,"non hai i permessi" );
+	 exit();
     }
  //   tastierabirre($utente);
     $birra=$comando[1];
