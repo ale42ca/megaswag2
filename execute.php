@@ -126,7 +126,6 @@ switch($comando[0]){
  	 mandamessaggiutente($utente,"non hai i permessi" );
 	 exit();
     }
-    removeKeyboard($utente);	
     $prenotazione=$comando[1];
     $dataprenotazione= explode('.', $prenotazione);
     $meseprenotato=$dataprenotazione[1];
@@ -178,7 +177,7 @@ switch($comando[0]){
     }
     $msg="creiamo insieme il prossimo evento scrivi il tuo messaggio e invialo poi scrivi evento e la data";
     mandamessaggiutente($utente, $msg);
-    removeKeyboard($utente);	
+	
     $evento=$comando[1];
     $newevento= explode('.', $evento);
     $meseprenotato=$newevento[2];
