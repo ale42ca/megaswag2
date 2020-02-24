@@ -244,11 +244,23 @@ switch($comando[0]){
       //cancella ultimo evento
 
       inserireneldatabase("DELETE FROM evento WHERE ir in ( SELECT ir FROM evento ORDER BY ir desc LIMIT 1 ) ");
+      $tabrutta= letturedatabase("SELECT ir FROM eventi  ");
+      $int=count($tabrutta);
+	    if($int<1){
+		 mandamessaggiutente($utente,"non ci sono più eventi");
+		 exit();
+	    }	  
       $msg="ultimo evento cancellato";
       mandamessaggiutente($utente, $msg);
     }elseif ($cancella=="prenotazione") {
 
       inserireneldatabase("DELETE FROM prenotazioni WHERE utente='$username' AND ir in ( SELECT ir FROM prenotazioni ORDER BY ir desc LIMIT 1 ) ");
+      $tabrutta= letturedatabase("SELECT ir FROM prenotazioni WHERE utente='$username' ");
+      $int=count($tabrutta);
+	    if($int<1){
+		 mandamessaggiutente($utente,"non ci sono più prenotazioni");
+		 exit();
+	    }	
       $msg="ultima tua prenotazione cancellata";
       mandamessaggiutente($utente, $msg);
     }
