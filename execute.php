@@ -403,7 +403,7 @@ function tastieracalendario($utente){
 
 function tastierabirre($utente){
     $messaggio = "birra";	
-    $tastiera = '&reply_markup={"keyboard":[["birra tot"],["birra consumata"],["esci"]]}';
+    $tastiera = '&reply_markup={"keyboard":[["birra tot"],["esci"]]}';
     $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     file_get_contents($url);
 }
