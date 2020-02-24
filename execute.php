@@ -113,7 +113,8 @@ switch($comando[0]){
 	
 	inserireneldatabase("UPDATE utenti SET livello= '1'  WHERE password = 'quack'");
 	inserireneldatabase("UPDATE utenti SET livello= '2'  WHERE password = 'fico'");
-	inserireneldatabase("UPDATE utenti SET livello= '3'  WHERE password = 'megaswag'");	
+	inserireneldatabase("UPDATE utenti SET livello= '3'  WHERE password = 'megaswag'");
+	tastierastart($utente);
     break;
   case 'prenota':
 
