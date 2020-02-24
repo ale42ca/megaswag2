@@ -242,7 +242,10 @@ switch($comando[0]){
     }
     if($cancella=="evento"){
       //cancella ultimo evento
-
+     if($GLOBALS['utenterfl']['livello']<3){
+ 	 mandamessaggiutente($utente,"non hai i permessi" );
+	 exit();
+      }
       inserireneldatabase("DELETE FROM evento WHERE ir in ( SELECT ir FROM evento ORDER BY ir desc LIMIT 1 ) ");
       $tabrutta= letturedatabase("SELECT ir FROM eventi  ");
       $int=count($tabrutta);
@@ -420,8 +423,14 @@ function tastieraaiuto($utente){
 
 }
 function tastieracanc($utente){
-    $messaggio = "cancelliamo la tua ultima prenotazione";
-    $tastiera = '&reply_markup={"keyboard":[["canc evento"],["canc prenotazione"],["esci"]]}';
+    $messaggio = "cancelliamo ultima tua prenotazione";
+    if($GLOBALS['utenterfl']['livello']==2){
+    	$tastiera = '&reply_markup={"keyboard":[["canc prenotazione"],["esci"]]}';
+
+    }else if($GLOBALS['utenterfl']['livello']>2){
+    	$tastiera = '&reply_markup={"keyboard":[["canc evento"],["canc prenotazione"],["esci"]]}';
+    }	
+	
     $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     file_get_contents($url);
 
