@@ -339,7 +339,7 @@ switch($comando[0]){
     $tesserato=$coma[1];
     $newtesserato= explode('.', $tesserato);
     ////////////////////////
-    $tarta		
+    		
     $nometesserato=$newtesserato[0];
     $livellotesserato=$newtesserato[2];
     $nomevero=$newtesserato[1];
