@@ -322,9 +322,9 @@ switch($comando[0]){
     break;
 }
 if($comando[0]=="aiuto"){
-	mandamessaggiutente($utente, "Tranquillo ci penso io ".$username);
+	    $messaggio = "Tranquillo ci penso io ".$username;
 	    $tastiera = '&reply_markup={"keyboard":[["aiuto prenota"],["aiuto eventi"],["aiuto calendario"],["aiuto birra"],["esci"]]}';
-    	    $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."HTML&text=".$tastiera;
+    	    $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
             file_get_contents($url);
 	if($comando[1]=="prenota"){	
 		mandamessaggiutente($utente, "Per prenotare ".$username);
@@ -340,6 +340,12 @@ if($comando[0]=="aiuto"){
 }
 	
 
+}
+function tastierastart($utente){
+	$messaggio = "osserva la tastiera e usa i suoi comandi";
+    	$tastiera = '&reply_markup={"keyboard":[["prenota"],["calendario"],["vedi prenotazioni"],["data"]]}';
+    	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
+    	file_get_contents($url);
 }
 function tastierastart($utente){
     
