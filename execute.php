@@ -304,32 +304,39 @@ switch($comando[0]){
     $birra=$comando[1];
     $tabirra= letturedatabase("SELECT birre FROM birra");
     $msgbirra=$tabirra[0]["birre"];
-    mandamessaggiutente($utente, "le birre totali ".$msgbirra);
-
-    $tastiera = '&reply_markup={"keyboard":[["birra consumata"],["esci"]]}';
-    $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$tastiera;
-    file_get_contents($url);
-				
-
+    mandamessaggiutente($utente, "le birre totali: ".$msgbirra);
+		
     if($birra>0 or is_numeric($birra)){
       mandamessaggiutente($utente, "ti ricordo che puoi indicare che se hai preso + birre puoi indicare quante ne hai prese");    
       $nbirra=$msgbirra+$comando[1];
-      inserireneldatabase("INSERT INTO birra  VALUES (ir, '$nbirra', '$username', '$dataoggi')");
+      inserireneldatabase("INSERT INTO birra  (birre, utente, data) VALUES ('$nbirra', '$username', '$dataoggi')");
       exit();
     }
     if($birra=="consumata"){
-      //cancella ultimo evento
+
       if($nbirra==0){
        	mandamessaggiutente($utente, "le birre sono esaurite");
        	exit();
-	    
-    }		    
+	}		    
       $nbirra=$msgbirra-1;
-      $tabirra= letturedatabase("INSERT INTO birra  VALUES (ir, '$nbirra', '$username', '$dataoggi') ");
-      mandamessaggiutente($utente, "preso una  birra");
+      $tabirra= letturedatabase("INSERT INTO birra  (birre, utente, data) VALUES ('$nbirra', '$username', '$dataoggi') ");
+      mandamessaggiutente($utente, $username."ha preso una  birra");
     }
 		
     break;
+  case 'new':
+    if($GLOBALS['utenterfl']['livello']<2){
+ 	 mandamessaggiutente($utente,"non hai i permessi" );
+	 exit();
+    }		
+    mandamessaggiutente($utente, "Nuovo tesserato");
+    $tesserato=$comando[1];
+    $newtesserato= explode('.', $tesserato);
+    $nome=$newevento[2];
+    $livello=$newevento[1];
+    $cosaevento=$newevento[0];
+
+    break;		
   case 'esci':
     tastierastart($utente);
 
@@ -350,7 +357,7 @@ if($comando[0]=="aiuto"){
 		mandamessaggiutente($utente, "Per creare un evento scrivi sulla tastiera: (evento) poi (nome dell' evento) (.) (giorno)  (.) e (mese) ");
 }
 	if($comando[1]=="birra"){
-		mandamessaggiutente($utente, "");
+		mandamessaggiutente($utente, "Per inndicare una nuova birra presa");
 }
 	
 
