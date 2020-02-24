@@ -9,7 +9,7 @@ $updates=file_get_contents("php://input");
 $update=json_decode($updates, true);
 
 if(!$update){
-  exit;
+  exit();
 }
 //msg
 $messaggio=$update['message'];
