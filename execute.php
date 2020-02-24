@@ -112,8 +112,8 @@ switch($comando[0]){
         mandamessaggiutente($utente,"ok la password è aggiornata" );
 	
 	inserireneldatabase("UPDATE utenti SET livello= '1'  WHERE password = 'quack'");
-	inserireneldatabase("UPDATE utenti SET livello= '2'  WHERE password = 'fico'");
-	inserireneldatabase("UPDATE utenti SET livello= '3'  WHERE password = 'megaswag'");
+	inserireneldatabase("UPDATE utenti SET livello= '2'  WHERE password = 'frequenza'");
+	inserireneldatabase("UPDATE utenti SET livello= '3'  WHERE password = 'lib.era'");
 	tastierastart($utente);
     break;
   case 'prenota':
@@ -353,7 +353,7 @@ switch($comando[0]){
 }
 if($comando[0]=="aiuto"){
 	tastieraaiuto($utente);
-	if($comando[1]=="prenota"){	
+	if($comando[1]=="prenotazione"){	
 		mandamessaggiutente($utente, "Per prenotare scrivi sulla tastiera: (prenota) poi (giorno) aggiungendo (.) e (mese) ");
 }
 	if($comando[1]=="calendario"){
@@ -370,6 +370,13 @@ if($comando[0]=="aiuto"){
 }
 if($comando[0]=="raccontami qualcosa"){
 	mandamessaggiutente($utente, "Ti racconto una barzeletta");
+	$file = "frasi.txt";
+	$file_arr = file($file);
+	$num_lines = count($file_arr);
+	$last_arr_index = $num_lines - 1;
+	$rand_index = rand(0, $last_arr_index);
+	$rand_text = $file_arr[$rand_index];
+	mandamessaggiutente($utente, $rand_text);
 }
 
 function tastierastart($utente){
