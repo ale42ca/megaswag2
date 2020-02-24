@@ -380,11 +380,11 @@ if($comando[0]=="raccontami qualcosa"){
 }
 
 function tastierastart($utente){
-	$messaggio = "osserva la tastiera e usa i suoi comandi";
-    if($GLOBALS['utenterfl']['livello']<2){
+    $messaggio = "osserva la tastiera e usa i suoi comandi";
+    if($GLOBALS['utenterfl']['livello']<3){
         $tastiera = '&reply_markup={"keyboard":[["calendario"],["birra"],["aiuto"]]}';
 	 
-    }else if($GLOBALS['utenterfl']['livello']<3){	
+    }else if($GLOBALS['utenterfl']['livello']<4){	
         $tastiera = '&reply_markup={"keyboard":[["prenota"],["evento"],["calendario"],["birra"],["canc"],["aiuto"]]}';
     }
 	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
@@ -392,7 +392,7 @@ function tastierastart($utente){
 }
 function tastieraaiuto($utente){
     $messaggio = "Ti aiuto io";	
-    $tastiera = '&reply_markup={"keyboard":[["esci"]]}';
+    $tastiera = '&reply_markup={"keyboard":[["raccontami qualcosa"],["aiuto prenotazione"],["aiuto calendario"],["aiuto eventi"],["aiuto birra"],["esci"]]}';
     $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     file_get_contents($url);
 
