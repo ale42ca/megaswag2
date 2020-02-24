@@ -423,11 +423,12 @@ function tastieraaiuto($utente){
 
 }
 function tastieracanc($utente){
-    $messaggio = "cancelliamo ultima tua prenotazione";
     if($GLOBALS['utenterfl']['livello']==2){
+	$messaggio = "cancelliamo ultima tua prenotazione";    
     	$tastiera = '&reply_markup={"keyboard":[["canc prenotazione"],["esci"]]}';
 
     }else if($GLOBALS['utenterfl']['livello']>2){
+	$messaggio = "cancelliamo ultima tua prenotazione";
     	$tastiera = '&reply_markup={"keyboard":[["canc evento"],["canc prenotazione"],["esci"]]}';
     }	
 	
