@@ -336,7 +336,7 @@ switch($comando[0]){
     break;
 }
 if($comando[0]=="aiuto"){
-	    $messaggio = null;
+	    $messaggio = " ";
 	    $tastiera = '&reply_markup={"keyboard":[["aiuto prenota"],["aiuto eventi"],["aiuto calendario"],["aiuto birra"],["esci"]]}';
     	    $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
             file_get_contents($url);
@@ -379,7 +379,7 @@ function tastieracalendario($utente){
 }
 
 function tastierabirre($utente){
-    $messaggio = " ";	
+    $messaggio = "birra";	
     $tastiera = '&reply_markup={"keyboard":[["birra"],["birra consumata"],["esci"]]}';
     $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     file_get_contents($url);
