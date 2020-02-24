@@ -302,62 +302,52 @@ switch($comando[0]){
     }
     tastierabirre($utente);
     $birra=$comando[1];
-    $tabirra= letturedatabase("SELECT birre FROM birra");
+    $tabirra= letturedatabase("SELECT birre FROM birra WHERE ir in ( SELECT ir FROM evento ORDER BY ir desc LIMIT 1 )");
     $msgbirra=$tabirra[0]["birre"];
-    mandamessaggiutente($utente, "le birre totali: ".$msgbirra);
-		
+    mandamessaggiutente($utente, "le birre totali ".$msgbirra);
+
+    $tastiera = '&reply_markup={"keyboard":[["birra consumata"],["esci"]]}';
+    $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$tastiera;
+    file_get_contents($url);
+				
+
     if($birra>0 or is_numeric($birra)){
       mandamessaggiutente($utente, "ti ricordo che puoi indicare che se hai preso + birre puoi indicare quante ne hai prese");    
       $nbirra=$msgbirra+$comando[1];
-      inserireneldatabase("INSERT INTO birra  (birre, utente, data) VALUES ('$nbirra', '$username', '$dataoggi')");
+      inserireneldatabase("INSERT INTO birra  VALUES (ir, '$nbirra', '$username', '$dataoggi')");
       exit();
     }
     if($birra=="consumata"){
-
+      //cancella ultimo evento
       if($nbirra==0){
        	mandamessaggiutente($utente, "le birre sono esaurite");
        	exit();
-	}		    
+	    
+    }		    
       $nbirra=$msgbirra-1;
-      $tabirra= letturedatabase("INSERT INTO birra  (birre, utente, data) VALUES ('$nbirra', '$username', '$dataoggi') ");
-      mandamessaggiutente($utente, $username."ha preso una  birra");
+      $tabirra= letturedatabase("INSERT INTO birra  VALUES (ir, '$nbirra', '$username', '$dataoggi') ");
+      mandamessaggiutente($utente, "preso una  birra");
     }
 		
     break;
-  case 'new':
-    if($GLOBALS['utenterfl']['livello']<2){
- 	 mandamessaggiutente($utente,"non hai i permessi" );
-	 exit();
-    }		
-    mandamessaggiutente($utente, "Nuovo tesserato");
-    $tesserato=$comando[1];
-    $newtesserato= explode('.', $tesserato);
-    $nome=$newevento[2];
-    $livello=$newevento[1];
-    $cosaevento=$newevento[0];
-
-    break;		
   case 'esci':
     tastierastart($utente);
 
     break;
 }
 if($comando[0]=="aiuto"){
-	    $messaggio = " ";
-	    $tastiera = '&reply_markup={"keyboard":[["aiuto prenota"],["aiuto eventi"],["aiuto calendario"],["aiuto birra"],["esci"]]}';
-    	    $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
-            file_get_contents($url);
+	tastieraaiuto($utente);
 	if($comando[1]=="prenota"){	
 		mandamessaggiutente($utente, "Per prenotare scrivi sulla tastiera: (prenota) poi (giorno) aggiungendo (.) e (mese) ");
 }
 	if($comando[1]=="calendario"){
-		mandamessaggiutente($utente, "il calendario ti permette di vedere la   ");
+		mandamessaggiutente($utente, "il calendario ti permette di vedere le prenotazioni");
 }
 	if($comando[1]=="eventi"){
 		mandamessaggiutente($utente, "Per creare un evento scrivi sulla tastiera: (evento) poi (nome dell' evento) (.) (giorno)  (.) e (mese) ");
 }
 	if($comando[1]=="birra"){
-		mandamessaggiutente($utente, "Per inndicare una nuova birra presa");
+		mandamessaggiutente($utente, "");
 }
 	
 
@@ -368,7 +358,13 @@ function tastierastart($utente){
     	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     	file_get_contents($url);
 }
+function tastieraaiuto($utente){
+    $messaggio = "Ti aiuto io";	
+    $tastiera = '&reply_markup={"keyboard":[["aiuto prenota"],["aiuto calendario"],["aiuto prenota"],["aiuto eventi"],["aiuto birra"],["esci"]]}';
+    $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
+    file_get_contents($url);
 
+}
 function tastieracanc($utente){
     $messaggio = "cancelliamo la tua ultima prenotazione";	
     $tastiera = '&reply_markup={"keyboard":[["canc evento"],["canc prenotazione"],["esci"]]}';
