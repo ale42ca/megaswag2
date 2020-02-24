@@ -102,16 +102,7 @@ switch($comando[0]){
   if($GLOBALS['utenterfl']['livello']<1){
       exit();
   }else {
-    /**********************************  tastierastart($utente);
-***********************************
-*****************************
-**********************
-****************
-********
-******
-****
-**
-*/
+    tastierastart($utente);
     }
     break;
   case '/password':
@@ -259,6 +250,7 @@ switch($comando[0]){
     if($GLOBALS['utenterfl']['livello']<1){
       exit();
     }
+    tastieracalendario($utente);		
     $calendario=$comando[1];
 	if($calendario==eventi){
       $msg="ecco a te le ultime 5 eventi";
@@ -289,6 +281,7 @@ switch($comando[0]){
     if($GLOBALS['utenterfl']['livello']<1){
       exit();
     }
+    tastierabirre($utente);
     $birra=$comando[1];
     $tabirra= letturedatabase("SELECT birre FROM birra");
     $msgbirra=$tabirra[0]["birre"];
@@ -299,7 +292,7 @@ switch($comando[0]){
     file_get_contents($url);
 				
 
-    if($birra== null or is_numeric($birra)){
+    if($birra>0 or is_numeric($birra)){
       mandamessaggiutente($utente, "ti ricordo che puoi indicare che se hai preso + birre puoi indicare quante ne hai prese");    
       $nbirra=$msgbirra+$comando[1];
       inserireneldatabase("INSERT INTO birra  VALUES (ir, '$nbirra', '$utente', '$dataoggi')");
@@ -319,7 +312,49 @@ switch($comando[0]){
 		
     break;
   case 'esci':
-    // qui mettere tastiera start
-    //tastierastart($utente);
+    tastierastart($utente);
+
     break;
 }
+if(comando=="aiuto"){
+	mandamessaggiutente($utente, "Tranquillo ci penso io");
+}
+function tastierastart($utente){
+    
+	
+    $tastiera = '&reply_markup={"keyboard":[["prenota"],["calendario"],["birra"],["aiuto"]]}';
+    $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$tastiera;
+    file_get_contents($url);
+	
+
+}
+
+function tastieracalendario($utente){
+    $tastiera = '&reply_markup={"keyboard":[["calendario eventi"],["calendario prenotazioni"],["esci"]]}';
+    $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$tastiera;
+    file_get_contents($url);
+
+}
+
+function tastierabirre($utente){
+    $tastiera = '&reply_markup={"keyboard":[["birra"],["birra consumata"],["esci"]]}';
+    $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$tastiera;
+    file_get_contents($url);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
