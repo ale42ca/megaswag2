@@ -281,7 +281,7 @@ switch($comando[0]){
     if($GLOBALS['utenterfl']['livello']<1){
       exit();
     }
-    tastierabirre($utente);
+ //   tastierabirre($utente);
     $birra=$comando[1];
     $tabirra= letturedatabase("SELECT birre FROM birra");
     $msgbirra=$tabirra[0]["birre"];
@@ -335,7 +335,7 @@ function tastieracalendario($utente){
     file_get_contents($url);
 
 }
-
+/*
 function tastierabirre($utente){
     $tastiera = '&reply_markup={"keyboard":[["birra"],["birra consumata"],["esci"]]}';
     $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$tastiera;
@@ -343,7 +343,7 @@ function tastierabirre($utente){
 }
 
 
-
+*/
 
 
 
