@@ -373,9 +373,9 @@ if($comando[0]=="aiuto"){
 
 }
 if($comando[0]=="raccontami qualcosa"){
-
-  $tabrutta= letturedatabase("SELECT frasi FROM frasi ORDER BY RANDOM() LIMIT 1");
-  mandamessaggiutente($utente, $tabrutta[0]);
+  $tabirra= letturedatabase("SELECT frasi FROM frasi ORDER BY RANDOM() LIMIT 1");
+  $msg=$tabirra[0]["frasi"];
+  mandamessaggiutente($utente, $msg);
 }
 
 function tastierastart($utente){
