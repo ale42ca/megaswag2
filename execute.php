@@ -262,7 +262,7 @@ switch($comando[0]){
     $calendario=$comando[1];
 	if($calendario==eventi){
       $tabrutta= letturedatabase("SELECT utente, giorno, mese FROM eventi WHERE ir in ( SELECT ir FROM eventi ORDER BY ir desc LIMIT 10 )");
-      $int=count($tabrutta)
+      $int=count($tabrutta);
 	    if($int<1){
 		 mandamessaggiutente($utente,"non ci sono eventi" );
 		 exit();
