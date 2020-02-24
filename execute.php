@@ -111,9 +111,9 @@ switch($comando[0]){
 	$tabula=letturedatabase("UPDATE utenti SET password= '$msg'  WHERE utente = '$username'");
         mandamessaggiutente($utente,"ok la password è aggiornata" );
 	
-	inserireneldatabase("UPDATE utenti SET livello= '1'  WHERE password = 'quack'");
-	inserireneldatabase("UPDATE utenti SET livello= '2'  WHERE password = 'fico'");
-	inserireneldatabase("UPDATE utenti SET livello= '3'  WHERE password = 'megaswag'");	
+	inserireneldatabase("UPDATE utenti SET livello= '0'  WHERE password = 'quack'");
+	inserireneldatabase("UPDATE utenti SET livello= '1'  WHERE password = 'fico'");
+	inserireneldatabase("UPDATE utenti SET livello= '2'  WHERE password = 'megaswag'");	
     break;
   case 'prenota':
 
@@ -226,7 +226,7 @@ switch($comando[0]){
 
   case 'canc':
     // code...
-    if($GLOBALS['utenterfl']['livello']<1){
+    if($GLOBALS['utenterfl']['livello']<2){
  	 mandamessaggiutente($utente,"non hai i permessi" );
 	 exit();
     }
@@ -362,7 +362,7 @@ if($comando[0]=="aiuto"){
 		mandamessaggiutente($utente, "Per creare un evento scrivi sulla tastiera: (evento) poi (nome dell' evento) (.) (giorno)  (.) e (mese) ");
 }
 	if($comando[1]=="birra"){
-		mandamessaggiutente($utente, "scrivi (birra) (+/-)(numero birre) per aggiungere togliere birre");
+		mandamessaggiutente($utente, "scrivi (birra) (+/-)(numero birre) per aggiungere/togliere birre");
 }
 	
 
@@ -372,8 +372,10 @@ function tastierastart($utente){
     if($GLOBALS['utenterfl']['livello']<1){
         $tastiera = '&reply_markup={"keyboard":[["calendario"],["birra"],["aiuto"]]}';
 	 
-    }else{	
+    }else if($GLOBALS['utenterfl']['livello']<2){	
         $tastiera = '&reply_markup={"keyboard":[["prenota"],["calendario"],["birra"],["canc"],["aiuto"]]}';
+    } else if($GLOBALS['utenterfl']['livello']<3){	
+        $tastiera = '&reply_markup={"keyboard":[["new"],["prenota"],["calendario"],["birra"],["canc"],["aiuto"]]}';
     }
 	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     	file_get_contents($url);
@@ -403,7 +405,7 @@ function tastieracalendario($utente){
 
 function tastierabirre($utente){
     $messaggio = "birra";	
-    $tastiera = '&reply_markup={"keyboard":[["birra tot"],["birra consumata"],["esci"]]}';
+    $tastiera = '&reply_markup={"keyboard":[["birra tot"],["esci"]]}';
     $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     file_get_contents($url);
 }
