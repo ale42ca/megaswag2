@@ -91,7 +91,7 @@ $option= json_encode($option);
 $oks=http_build_query("&is_anonymous=False");
 function sendpool($msg, $option){
   $utente = "@santacaterina2";
-  $url = $GLOBALS[completo]."/sendPoll?chat_id=".$utente."&question=".$msg."&options=".$option.$oks;
+  $url = $GLOBALS[completo]."/sendPoll?chat_id=".$utente."&question=".$msg."&options=".$option."&is_anonymous={"Poll":false}";
   file_get_contents($url);
 }
 //switch case
