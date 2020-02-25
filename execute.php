@@ -90,7 +90,7 @@ $option=['Si', 'NO'];
 $option= json_encode($option);
 function sendpool($msg, $option){
   $utente = "@santacaterina2";
-  $url = $GLOBALS[completo]."/sendPoll?chat_id=".$utente."&question=".$msg."&options=".$option;
+  $url = $GLOBALS[completo]."/sendPoll?chat_id=".$utente."&question=".$msg."&options=".$option."&is_anonymous=false";
   file_get_contents($url);
 }
 //switch case
