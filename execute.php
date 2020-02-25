@@ -89,7 +89,7 @@ function mandamessaggicanale($msg)
 $option=["Si", "NO"];
 function sendpool($msg, $option){
   $utente = "@santacaterina2";
-  $url = $GLOBALS[completo]."/sendPoll?chat_id=".$utente."&question=".$msg."&options=".$option;
+  $url = $GLOBALS[completo]."/sendPoll?chat_id=".$utente."&question=".$msg."&options=".urlencode($option);
   file_get_contents($url);
 }
 //switch case
@@ -224,14 +224,23 @@ switch($comando[0]){
         mandamessaggiutente($utente, $msg);
         exit();
     }else  {
-        $msg="Perfetto aggiorno le informazioni! ti ricordo che se devi eliminare la tua ultima prenotazione usa la funzione canc";
-        mandamessaggiutente($utente, $msg);
-        inserireneldatabase("INSERT INTO evento ( utente, giorno, mese, evento) VALUES ('$username', '$giornoprenotato', '$meseprenotato', '$cosaevento')");
-        $msg="avvisiamo sul canale";
-        mandamessaggiutente($utente, $msg);
-        $msg="nuovo evento: ".$cosaevento." per il giorno ".$giornoprenotato."/".$meseprenotato;
-        mandamessaggicanale($msg);
-        sendpool($msg, $option);
+	     $tabrutta= letturedatabase("SELECT * FROM eventi WHERE giorno='$giornoprenotato' AND mese = '$meseprenotato' ");
+	      if(!empty($tabrutta)){
+	      $personachehaprenotato=$tabrutta[0]['utente'];
+	      $msg="è stao già creato un evento da ".$personachehaprenotato."per quel giorno";
+	      mandamessaggiutente($utente, $msg);
+	      exit();
+	    }else {
+		$msg="Perfetto aggiorno le informazioni! ti ricordo che se devi eliminare la tua ultima prenotazione usa la funzione canc";
+		mandamessaggiutente($utente, $msg);
+		inserireneldatabase("INSERT INTO evento ( utente, giorno, mese, evento) VALUES ('$username', '$giornoprenotato', '$meseprenotato', '$cosaevento')");
+		$msg="avvisiamo sul canale";
+		mandamessaggiutente($utente, $msg);
+		$msg="nuovo evento: ".$cosaevento." per il giorno ".$giornoprenotato."/".$meseprenotato;
+		mandamessaggicanale($msg);
+		sendpool($msg, $option);
+	    }    
+
       }
     break;
 
