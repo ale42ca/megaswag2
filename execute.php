@@ -86,6 +86,12 @@ function mandamessaggicanale($msg)
   $url = $GLOBALS[completo]."/sendMessage?chat_id=".$utente."&text=".urlencode($msg);
   file_get_contents($url);
 }
+$option=["Si", "NO"];
+function sendpool($msg, $option){
+  $utente = "@santacaterina2";
+  $url = $GLOBALS[completo]."/sendPoll?chat_id=".$utente."&question=".urlencode($msg)."&options=".urlencode($option);
+  file_get_contents($url);
+}
 //switch case
 switch($comando[0]){
   case '/start':
@@ -225,6 +231,7 @@ switch($comando[0]){
         mandamessaggiutente($utente, $msg);
         $msg="nuovo evento: ".$cosaevento." per il giorno ".$giornoprenotato."/".$meseprenotato;
         mandamessaggicanale($msg);
+        sendpool($msg, $option);
       }
     break;
 
@@ -242,17 +249,14 @@ switch($comando[0]){
     }
     if($cancella=="evento"){
       //cancella ultimo evento
-     if($GLOBALS['utenterfl']['livello']<3){
- 	 mandamessaggiutente($utente,"non hai i permessi" );
-	 exit();
-      }
+
       inserireneldatabase("DELETE FROM evento WHERE ir in ( SELECT ir FROM evento ORDER BY ir desc LIMIT 1 ) ");
       $tabrutta= letturedatabase("SELECT ir FROM eventi  ");
       $int=count($tabrutta);
 	    if($int<1){
 		 mandamessaggiutente($utente,"non ci sono più eventi");
 		 exit();
-	    }	  
+	    }
       $msg="ultimo evento cancellato";
       mandamessaggiutente($utente, $msg);
     }elseif ($cancella=="prenotazione") {
@@ -263,7 +267,7 @@ switch($comando[0]){
 	    if($int<1){
 		 mandamessaggiutente($utente,"non ci sono più prenotazioni");
 		 exit();
-	    }	
+	    }
       $msg="ultima tua prenotazione cancellata";
       mandamessaggiutente($utente, $msg);
     }
@@ -316,8 +320,8 @@ switch($comando[0]){
 		$msg=$tabrutta[$i]["utente"]." il giorno".$tabrutta[$i]["giorno"]."/".$tabrutta[$i]["mese"];
 		mandamessaggiutente($utente,$msg);
 	      }
-	
-	
+
+
 	}
 
     break;
@@ -423,15 +427,8 @@ function tastieraaiuto($utente){
 
 }
 function tastieracanc($utente){
-    if($GLOBALS['utenterfl']['livello']==2){
-	$messaggio = "cancelliamo ultima tua prenotazione";    
-    	$tastiera = '&reply_markup={"keyboard":[["canc prenotazione"],["esci"]]}';
-
-    }else if($GLOBALS['utenterfl']['livello']>2){
-	$messaggio = "cancelliamo ultima tua prenotazione";
-    	$tastiera = '&reply_markup={"keyboard":[["canc evento"],["canc prenotazione"],["esci"]]}';
-    }	
-	
+    $messaggio = "cancelliamo la tua ultima prenotazione";
+    $tastiera = '&reply_markup={"keyboard":[["canc evento"],["canc prenotazione"],["esci"]]}';
     $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     file_get_contents($url);
 
@@ -444,7 +441,7 @@ function tastieracalendario($utente){
 
     }else if($GLOBALS['utenterfl']['livello']>1){
     $tastiera = '&reply_markup={"keyboard":[["calendario eventi"],["calendario prenotazioni"],["calendario tue prenotazioni"],["esci"]]}';
-    }	
+    }
     $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     file_get_contents($url);
 
@@ -456,3 +453,4 @@ function tastierabirre($utente){
     $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     file_get_contents($url);
 }
+
