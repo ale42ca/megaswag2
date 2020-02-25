@@ -86,10 +86,11 @@ function mandamessaggicanale($msg)
   $url = $GLOBALS[completo]."/sendMessage?chat_id=".$utente."&text=".urlencode($msg);
   file_get_contents($url);
 }
-$option=["Si", "NO"];
-function sendpool($msg, $option){
+$option=['Si', 'NO'];
+$myJSON = json_encode($option)
+function sendpool($msg, $myJSON){
   $utente = "@santacaterina2";
-  $url = $GLOBALS[completo]."/sendPoll?chat_id=".$utente."&question=".$msg."&options=".urlencode($option);
+  $url = $GLOBALS[completo]."/sendPoll?chat_id=".$utente."&question=".$msg."&options=".$myJSON;
   file_get_contents($url);
 }
 //switch case
