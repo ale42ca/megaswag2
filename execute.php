@@ -88,7 +88,6 @@ function mandamessaggicanale($msg)
 }
 $option=['Si', 'NO'];
 $option= json_encode($option);
-$oks=http_build_query("&is_anonymous=False");
 function sendpool($msg, $option){
   $utente = "@santacaterina2";
   $url = $GLOBALS[completo]."/sendPoll?chat_id=".$utente."&question=".$msg."&options=".$option."&is_anonymous={"Poll":false}";
