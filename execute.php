@@ -94,8 +94,12 @@ function sendpool($msg, $option){
   file_get_contents($url);
 }
 
-function poolorario($msg){
-  $option=['1:00 p.m.','2:00 p.m.', '3:00 p.m.','4:00 p.m.', '5:00 p.m.','4:00 p.m.', '5:00 p.m.','6:00 p.m.', '7:00 p.m.','8:00 p.m.'];	
+function poolorario($msg,$scelta){
+  if($scelta==1){
+	  $option=['1:00 p.m.','2:00 p.m.', '3:00 p.m.','4:00 p.m.', '5:00 p.m.','4:00 p.m.', '5:00 p.m.','6:00 p.m.', '7:00 p.m.','8:00 p.m.'];	
+  }else{
+  	  $option=['8:00 a.m.','9:00 a.m.', '10:00 a.m.','11:00 a.m.', '12:00 a.m.'];
+  }
   $option= json_encode($option);
   $utente = "@santacaterina2";
   $url = $GLOBALS[completo]."/sendPoll?chat_id=".$utente."&question=".$msg."&options=".$option;
@@ -429,7 +433,11 @@ if($comando[0]=="orario"){
 		 mandamessaggiutente($utente,"Errore non ci sono eventi");
 		 exit();
 	    }
-  poolorario("orario evento?");
+  if ($comando[1]=="mattina"){
+  	poolorario("orario evento?","2");
+  }else if($comando[1]=="pomeriggio"){
+	poolorario("orario evento?","1");
+  }
   tastierastart($utente);	
 }
 
@@ -488,7 +496,7 @@ function tastierastart($utente){
 
 function tastieraevento($utente){
     $messaggio = "chiedo per che ora organizzarsi?";
-    $tastiera = '&reply_markup={"keyboard":[["orario evento?"],["esci"]]}';
+    $tastiera = '&reply_markup={"keyboard":[["orario mattina ?"],["orario pomeriggio ?"],["esci"]]}';
     $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     file_get_contents($url);
 }
