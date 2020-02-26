@@ -445,7 +445,7 @@ if($comando[0]=="tesserati"){
   $tabrutta= letturedatabase("SELECT nomevero, livello FROM utenti");
   $int=count($tabrutta);
 	      for ($i=0; $i<$int; $i++) {
-		$msg=$tabrutta[$i]["nomevero"]." di lvl ".$tabrutta[$i]["livello"]."tesserato il ".[$i]["giorno"]."/".[$i]["mese"];
+		$msg=$tabrutta[$i]["nomevero"]." di lvl ".$tabrutta[$i]["livello"]." tesserato il ".[$i]["giorno"]."/".[$i]["mese"];
 		mandamessaggiutente($utente,$msg);
 	      }
   mandamessaggiutente($utente, $msg);
