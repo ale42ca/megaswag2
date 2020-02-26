@@ -309,15 +309,15 @@ switch($comando[0]){
     tastieracalendario($utente);
     $calendario=$comando[1];
 	if($calendario==eventi){
-      $tabrutta= letturedatabase("SELECT utente, giorno, mese FROM eventi WHERE ir in ( SELECT ir FROM eventi ORDER BY ir desc LIMIT 10 )");
+      $tabrutta= letturedatabase("SELECT utente, giorno, mese, evento FROM eventi WHERE ir in ( SELECT ir FROM eventi ORDER BY ir desc LIMIT 10 )");
       $int=count($tabrutta);
 	    if($int<1){
 		 mandamessaggiutente($utente,"non ci sono eventi");
 		 exit();
 	    }
-      mandamessaggiutente($utente, "ecco a te le ultime 5 eventi");
+      mandamessaggiutente($utente, "ecco a te i prossimi 5 eventi");
       for ($i=0; $i<5 ; $i++) {
-        $msg=$tabrutta[$i]["utente"]." il giorno".$tabrutta[$i]["giorno"]."/".$tabrutta[$i]["mese"];
+        $msg=$tabrutta[$i]["evento"]." il giorno".$tabrutta[$i]["giorno"]."/".$tabrutta[$i]["mese"];
         mandamessaggiutente($utente,$msg);
 
       }
