@@ -431,6 +431,7 @@ if($comando[0]=="orario"){
 		 exit();
 	    }
   poolorario("orario evento?");
+  tastierastart($utente);	
 }
 
 
