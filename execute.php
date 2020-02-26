@@ -86,11 +86,18 @@ function mandamessaggicanale($msg)
   $url = $GLOBALS[completo]."/sendMessage?chat_id=".$utente."&text=".urlencode($msg);
   file_get_contents($url);
 }
-$option=['Si', 'NO'];
+$option=['CI SONO', 'NON CI SONO'];
 $option= json_encode($option);
 function sendpool($msg, $option){
   $utente = "@santacaterina2";
-  $url = $GLOBALS[completo]."/sendPoll?chat_id=".$utente."&question=".$msg."&options=".$option."&is_anonymous:false";
+  $url = $GLOBALS[completo]."/sendPoll?chat_id=".$utente."&question=".$msg."&options=".$option."&is_anonymous=false";
+  file_get_contents($url);
+}
+
+function poolorario($msg){
+  $option=['1:00 p.m.','2:00 p.m.', '3:00 p.m.','4:00 p.m.', '5:00 p.m.','4:00 p.m.', '5:00 p.m.','6:00 p.m.', '7:00 p.m.','8:00 p.m.'];	
+  $utente = "@santacaterina2";
+  $url = $GLOBALS[completo]."/sendPoll?chat_id=".$utente."&question=".$msg."&options=".$option."&is_anonymous=false";
   file_get_contents($url);
 }
 //switch case
@@ -240,8 +247,9 @@ switch($comando[0]){
 		$msg="nuovo evento: ".$cosaevento." per il giorno ".$giornoprenotato."/".$meseprenotato;
 		mandamessaggicanale($msg);
 		sendpool($msg, $option);
+		tastieraevento($utente);      
 	    }    
-
+		
       }
     break;
 
@@ -260,7 +268,7 @@ switch($comando[0]){
     if($cancella=="evento"){
       //cancella ultimo evento
 
-      inserireneldatabase("DELETE FROM evento WHERE ir in ( SELECT ir FROM evento ORDER BY ir desc LIMIT 1 ) ");
+      inserireneldatabase("DELETE FROM eventi WHERE ir in ( SELECT ir FROM eventi ORDER BY ir desc LIMIT 1 ) ");
       $tabrutta= letturedatabase("SELECT ir FROM eventi  ");
       $int=count($tabrutta);
 	    if($int<1){
@@ -413,6 +421,16 @@ if($comando[0]=="aiuto"){
 
 }
 
+if($comando[0]=="orario"){
+      $tabrutta= letturedatabase("SELECT utente, giorno, mese FROM eventi WHERE ir in ( SELECT ir FROM eventi ORDER BY ir desc LIMIT 1 )");
+     
+	if(count($tabrutta)<1){
+		 mandamessaggiutente($utente,"Errore non ci sono eventi");
+		 exit();
+	    }
+  poolorario("orario evento?");
+}
+
 
 
 if($comando[0]=="raccontami"){
@@ -443,6 +461,16 @@ function tastierastart($utente){
 	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     	file_get_contents($url);
 }
+
+function tastieraevento($utente){
+    $messaggio = "chiedo per che ora organizzarsi?";
+    $tastiera = '&reply_markup={"keyboard":[["orario evento?"],["esci"]]}';
+    $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
+    file_get_contents($url);
+}
+
+
+
 function tastieraaiuto($utente){
     $messaggio = "Ti aiuto io";
     $tastiera = '&reply_markup={"keyboard":[["raccontami qualcosa"],["aiuto prenotazione"],["aiuto calendario"],["aiuto eventi"],["aiuto birra"],["esci"]]}';
