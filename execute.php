@@ -431,7 +431,7 @@ if($comando[0]=="aiuto"){
 }
 	if($comando[1]=="birra"){
 		mandamessaggiutente($utente, "scrivi (birra)( )(+/-)(numero birre) per aggiungere/togliere birre");
-		mandamessaggiutente($utente, "Bevi responsabilmente oppure no, non sono un poliziotto");			
+		mandamessaggiutente($utente, "Bevi responsabilmente, oppure no non sono un poliziotto");			
 		mandamessaggiutente($utente, "Esempio-> birra -1");
 		
 
