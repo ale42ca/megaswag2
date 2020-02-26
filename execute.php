@@ -445,13 +445,13 @@ if($comando[0]=="raccontami"){
 if($comando[0]=="tesserati"){
 	tastieratesserati($utente);
 if($comando[1]=="fan"){
-	  $tabrutta= letturedatabase("SELECT nome, cognome, data FROM tesserati");
+	  $tabrutta= letturedatabase("SELECT nome, cognome, data FROM tesserati  ORDER BY numero asc");
   	  $int=count($tabrutta);
 	      for ($i=0; $i<$int; $i++) {
 		      if($tabrutta[$i]["anno"]==null){
 		      	$tabrutta[$i]["anno"]=="2020";
 		      }
-		$msg=$tabrutta[$i]["nome"]." ".$tabrutta[$i]["cognome"]." tesserato il ".$tabrutta[$i]["data"];
+		$msg=$tabrutta[$i]["nome"]." ".$tabrutta[$i]["cognome"]."%0A tesserato il ".$tabrutta[$i]["data"];
 		mandamessaggiutente($utente,$msg);
 	      }
 }
