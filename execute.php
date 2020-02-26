@@ -242,7 +242,7 @@ switch($comando[0]){
 	    }else {
 		$msg="Perfetto aggiorno le informazioni! ti ricordo che se devi eliminare la tua ultima prenotazione usa la funzione canc";
 		mandamessaggiutente($utente, $msg);
-		inserireneldatabase("INSERT INTO evento ( utente, giorno, mese, evento) VALUES ('$username', '$giornoprenotato', '$meseprenotato', '$cosaevento')");
+		inserireneldatabase("INSERT INTO eventi ( utente, giorno, mese, evento) VALUES ('$username', '$giornoprenotato', '$meseprenotato', '$cosaevento')");
 		$msg="avvisiamo sul canale";
 		mandamessaggiutente($utente, $msg);
 		$msg="nuovo evento: ".$cosaevento." per il giorno ".$giornoprenotato."/".$meseprenotato;
