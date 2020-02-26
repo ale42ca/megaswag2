@@ -469,7 +469,7 @@ if($comando[1]=="utenti"){
 
 }
 function tastieratesserati($utente){
-    $messaggio = "chiedo per che ora organizzarsi?";
+    $messaggio = "visualizzo informazioni";
     $tastiera = '&reply_markup={"keyboard":[["tesserati fan"],["tesserati utenti"],["esci"]]}';
     $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     file_get_contents($url);
