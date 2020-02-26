@@ -90,8 +90,7 @@ $option=['CI SONO', 'NON CI SONO'];
 $option= json_encode($option);
 function sendpool($msg, $option){
   $utente = "@santacaterina2";
-  $anoni=urlencode("&is_anonymous=false");
-  $url = $GLOBALS[completo]."/sendPoll?chat_id=".$utente."&question=".$msg."&options=".$option.$anoni;
+  $url = $GLOBALS[completo]."/sendPoll?chat_id=".$utente."&question=".$msg."&options=".$option;
   file_get_contents($url);
 }
 
