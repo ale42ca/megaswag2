@@ -443,8 +443,21 @@ if($comando[0]=="raccontami"){
 
 
 if($comando[0]=="tesserati"){
-  $tabrutta= letturedatabase("SELECT nomevero, livello, giorno, mese, anno FROM utenti");
-  $int=count($tabrutta);
+	tastieratesserati($utente);
+if($comando[1]=="fan"){
+	  $tabrutta= letturedatabase("SELECT nome, cognome, data FROM tesserati");
+  	  $int=count($tabrutta);
+	      for ($i=0; $i<$int; $i++) {
+		      if($tabrutta[$i]["anno"]==null){
+		      	$tabrutta[$i]["anno"]=="2020";
+		      }
+		$msg=$tabrutta[$i]["nome"]." ".$tabrutta[$i]["cognome"]." tesserato il ".$tabrutta[$i]["data"];
+		mandamessaggiutente($utente,$msg);
+	      }
+}
+if($comando[1]=="utenti"){
+	  $tabrutta= letturedatabase("SELECT nomevero, livello, giorno, mese, anno FROM utenti");
+          $int=count($tabrutta);
 	      for ($i=0; $i<$int; $i++) {
 		      if($tabrutta[$i]["anno"]==null){
 		      	$tabrutta[$i]["anno"]=="2020";
@@ -452,8 +465,15 @@ if($comando[0]=="tesserati"){
 		$msg=$tabrutta[$i]["nomevero"]." di lvl ".$tabrutta[$i]["livello"]." tesserato il ".$tabrutta[$i]["giorno"]."/".$tabrutta[$i]["mese"]."/".$tabrutta[$i]["anno"];
 		mandamessaggiutente($utente,$msg);
 	      }
-}
+}	
 
+}
+function tastieratesserati($utente){
+    $messaggio = "chiedo per che ora organizzarsi?";
+    $tastiera = '&reply_markup={"keyboard":[["tesserati fan"],["tesserati utenti"],["esci"]]}';
+    $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
+    file_get_contents($url);
+}
 function tastierastart($utente){
     $messaggio = "osserva la tastiera e usa i suoi comandi";
     if($GLOBALS['utenterfl']['livello']==1){
@@ -472,6 +492,7 @@ function tastieraevento($utente){
     $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     file_get_contents($url);
 }
+
 
 
 
