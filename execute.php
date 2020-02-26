@@ -445,24 +445,24 @@ if($comando[0]=="raccontami"){
 if($comando[0]=="tesserati"){
 	  tastieratesserati($utente);	
 	  if($comando[1]=="utenti"){
-	  $tabrutta= letturedatabase("SELECT nomevero, livello, giorno, mese, anno FROM utenti");
-	  $int=count($tabrutta);
-		      for ($i=0; $i<$int; $i++) {
-			      if($tabrutta[$i]["anno"]==null){
-				$tabrutta[$i]["anno"]=="2020";
-			      }
-			$msg=$tabrutta[$i]["nomevero"]." di lvl ".$tabrutta[$i]["livello"]." tesserato il ".$tabrutta[$i]["giorno"]."/".$tabrutta[$i]["mese"]."/".$tabrutta[$i]["anno"];
-			mandamessaggiutente($utente,$msg);
+		  $tabrutta= letturedatabase("SELECT nomevero, livello, giorno, mese, anno FROM utenti");
+		  $int=count($tabrutta);
+			      for ($i=0; $i<$int; $i++) {
+				      if($tabrutta[$i]["anno"]==null){
+					$tabrutta[$i]["anno"]=="2020";
+				      }
+				$msg=$tabrutta[$i]["nomevero"]." di lvl ".$tabrutta[$i]["livello"]." tesserato il ".$tabrutta[$i]["giorno"]."/".$tabrutta[$i]["mese"]."/".$tabrutta[$i]["anno"];
+				mandamessaggiutente($utente,$msg);
 		      }
 	  if($comando[1]=="fan"){
-	  $tabrutta= letturedatabase("SELECT nome, cognome, data, FROM tesserati");
-	  $int=count($tabrutta);
-		      for ($i=0; $i<$int; $i++) {
-			      if($tabrutta[$i]["anno"]==null){
-				$tabrutta[$i]["anno"]=="2020";
-			      }
-			$msg=$tabrutta[$i]["nome"]." ".$tabrutta[$i]["cognome"]." tesserato il ".$tabrutta[$i]["data"];
-			mandamessaggiutente($utente,$msg);
+		  $tabrutta= letturedatabase("SELECT nome, cognome, data FROM tesserati");
+		  $int=count($tabrutta);
+			      for ($i=0; $i<$int; $i++) {
+				      if($tabrutta[$i]["anno"]==null){
+					$tabrutta[$i]["anno"]=="2020";
+				      }
+				$msg=$tabrutta[$i]["nome"]." ".$tabrutta[$i]["cognome"]." tesserato il ".$tabrutta[$i]["data"];
+				mandamessaggiutente($utente,$msg);
 	      }	  
 }
 	
@@ -528,4 +528,3 @@ function tastierabirre($utente){
     $url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     file_get_contents($url);
 }
-
