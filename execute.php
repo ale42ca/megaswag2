@@ -90,14 +90,15 @@ $option=['CI SONO', 'NON CI SONO'];
 $option= json_encode($option);
 function sendpool($msg, $option){
   $utente = "@santacaterina2";
-  $url = $GLOBALS[completo]."/sendPoll?chat_id=".$utente."&question=".$msg."&options=".$option."&is_anonymous=false";
+  $url = $GLOBALS[completo]."/sendPoll?chat_id=".$utente."&question=".$msg."&options=".$option."&is_anonymous:false";
   file_get_contents($url);
 }
 
 function poolorario($msg){
   $option=['1:00 p.m.','2:00 p.m.', '3:00 p.m.','4:00 p.m.', '5:00 p.m.','4:00 p.m.', '5:00 p.m.','6:00 p.m.', '7:00 p.m.','8:00 p.m.'];	
+  $option= json_encode($option);
   $utente = "@santacaterina2";
-  $url = $GLOBALS[completo]."/sendPoll?chat_id=".$utente."&question=".$msg."&options=".$option."&is_anonymous=false";
+  $url = $GLOBALS[completo]."/sendPoll?chat_id=".$utente."&question=".$msg."&options=".$option;
   file_get_contents($url);
 }
 //switch case
@@ -422,7 +423,7 @@ if($comando[0]=="aiuto"){
 }
 
 if($comando[0]=="orario"){
-      $tabrutta= letturedatabase("SELECT utente, giorno, mese FROM eventi WHERE ir in ( SELECT ir FROM eventi ORDER BY ir desc LIMIT 1 )");
+      $tabrutta= letturedatabase("SELECT * FROM eventi ");
      
 	if(count($tabrutta)<1){
 		 mandamessaggiutente($utente,"Errore non ci sono eventi");
