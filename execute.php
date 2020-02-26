@@ -425,7 +425,7 @@ if($comando[0]=="aiuto"){
 if($comando[0]=="orario"){
       $tabrutta= letturedatabase("SELECT * FROM eventi ");
      
-	if(count($tabrutta)<1){
+	if(empty($tabrutta)){
 		 mandamessaggiutente($utente,"Errore non ci sono eventi");
 		 exit();
 	    }
