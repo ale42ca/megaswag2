@@ -236,7 +236,7 @@ switch($comando[0]){
 	     $tabrutta= letturedatabase("SELECT * FROM eventi WHERE giorno='$giornoprenotato' AND mese = '$meseprenotato' ");
 	      if(!empty($tabrutta)){
 	      $personachehaprenotato=$tabrutta[0]['utente'];
-	      $msg="è stao già creato un evento da ".$personachehaprenotato." per quel giorno";
+	      $msg="è stato già creato un evento da ".$personachehaprenotato." per quel giorno";
 	      mandamessaggiutente($utente, $msg);
 	      exit();
 	    }else {
