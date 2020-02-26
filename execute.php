@@ -209,7 +209,7 @@ switch($comando[0]){
     $cosaevento=$newevento[0];
     if($meseprenotato== null or $meseprenotato== null){
 	    mandamessaggiutente($utente, "per farlo digita:");
-	    mandamessaggiutente($utente, "evento NomeEvento.GiornoEvento.MeseScelto");
+	    mandamessaggiutente($utente, "evento NomeEvento.Giorno.Mese");
 	    exit();
     }
 	if($cosaevento==null){
@@ -416,15 +416,25 @@ if($comando[0]=="aiuto"){
 	tastieraaiuto($utente);
 	if($comando[1]=="prenotazione"){
 		mandamessaggiutente($utente, "Per prenotare scrivi sulla tastiera: (prenota)( )(giorno).(mese)");
+		mandamessaggiutente($utente, "non inserire spazzi non necessari, non ci sono differenze tra maiuscolo e minuscolo");
+		mandamessaggiutente($utente, "Esempio-> prenota 26.8");
 }
 	if($comando[1]=="calendario"){
-		mandamessaggiutente($utente, "il calendario ti permette di vedere ultime 5 prenotazioni o eventi, controlla prenotazioni anche sul canale");
+		mandamessaggiutente($utente, "il calendario ti permette di vedere ultime 5 prenotazioni o eventi, controlla anche sul canale");
+		
 }
 	if($comando[1]=="eventi"){
 		mandamessaggiutente($utente, "Per creare un evento scrivi sulla tastiera: (evento)( )(nome dell'evento).(giorno).(mese)");
+		mandamessaggiutente($utente, "non inserire spazzi non necessari, non ci sono differenze tra maiuscolo e minuscolo");
+		mandamessaggiutente($utente, "Esempio-> evento festa.26.8");
+
 }
 	if($comando[1]=="birra"){
 		mandamessaggiutente($utente, "scrivi (birra)( )(+/-)(numero birre) per aggiungere/togliere birre");
+		mandamessaggiutente($utente, "Bevi responsabilmente oppure no, non sono un poliziotto");			
+		mandamessaggiutente($utente, "Esempio-> birra -1");
+		
+
 }
 
 
