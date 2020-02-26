@@ -412,9 +412,23 @@ if($comando[0]=="aiuto"){
 
 
 }
+
+
+
 if($comando[0]=="raccontami"){
   $tabirra= letturedatabase("SELECT frasi FROM frasi ORDER BY RANDOM() LIMIT 1");
   $msg=$tabirra[0]["frasi"];
+  mandamessaggiutente($utente, $msg);
+}
+
+
+if($comando[0]=="tesserati"){
+  $tabrutta= letturedatabase("SELECT nomevero, livello FROM utenti");
+  $int=count($tabrutta)-1;
+	      for ($i=0; $i<int; $i++) {
+		$msg=$tabrutta[$i]["nomevero"]." di lvl ".$tabrutta[$i]["livello"]"];
+		mandamessaggiutente($utente,$msg);
+	      }
   mandamessaggiutente($utente, $msg);
 }
 
@@ -424,7 +438,7 @@ function tastierastart($utente){
         $tastiera = '&reply_markup={"keyboard":[["calendario"],["birra"],["aiuto"]]}';
 
     }else if($GLOBALS['utenterfl']['livello']>1){
-        $tastiera = '&reply_markup={"keyboard":[["prenota"],["evento"],["calendario"],["birra"],["canc"],["aiuto"]]}';
+        $tastiera = '&reply_markup={"keyboard":[["prenota"],["evento"],["calendario"],["birra"],["canc"],["aiuto"],["tesserati"]]}';
     }
 	$url = "$GLOBALS[completo]"."/sendMessage?chat_id=".$utente."&parse_mode=HTML&text=".$messaggio.$tastiera;
     	file_get_contents($url);
