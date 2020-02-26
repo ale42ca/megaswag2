@@ -451,7 +451,7 @@ if($comando[1]=="fan"){
 		      if($tabrutta[$i]["anno"]==null){
 		      	$tabrutta[$i]["anno"]=="2020";
 		      }
-		$msg=$tabrutta[$i]["nome"]." ".$tabrutta[$i]["cognome"].%0A." tesserato il ".$tabrutta[$i]["data"];
+		$msg=$tabrutta[$i]["nome"]." ".$tabrutta[$i]["cognome"]." tesserato il ".$tabrutta[$i]["data"];
 		mandamessaggiutente($utente,$msg);
 	      }
 }
