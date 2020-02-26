@@ -115,7 +115,7 @@ switch($comando[0]){
 			$GLOBALS['utenterfl']= $tabula[0];
 			mandamessaggiutente($utente, "Benvenuto ".$GLOBALS['utenterfl']['nomevero']);
       if(empty($GLOBALS['utenterfl']['password'])){
-          mandamessaggiutente($utente, " Dammi una password digita:");
+          mandamessaggiutente($utente, "Dammi una password digita:");
 	  mandamessaggiutente($utente, "/password LaTuaPassword");
           exit();
       }
@@ -131,6 +131,10 @@ switch($comando[0]){
     break;
   case '/password':
   $msg=$comando[1];
+      if($msg == null){
+ 	 mandamessaggiutente($utente,"non hai inserito nulla, ritenta");
+	 exit();
+    }		
 	$tabula=letturedatabase("UPDATE utenti SET password= '$msg'  WHERE utente = '$username'");
         mandamessaggiutente($utente,"ok la password è aggiornata" );
 
