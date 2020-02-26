@@ -448,7 +448,6 @@ if($comando[0]=="tesserati"){
 		$msg=$tabrutta[$i]["nomevero"]." di lvl ".$tabrutta[$i]["livello"]." tesserato il ".[$i]["giorno"]."/".[$i]["mese"];
 		mandamessaggiutente($utente,$msg);
 	      }
-  mandamessaggiutente($utente, $msg);
 }
 
 function tastierastart($utente){
