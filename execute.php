@@ -90,7 +90,7 @@ $option=['CI SONO', 'NON CI SONO'];
 $option= json_encode($option);
 function sendpool($msg, $option){
   $utente = "@santacaterina2";
-  $url = $GLOBALS[completo]."/sendPoll?chat_id=".$utente."&question=".$msg."&options=".$option."&is_anonymous=false";
+  $url = $GLOBALS[completo]."/sendPoll?chat_id=".$utente."&question=".$msg."&options=".$option;
   file_get_contents($url);
 }
 
@@ -430,6 +430,7 @@ if($comando[0]=="orario"){
 		 exit();
 	    }
   poolorario("orario evento?");
+  tastierastart($utente);	
 }
 
 
@@ -442,10 +443,13 @@ if($comando[0]=="raccontami"){
 
 
 if($comando[0]=="tesserati"){
-  $tabrutta= letturedatabase("SELECT nomevero, livello FROM utenti");
+  $tabrutta= letturedatabase("SELECT nomevero, livello, giorno, mese, anno FROM utenti");
   $int=count($tabrutta);
 	      for ($i=0; $i<$int; $i++) {
-		$msg=$tabrutta[$i]["nomevero"]." di lvl ".$tabrutta[$i]["livello"]." tesserato il ".[$i]["giorno"]."/".[$i]["mese"];
+		      if($tabrutta[$i]["anno"]==null){
+		      	$tabrutta[$i]["anno"]=="2020";
+		      }
+		$msg=$tabrutta[$i]["nomevero"]." di lvl ".$tabrutta[$i]["livello"]." tesserato il ".$tabrutta[$i]["giorno"]."/".$tabrutta[$i]["mese"]."/".$tabrutta[$i]["anno"];
 		mandamessaggiutente($utente,$msg);
 	      }
 }
