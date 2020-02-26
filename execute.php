@@ -111,12 +111,12 @@ switch($comando[0]){
 	mandamessaggiutente($utente, "Benevenuto sono Beecky assistente di frequenza libera");
   $tabella= letturedatabase("SELECT COUNT(*) FROM utenti WHERE utente='$username'");
   if($tabella[0]['count']){
-      mandamessaggiutente($utente, "Benvenuto amico mio ");
-			$tabula=letturedatabase("SELECT * FROM utenti WHERE utente='$username'");
+      			$tabula=letturedatabase("SELECT * FROM utenti WHERE utente='$username'");
 			$GLOBALS['utenterfl']= $tabula[0];
-			mandamessaggiutente($utente, $GLOBALS['utenterfl']['nomevero']);
+			mandamessaggiutente($utente, "Benvenuto ".$GLOBALS['utenterfl']['nomevero']);
       if(empty($GLOBALS['utenterfl']['password'])){
-          mandamessaggiutente($utente, " dammi una password inserendo /password latuapassword");
+          mandamessaggiutente($utente, " Dammi una password digita:");
+	  mandamessaggiutente($utente, "/password LaTuaPassword");
           exit();
       }
 	}else{
@@ -153,7 +153,7 @@ switch($comando[0]){
     $giornoprenotato=$dataprenotazione[0];
     if($meseprenotato== null or $meseprenotato== null){
 	    mandamessaggiutente($utente, "Prenotiamo lo studio, per farlo digita:");
-	    mandamessaggiutente($utente, "prenota (giorno scelto).(mese scelto)");
+	    mandamessaggiutente($utente, "prenota GiornoScelto.MeseScelto");
 	    exit();
     }
 
@@ -205,7 +205,7 @@ switch($comando[0]){
     $cosaevento=$newevento[0];
     if($meseprenotato== null or $meseprenotato== null){
 	    mandamessaggiutente($utente, "per farlo digita:");
-	    mandamessaggiutente($utente, "evento (nome evento).(giorno scelto).(mese scelto)");
+	    mandamessaggiutente($utente, "evento NomeEvento.GiornoEvento.MeseScelto");
 	    exit();
     }
 	if($cosaevento==null){
@@ -367,7 +367,7 @@ switch($comando[0]){
 	}
 
 	if($birra>0 or is_numeric($birra)){
-	  mandamessaggiutente($utente, "Digita: birra +/-(numero birre)");
+	  mandamessaggiutente($utente, "Digita: birra +/-numerobirre");
 	  $nbirra=$msgbirra+$birra;
 	  inserireneldatabase("INSERT INTO birra (birre, utente, data) VALUES ( '$nbirra', '$username', '$dataoggi')");
 	  exit();
@@ -427,6 +427,10 @@ if($comando[0]=="aiuto"){
 }
 
 if($comando[0]=="orario"){
+    if($GLOBALS['utenterfl']['livello']<2){
+ 	 mandamessaggiutente($utente,"non hai i permessi" );
+	 exit();
+    }	
       $tabrutta= letturedatabase("SELECT * FROM eventi ");
      
 	if(empty($tabrutta)){
