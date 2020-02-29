@@ -89,7 +89,7 @@ function mandamessaggicanale($msg)
 $option=['CI SONO', 'NON CI SONO'];
 $option= json_encode($option);
 function sendpool($msg, $option){
-  $utente = "@santacaterina2";
+  $utente = "@rflprenota";
   $url = $GLOBALS[completo]."/sendPoll?chat_id=".$utente."&question=".$msg."&options=".$option;
   file_get_contents($url);
 }
@@ -101,7 +101,7 @@ function poolorario($msg,$scelta){
   	  $option=['8:00 a.m.','9:00 a.m.', '10:00 a.m.','11:00 a.m.', '12:00 a.m.'];
   }
   $option= json_encode($option);
-  $utente = "@santacaterina2";
+  $utente = "@rflprenota";
   $url = $GLOBALS[completo]."/sendPoll?chat_id=".$utente."&question=".$msg."&options=".$option;
   file_get_contents($url);
 }
