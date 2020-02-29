@@ -82,7 +82,7 @@ function mandamessaggiutente($utente, $msg)
 // metodo per mandare un msg al canale
 function mandamessaggicanale($msg)
 {
-  $utente = "@santacaterina2";
+  $utente = "@rflprenota";
   $url = $GLOBALS[completo]."/sendMessage?chat_id=".$utente."&text=".urlencode($msg);
   file_get_contents($url);
 }
