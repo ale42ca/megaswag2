@@ -124,7 +124,7 @@ switch($comando[0]){
 	$tabella= letturedatabase("SELECT COUNT(*) FROM utenti WHERE utente='$username'");
 	$comando[0]='/start';
   }
-  if($GLOBALS['utenterfl']['livello']<0 r $GLOBALS['utenterfl']['livello']==null){
+  if($GLOBALS['utenterfl']['livello']<0 or $GLOBALS['utenterfl']['livello']==null){
       exit();
   }else {
     tastierastart($utente);
