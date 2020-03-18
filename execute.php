@@ -120,10 +120,11 @@ switch($comando[0]){
           exit();
       }
 	}else{
-		  mandamessaggiutente($utente, "la password non è giusta ");
-			exit();
-	}
-  if($GLOBALS['utenterfl']['livello']<1 or $GLOBALS['utenterfl']['livello']==null){
+	inserireneldatabase("INSERT INTO utenti ( utente,livello, giorno, mese, anno) VALUES ('$username', '0', '$giorno', '$mese','$anno')");
+	$tabella= letturedatabase("SELECT COUNT(*) FROM utenti WHERE utente='$username'");
+	$comando[0]='/start';
+  }
+  if($GLOBALS['utenterfl']['livello']<0 r $GLOBALS['utenterfl']['livello']==null){
       exit();
   }else {
     tastierastart($utente);
