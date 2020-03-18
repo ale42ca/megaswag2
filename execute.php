@@ -122,7 +122,11 @@ switch($comando[0]){
 	}else{
 	inserireneldatabase("INSERT INTO utenti ( utente,livello, giorno, mese, anno) VALUES ('$username', '0', '$giorno', '$mese','$anno')");
 	$tabella= letturedatabase("SELECT COUNT(*) FROM utenti WHERE utente='$username'");
-	$comando[0]='/start';
+	if(empty($GLOBALS['utenterfl']['password'])){
+          mandamessaggiutente($utente, "Digita una password:");
+	  mandamessaggiutente($utente, "/password LaTuaPassword");
+          exit();
+      }
   }
   if($GLOBALS['utenterfl']['livello']<0 or $GLOBALS['utenterfl']['livello']==null){
       exit();
